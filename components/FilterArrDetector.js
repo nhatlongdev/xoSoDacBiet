@@ -11,7 +11,6 @@ function filterArrDetector(data, numberFilter, soLanQuay){
         for(j =0; j<data[i].length;j++){
             console.log('CHAY FOR: ')
             var sub = data[i][j].number.substr(data[i][j].number.length -2,2);
-            console.log('GIA TRI SUB: '+ sub)
             if(sub == numberFilter){
                 mangData.push(data[i][j]);
             }

@@ -23,14 +23,15 @@ import FloatButtonCompoment from '../components/FloatButtonCompoment';
 import moment from 'moment';
 import {getDataFromServer} from '../networking/Server';
 import {createArrPushInItem} from '../components/CreateArrPushInItem';
+import TreeView from '@zaguini/react-native-tree-view';
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
 
-var listDay = [];
-var date_ = new Date();
+var listDay = [], listDayTam = [];
+var date_ = new Date(), dateTam = new Date();
 var lottery_provinces = require('../assets/lottery_provinces_.json');
-var data ;
+var data , dataTam;
 var dataLoadingToServer;
 var dataWithProvinces = {};
 export default class HomeScreen extends Component {
@@ -39,8 +40,10 @@ export default class HomeScreen extends Component {
         super(props);
         dataLoadingToServer = this.props.navigation.state.params.data_lottery;
         data = getListDay_();
+        dataTam = getListDay_tam(); 
         dataWithProvinces = createArrPushInItem(dataLoadingToServer);
        console.log("ppppppppppppppppp"+ JSON.stringify(dataWithProvinces));
+       console.log("DataTAM===>>>"+ JSON.stringify(dataTam));
     }
     
     render(){
@@ -103,21 +106,10 @@ export default class HomeScreen extends Component {
                 <Text style = {style.text_title_1}>Danh sách kết quả xổ số mới nhất</Text>
 
                 <View style = {style.content}>
-                    <ExpanableList
-                        refreshing = {false}
-                        onRefresh = {()=>{this.refresh()}}
-
-                        onEndReachedThreshold = {0}
-                        onEndReached = {()=>{
-                            
-                        }}
-                        dataSource={data}
-                        headerKey="header"
-                        memberKey="member"
-                        renderRow={this._renderRow}
-                        headerOnPress = {this._headerOnClick}
-                        renderSectionHeaderX={this._renderSection}
-                        keyExtractor={ (item, index) => index.toString() }
+                    <FlatList
+                        data = {dataTam}
+                        renderItem = {this.renderItem}
+                        keyExtractor={item => item.id.toString()}
                     />
                 </View>
 
@@ -129,6 +121,32 @@ export default class HomeScreen extends Component {
 
         );
     }
+
+    renderItem = ({ item }) => (
+        <TreeView
+            data={item.array}
+            renderItem={(item, level) => (
+            <View>
+                <Text
+                style={{
+                    marginLeft: 25 * level,
+                }}
+                >
+                
+                {
+                    item.collapsed !== null ?
+                    // `v ${item.title}`}
+                    <View style = {{flexDirection: 'row'}}>
+                        <Text>{item.collapsed ? <Icon name = 'ios-arrow-up'/> : <Icon name = 'ios-arrow-down'/>} </Text> 
+                        <Text>{item.title}</Text>
+                    </View>:
+                    <Text>{item.name[0]}</Text>
+                }
+                </Text>
+            </View>
+            )}
+        />
+      )
 
     refresh(){
 
@@ -229,6 +247,73 @@ function getListDay_(){
     // var check_list_day = JSON.stringify(listDay);
     //     console.log('GIa tri list SHow: ' + check_list_day);
     return listDay;
+}
+
+// tam test
+function getListDay_tam(){
+    for (var i = 0 ; i <= 15; i++){
+        var title = '';
+        var title_screen_result = '';
+        if(i == 0){
+            title = 'Hôm nay';
+        } else if (i == 1){
+            title = 'Hôm qua';
+        }
+        var item = {};
+        item.id = i;
+        var array = [];
+        var to_day = {};
+        var indexDay = dateTam.getDay();
+        title = title != '' ? title + ", " + getDayOfWeek(indexDay) + ", " + moment(dateTam).format('DD/MM')
+            : getDayOfWeek(indexDay) + ", " + moment(dateTam).format('DD/MM');
+        title_screen_result =  getDayOfWeek(indexDay) + ", " + moment(dateTam).format('DD/MM/YYYY');
+        var test_date= moment(dateTam).format('YYYY-MM-DD');
+        to_day.title = title;
+        to_day.title_screen_result = title_screen_result;
+        to_day.status = false;
+        var member_= [];
+        var tmp_lottery_provinces = JSON.parse(JSON.stringify(lottery_provinces));
+        for(var j=0;j< tmp_lottery_provinces.length;j++){
+            if(indexDay == 0 && tmp_lottery_provinces[j].weekdays.indexOf(',1,') != -1){
+                tmp_lottery_provinces[j].rd = test_date;
+                member_.push(tmp_lottery_provinces[j]);
+            }else if(indexDay == 1 && tmp_lottery_provinces[j].weekdays.indexOf(',2,') != -1){
+                tmp_lottery_provinces[j].rd = test_date;
+                member_.push(tmp_lottery_provinces[j]);
+            }else if(indexDay == 2 && tmp_lottery_provinces[j].weekdays.indexOf(',3,') != -1){
+                tmp_lottery_provinces[j].rd = test_date;
+                member_.push(tmp_lottery_provinces[j]);
+            }else if(indexDay == 3 && tmp_lottery_provinces[j].weekdays.indexOf(',4,') != -1){
+                tmp_lottery_provinces[j].rd = test_date;
+                member_.push(tmp_lottery_provinces[j]);
+            }else if(indexDay == 4 && tmp_lottery_provinces[j].weekdays.indexOf(',5,') != -1){
+                tmp_lottery_provinces[j].rd = test_date;
+                member_.push(tmp_lottery_provinces[j]);
+            }else if(indexDay == 5 && tmp_lottery_provinces[j].weekdays.indexOf(',6,') != -1){
+                tmp_lottery_provinces[j].rd = test_date;
+                member_.push(tmp_lottery_provinces[j]);
+            }else if(indexDay == 6 && tmp_lottery_provinces[j].weekdays.indexOf(',7,') != -1){
+                tmp_lottery_provinces[j].rd = test_date;
+                member_.push(tmp_lottery_provinces[j]);
+            }         
+        }
+
+    
+        // add ket qua dac biet
+        member_ = pushPropsInItem(member_);
+
+        var _ = require('underscore');
+        var member = _.sortBy(member_, 'area_id');
+        to_day.children = member;  
+        array.push(to_day);
+        item.array = array;
+        listDayTam.push(item);
+        // set date
+        dateTam.setDate(dateTam.getDate() - 1);
+    }
+    // var check_list_day = JSON.stringify(listDay);
+    //     console.log('GIa tri list SHow: ' + check_list_day);
+    return listDayTam;
 }
 
 // ham push giai dac biet vao item

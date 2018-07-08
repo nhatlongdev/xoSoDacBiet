@@ -136,9 +136,9 @@ export default class HomeScreen extends Component {
                 {
                     item.collapsed !== null ?
                     // `v ${item.title}`} ghi chu
-                    <View style = {{flexDirection: 'row'}}>
-                        <Text>{item.collapsed ? <Icon name = 'ios-arrow-up'/> : <Icon name = 'ios-arrow-down'/>} </Text> 
-                        <Text>{item.title}</Text>
+                    <View style = {{margin:1,backgroundColor:'red',flexDirection: 'row', fontSize: 18 , alignItems:'center'}}>
+                        <Text style = {{paddingLeft:5, paddingRight: 7, alignItems:'center'}}>{item.collapsed ? <Icon style={{backgroundColor:'white'}} name = 'ios-arrow-up'/> : <Icon name = 'ios-arrow-down'/>} </Text> 
+                        <Text style = {{textAlign: 'center'}}>{item.title}</Text>
                     </View>:
                     <Text>{item.name[0]}</Text>
                 }

@@ -34,15 +34,23 @@ var lottery_provinces = require('../assets/lottery_provinces_.json');
 var data , dataTam;
 var dataLoadingToServer;
 var dataWithProvinces = {};
+//bien tang i khi load more
+var countLoadmore = 0;
+
 export default class HomeScreen extends Component {
 
     constructor(props){
         super(props);
+        
         dataLoadingToServer = this.props.navigation.state.params.data_lottery;
         data = getListDay_();
-        dataTam = getListDay_tam(); 
+        this.state = {
+            dataTam: []
+        }
+        dataTam = getListDay_tam(dateTam, countLoadmore, 40);
         dataWithProvinces = createArrPushInItem(dataLoadingToServer);
        console.log("ppppppppppppppppp"+ JSON.stringify(dataWithProvinces));
+       console.log("pppppppppppppppppNew"+ JSON.stringify(dataLoadingToServer));
        console.log("DataTAM===>>>"+ JSON.stringify(dataTam));
     }
     
@@ -109,6 +117,8 @@ export default class HomeScreen extends Component {
                     <FlatList
                         data = {dataTam}
                         renderItem = {this.renderItem}
+                        onEndReachedThreshold = {0.2}
+                        onEndReached = {()=>this.loadMoreData()}
                         keyExtractor={item => item.id.toString()}
                     />
                 </View>
@@ -126,27 +136,40 @@ export default class HomeScreen extends Component {
         <TreeView
             data={item.array}
             renderItem={(item, level) => (
-            <View>
+            <View style = {{justifyContent:'center'}}> 
                 <Text
                 style={{
-                    marginLeft: 25 * level,
-                }}
-                >
-                
+                    marginLeft: 25 * level, justifyContent:'center', alignItems:'center'
+                }}>
                 {
                     item.collapsed !== null ?
-                    // `v ${item.title}`} ghi chu
                     <View style = {{margin:1,backgroundColor:'red',flexDirection: 'row', fontSize: 18 , alignItems:'center'}}>
-                        <Text style = {{paddingLeft:5, paddingRight: 7, alignItems:'center'}}>{item.collapsed ? <Icon style={{backgroundColor:'white'}} name = 'ios-arrow-up'/> : <Icon name = 'ios-arrow-down'/>} </Text> 
-                        <Text style = {{textAlign: 'center'}}>{item.title}</Text>
+                        <Text>{item.collapsed ? <Icon style={{backgroundColor:'white'}} name = 'ios-arrow-up'/> : <Icon name = 'ios-arrow-down'/>} </Text> 
+                        <Text>{item.title}</Text>
                     </View>:
-                    <Text>{item.name[0]}</Text>
+                    <TouchableOpacity onPress = {()=>{
+                        if(item.code.length == 1){
+                            this.props.navigation.navigate('ResultLottery', {title: item.text_show , 
+                            data_lottery: dataLoadingToServer, row: item, })
+                        }else {
+                            this.props.navigation.navigate('ResultLottery2', {title: item.text_show , 
+                            data_lottery: dataLoadingToServer, row: item, })
+                        }
+                      }}
+                    >
+                        <Text>{item.text_show}</Text>
+                    </TouchableOpacity> 
                 }
                 </Text>
             </View>
             )}
         />
       )
+
+    loadMoreData(){
+        countLoadmore = countLoadmore + 40;
+        getListDay_tam(dateTam, countLoadmore, 40);
+    }  
 
     refresh(){
 
@@ -182,6 +205,7 @@ export default class HomeScreen extends Component {
         alert("floatButton")
     }
 }
+
 
 function getListDay_(){
     for (var i = 0 ; i <= 15; i++){
@@ -250,8 +274,8 @@ function getListDay_(){
 }
 
 // tam test
-function getListDay_tam(){
-    for (var i = 0 ; i <= 15; i++){
+function getListDay_tam(date, countLoadmore, size){
+    for (var i = countLoadmore ; i < countLoadmore + 40; i++){
         var title = '';
         var title_screen_result = '';
         if(i == 0){
@@ -311,6 +335,7 @@ function getListDay_tam(){
         // set date
         dateTam.setDate(dateTam.getDate() - 1);
     }
+    alert(countLoadmore)
     // var check_list_day = JSON.stringify(listDay);
     //     console.log('GIa tri list SHow: ' + check_list_day);
     return listDayTam;
@@ -321,16 +346,42 @@ function pushPropsInItem(member_){
     for (var i = 0; i< member_.length; i++){
         var mang_kq = [];
         var status_kq = '';
+        var text_show = '';
+        if(member_[i].area_id == 1){
+            text_show = 'Mien Bac';
+        }else if(member_[i].area_id == 2){
+            text_show = 'Mien Trung:';
+        }else{
+            text_show = 'Mien Nam:';
+        }
         for(var k=0; k< member_[i].code.length; k++){
+            var check = false;
             for(var j=0;j< dataLoadingToServer.length; j++){
                 if(member_[i].code[k] == dataLoadingToServer[j].pc && member_[i].rd == dataLoadingToServer[j].rd){
+                    check = true;
                     var kq_ = (dataLoadingToServer[j].s1?dataLoadingToServer[j].s1: "");
                     kq_ = kq_ + (dataLoadingToServer[j].s2?dataLoadingToServer[j].s2: "");
                     status_kq = dataLoadingToServer[j].s;
                     mang_kq.push(kq_);
+                    if(member_[i].area_id == 1){
+                        text_show = text_show + '(' + kq_ + ')'; 
+                    }else{
+                        text_show = text_show + ' ' + member_[i].name[k] + '(' + kq_ + ')'; 
+                    }
                 }
             }
+            if(check == false){
+                if(member_[i].area_id == 1){
+                    text_show = "Mien Bac (quay luc 18h15')";
+                }else if(member_[i].area_id == 2){
+                    text_show = text_show + ' ' + member_[i].name[k];
+                }else{
+                    text_show = text_show + ' ' + member_[i].name[k];
+                }
+            }
+            
         }
+        member_[i].text_show = text_show;
         member_[i].status_kq = status_kq;
         member_[i].mang_kq = mang_kq;
     }

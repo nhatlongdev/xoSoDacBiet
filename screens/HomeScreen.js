@@ -143,11 +143,8 @@ export default class HomeScreen extends Component {
                 }}>
                 {
                     item.collapsed !== null ?
-                    <View style = {{margin:1,backgroundColor:'red',flexDirection: 'row', fontSize: 18 , alignItems:'center'}}>
-                        <Text>{item.collapsed ? <Icon style={{backgroundColor:'white'}} name = 'ios-arrow-up'/> : <Icon name = 'ios-arrow-down'/>} </Text> 
-                        <Text>{item.title}</Text>
-                    </View>:
-                    <TouchableOpacity onPress = {()=>{
+                    <Text>{item.title}</Text>:
+                        <Text onPress = {()=>{
                         if(item.code.length == 1){
                             this.props.navigation.navigate('ResultLottery', {title: item.text_show , 
                             data_lottery: dataLoadingToServer, row: item, })
@@ -155,10 +152,8 @@ export default class HomeScreen extends Component {
                             this.props.navigation.navigate('ResultLottery2', {title: item.text_show , 
                             data_lottery: dataLoadingToServer, row: item, })
                         }
-                      }}
-                    >
-                        <Text>{item.text_show}</Text>
-                    </TouchableOpacity> 
+                      }}>{item.text_show}</Text>
+                    
                 }
                 </Text>
             </View>

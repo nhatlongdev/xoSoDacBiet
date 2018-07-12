@@ -21,7 +21,7 @@ import {Icon} from 'native-base';
 import CircleOption from '../components/CircleOption';
 import FloatButtonCompoment from '../components/FloatButtonCompoment';
 import moment from 'moment';
-import {getDataFromServer} from '../networking/Server';
+// import {getDataFromServer} from '../networking/Server';
 import {createArrPushInItem} from '../components/CreateArrPushInItem';
 import TreeView from '@zaguini/react-native-tree-view';
 // ham goi api lay ket qua tu server

@@ -158,6 +158,7 @@ export default class ResultLottery2 extends Component {
           };
           dataLottery = this.props.navigation.state.params.data_lottery;
           var rowItem_source = this.props.navigation.state.params.row;
+          checkRowItemIsCurrent = false;
           rowItem = JSON.parse(JSON.stringify(rowItem_source));
           date_row = new Date(rowItem.rd);
           if(rowItem.status_kq == ''){
@@ -246,7 +247,7 @@ export default class ResultLottery2 extends Component {
                     </View>
                     <ScrollView>
                     <View style = {{flex: 1}}>
-                    <Text style = {{textAlign: 'center', width: widthScreen, color: 'black', padding: checkRowItemIsCurrent == true? 10 : 0, fontSize: 16}}>
+                    <Text style = {{textAlign: 'center', width: widthScreen, color: '#0000FF', padding: checkRowItemIsCurrent == true? 10 : 0, fontSize: 16}}>
                         {checkRowItemIsCurrent == true? this.setTitleToday(rowItem.area_id == 2?2:3) : ''}
                     </Text>
                     <Text style = {{textAlign: 'center', width: widthScreen, color: 'black', padding: 10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>

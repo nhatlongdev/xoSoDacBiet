@@ -18,8 +18,8 @@ export default class Splash extends Component {
         getDataFromServer().then((data_)=>{
             dataLotteProvinces = data_;
             var jsonString = JSON.stringify(dataLotteProvinces);
+            console.log("API TRA VE KET QUA: " + JSON.stringify(dataLotteProvinces));
             this.props.navigation.navigate('Home_Screen', {data_lottery: dataLotteProvinces});
-
         }).catch((error) =>{
 
         });

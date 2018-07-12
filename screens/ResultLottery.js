@@ -26,67 +26,65 @@ export default class ResultLottery extends Component {
     // ham format result lottery  
     formatLottery(rowItem, dataLottery){
         checkDataNotNull = false;
+        var date_quay = moment(rowItem.rd).format('YYYYMMDD');
+        var keyItem = rowItem.code[0] + '_'+date_quay;
+        if(dataLottery[keyItem] != null){
+            checkDataNotNull = true;
+            var lotteryItem = dataLottery[keyItem];
 
-        for (var i = 0; i< rowItem.code.length; i++){
-           for(var j=0;j<dataLottery.length; j++){
-               if(rowItem.code[i] == dataLottery[j].pc && rowItem.rd == dataLottery[j].rd){
-                    checkDataNotNull = true;
-                    var obj_cli={};
-                
-                    var key_push = (rowItem.code[i]);
-                    var title_kq = dataLottery[j].pc + dataLottery[j].rd;
-                    var obdb = {}, ob1 = {}, ob2 = {}, ob3 = {}, ob4 = {}, ob5 = {}, ob6 = {}, ob7 = {};
-                    obdb.title = 'ĐB'; ob1.title = 'G.1'; ob2.title = 'G.2'; ob3.title = 'G.3'; ob4.title = 'G.4'; ob5.title = 'G.5'; ob6.title = 'G.6'; ob7.title = 'G.7'; 
-                    var s1s2 = (dataLottery[j].s1? dataLottery[j].s1 :dataLottery[j].s2);
-                    var arr_kqdb = s1s2.split(' - ');
-                    obdb.arr_kqdb = arr_kqdb;
-                    obj_cli.db = obdb;
-        
-                    var kq1_string = dataLottery[j].p1;
-                    var arr_kq1 = kq1_string.split(' - ');
-                    ob1.arr_kq1 = arr_kq1;
-                    var mang_loto1 = arr_kqdb.concat(arr_kq1);
-                    obj_cli.g1 = ob1;
-        
-                    var kq2_string = dataLottery[j].p2;
-                    var arr_kq2 = kq2_string.split(' - ');
-                    ob2.arr_kq2 = arr_kq2;
-                    var mang_loto2 = mang_loto1.concat(arr_kq2);
-                    obj_cli.g2 = ob2;
-        
-                    var kq3_string = dataLottery[j].p3;
-                    var arr_kq3 = kq3_string.split(' - ');
-                    ob3.arr_kq3 = arr_kq3;
-                    var mang_loto3 = mang_loto2.concat(arr_kq3);
-                    obj_cli.g3 = ob3;
-        
-                    var kq4_string = dataLottery[j].p4;
-                    var arr_kq4 = kq4_string.split(' - ');
-                    ob4.arr_kq4 = arr_kq4;
-                    var mang_loto4 = mang_loto3.concat(arr_kq4);
-                    obj_cli.g4 = ob4;
-        
-                    var kq5_string = dataLottery[j].p5;
-                    var arr_kq5 = kq5_string.split(' - ');
-                    ob5.arr_kq5 = arr_kq5;
-                    var mang_loto5 = mang_loto4.concat(arr_kq5);
-                    obj_cli.g5 = ob5;
-        
-                    var kq6_string = dataLottery[j].p6;
-                    var arr_kq6 = kq6_string.split(' - ');
-                    ob6.arr_kq6 = arr_kq6;
-                    var mang_loto6 = mang_loto5.concat(arr_kq6);
-                    obj_cli.g6 = ob6;
-        
-                    var kq7_string = dataLottery[j].p7;
-                    var arr_kq7 = kq7_string.split(' - ');
-                    ob7.arr_kq7 = arr_kq7;
-                    var mang_loto7 = mang_loto6.concat(arr_kq7);
-                    obj_cli.g7 = ob7;
-                    obj_cli.mang_loto7 = mang_loto7;
-                    mang_kq_tong[key_push] = obj_cli;
-               }
-           }
+            var obj_cli={};    
+            var key_push = (rowItem.code[0]);
+            var title_kq = lotteryItem.pc + lotteryItem.rd;
+            var obdb = {}, ob1 = {}, ob2 = {}, ob3 = {}, ob4 = {}, ob5 = {}, ob6 = {}, ob7 = {};
+            obdb.title = 'ĐB'; ob1.title = 'G.1'; ob2.title = 'G.2'; ob3.title = 'G.3'; ob4.title = 'G.4'; ob5.title = 'G.5'; ob6.title = 'G.6'; ob7.title = 'G.7'; 
+            var s1s2 = (lotteryItem.s1? lotteryItem.s1 :lotteryItem.s2);
+            var arr_kqdb = s1s2.split(' - ');
+            obdb.arr_kqdb = arr_kqdb;
+            obj_cli.db = obdb;
+
+            var kq1_string = lotteryItem.p1;
+            var arr_kq1 = kq1_string.split(' - ');
+            ob1.arr_kq1 = arr_kq1;
+            var mang_loto1 = arr_kqdb.concat(arr_kq1);
+            obj_cli.g1 = ob1;
+
+            var kq2_string = lotteryItem.p2;
+            var arr_kq2 = kq2_string.split(' - ');
+            ob2.arr_kq2 = arr_kq2;
+            var mang_loto2 = mang_loto1.concat(arr_kq2);
+            obj_cli.g2 = ob2;
+
+            var kq3_string = lotteryItem.p3;
+            var arr_kq3 = kq3_string.split(' - ');
+            ob3.arr_kq3 = arr_kq3;
+            var mang_loto3 = mang_loto2.concat(arr_kq3);
+            obj_cli.g3 = ob3;
+
+            var kq4_string = lotteryItem.p4;
+            var arr_kq4 = kq4_string.split(' - ');
+            ob4.arr_kq4 = arr_kq4;
+            var mang_loto4 = mang_loto3.concat(arr_kq4);
+            obj_cli.g4 = ob4;
+
+            var kq5_string = lotteryItem.p5;
+            var arr_kq5 = kq5_string.split(' - ');
+            ob5.arr_kq5 = arr_kq5;
+            var mang_loto5 = mang_loto4.concat(arr_kq5);
+            obj_cli.g5 = ob5;
+
+            var kq6_string = lotteryItem.p6;
+            var arr_kq6 = kq6_string.split(' - ');
+            ob6.arr_kq6 = arr_kq6;
+            var mang_loto6 = mang_loto5.concat(arr_kq6);
+            obj_cli.g6 = ob6;
+
+            var kq7_string = lotteryItem.p7;
+            var arr_kq7 = kq7_string.split(' - ');
+            ob7.arr_kq7 = arr_kq7;
+            var mang_loto7 = mang_loto6.concat(arr_kq7);
+            obj_cli.g7 = ob7;
+            obj_cli.mang_loto7 = mang_loto7;
+            mang_kq_tong[key_push] = obj_cli;
         }
         var checkobj = JSON.stringify(mang_kq_tong);
                     console.log("GIa Tri OBJ cli TOng: ===>>>" + checkobj);
@@ -94,7 +92,7 @@ export default class ResultLottery extends Component {
             date_row.setDate(date_row.getDate()-1);
             rowItem.rd = moment(date_row).format('YYYY-MM-DD');
             checkRowItemIsCurrent = true;
-        }            
+        }           
     }
 
     // ham gop mang thanh text
@@ -153,7 +151,10 @@ export default class ResultLottery extends Component {
         dataLottery = this.props.navigation.state.params.data_lottery;
         var rowItem_source = this.props.navigation.state.params.row;
         rowItem = JSON.parse(JSON.stringify(rowItem_source));
+        checkRowItemIsCurrent = false;
         date_row = new Date(rowItem.rd);
+        console.log("GIa Tri OBJ ROW ITEM: ===>>>" + JSON.stringify(rowItem));
+        console.log("GIa Tri OBJ ROW ITEMooooooooooooooooTRƯƠC: ===>>>" + checkRowItemIsCurrent);
         if(rowItem.status_kq == ''){
             date_row.setDate(date_row.getDate() - 1);
             rowItem.rd = moment(date_row).format('YYYY-MM-DD');
@@ -162,6 +163,7 @@ export default class ResultLottery extends Component {
         }else{
             this.formatLottery(rowItem, dataLottery);
         }
+        console.log("GIa Tri OBJ ROW ITEMooooooooooooooooSAU: ===>>>" + checkRowItemIsCurrent);
       }
     
       onSwipeUp(gestureState) {
@@ -242,14 +244,14 @@ export default class ResultLottery extends Component {
                     </View>
                     <ScrollView>
                     <View style = {{flex: 1}}>
-                    <Text style = {{textAlign: 'center', width: widthScreen, color: 'black', padding: checkRowItemIsCurrent == true? 10 : 0, fontSize: 16}}>
+                    <Text style = {{textAlign: 'center', width: widthScreen, color: '#0000FF', padding: checkRowItemIsCurrent == true? 10 : 0, fontSize: 16}}>
                         {checkRowItemIsCurrent == true? this.setTitleToday(1) : ''}
                     </Text>
                     <Text style = {{textAlign: 'center', width: widthScreen, color: 'black', padding: 10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
                     <View style = {{flex: 1, backgroundColor: 'grey', marginHorizontal: 2}}>
                         <View style = {style.row_result}>
-                           <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', marginRight: 10}}>{objResult.db.title}</Text>
-                           <Text style = {{flex: 1, textAlign: 'center', color: 'red', 
+                           <Text style = {style.row_text_title_result}>{objResult.db.title}</Text>
+                           <Text style = {{flex: 2, textAlign: 'center', color: 'red', 
                                 fontWeight: 'bold', fontSize: 18, borderLeftWidth: 1, borderLeftColor: 'grey'}}>{objResult.db.arr_kqdb}</Text>
                         </View>
 
@@ -405,6 +407,7 @@ var style = StyleSheet.create({
         marginBottom: 2
     },
     row_text_title_result: {
+        flex: 0.15,
         textAlign: 'center', 
         color: 'white', 
         fontWeight: 'bold',
@@ -412,7 +415,7 @@ var style = StyleSheet.create({
         paddingHorizontal: 5,
     },
     row_text_content_result: {
-        flex: 1, 
+        flex: 2, 
         fontSize: 16,
         textAlign: 'center', 
         color: 'black', 

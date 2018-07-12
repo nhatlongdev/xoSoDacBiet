@@ -21,9 +21,11 @@ import {Icon} from 'native-base';
 import CircleOption from '../components/CircleOption';
 import FloatButtonCompoment from '../components/FloatButtonCompoment';
 import moment from 'moment';
-import {getDataFromServer} from '../networking/Server';
+// import {getDataFromServer} from '../networking/Server';
 import {createArrPushInItem} from '../components/CreateArrPushInItem';
 import TreeView from '@zaguini/react-native-tree-view';
+// ham goi api lay ket qua tu server
+import {getDataFromServer} from '../networking/Server';
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
@@ -31,27 +33,54 @@ var heightScreen = Dimensions.get('window').height;
 var listDay = [], listDayTam = [];
 var date_ = new Date(), dateTam = new Date();
 var lottery_provinces = require('../assets/lottery_provinces_.json');
-var data , dataTam;
+var dataTam;
 var dataLoadingToServer;
+var dataSwitchKey = {};
 var dataWithProvinces = {};
 //bien tang i khi load more
 var countLoadmore = 0;
 
 export default class HomeScreen extends Component {
 
+    componentWillMount(){
+        this.refreshFromServer();
+    }
+
     constructor(props){
         super(props);
-        
+        // lấy ds kết quả chuyển từ màn splash sang
         dataLoadingToServer = this.props.navigation.state.params.data_lottery;
-        data = getListDay_();
+        console.log("pppppppppppppppppCHECK KET QUA TU PLAST SANG"+ JSON.stringify(dataLoadingToServer));
         this.state = {
             dataTam: []
         }
+
+        // Tao mảng danh sách ngày cho listView
         dataTam = getListDay_tam(dateTam, countLoadmore, 40);
+
+        // Tao mảng phuc vu viec thong ke, tra cuu
         dataWithProvinces = createArrPushInItem(dataLoadingToServer);
+
        console.log("ppppppppppppppppp"+ JSON.stringify(dataWithProvinces));
-       console.log("pppppppppppppppppNew"+ JSON.stringify(dataLoadingToServer));
        console.log("DataTAM===>>>"+ JSON.stringify(dataTam));
+
+    // Chuyển đổi kết quả về dạng key - value (key moi item la--> mã tỉnh_ngày)
+        for(var i=0; i< dataLoadingToServer.length; i++){
+            var date_quay = moment(dataLoadingToServer[i].rd).format('YYYYMMDD');
+            var key = dataLoadingToServer[i].pc + '_' + date_quay;
+            dataSwitchKey[key] = dataLoadingToServer[i];
+        } 
+        console.log("GIA TRI SAU KHI CO KEY===>>>"+ JSON.stringify(dataSwitchKey));
+
+        //Test Timeer
+        setTimeout(() => {
+            console.log("TIMER DELAY");
+        }, 10000);
+
+        setInterval(()=>{
+            console.log("TIMER CHAY CHAY");
+            this.refreshFromServer();
+        },5000)
     }
     
     render(){
@@ -132,35 +161,25 @@ export default class HomeScreen extends Component {
         );
     }
 
+    // item flatlist ==== treeView
     renderItem = ({ item }) => (
         <TreeView
+            collapsedItemHeight = {30}
             data={item.array}
-            renderItem={(item, level) => (
-            <View style = {{justifyContent:'center'}}> 
-                <Text
-                style={{
-                    marginLeft: 25 * level, justifyContent:'center', alignItems:'center'
-                }}>
+            renderItem={(item) => (
+            <View style = {{justifyContent: 'center'}}> 
                 {
                     item.collapsed !== null ?
-                    <View style = {{margin:1,backgroundColor:'red',flexDirection: 'row', fontSize: 18 , alignItems:'center'}}>
-                        <Text>{item.collapsed ? <Icon style={{backgroundColor:'white'}} name = 'ios-arrow-up'/> : <Icon name = 'ios-arrow-down'/>} </Text> 
-                        <Text>{item.title}</Text>
-                    </View>:
-                    <TouchableOpacity onPress = {()=>{
-                        if(item.code.length == 1){
-                            this.props.navigation.navigate('ResultLottery', {title: item.text_show , 
-                            data_lottery: dataLoadingToServer, row: item, })
-                        }else {
-                            this.props.navigation.navigate('ResultLottery2', {title: item.text_show , 
-                            data_lottery: dataLoadingToServer, row: item, })
-                        }
-                      }}
-                    >
-                        <Text>{item.text_show}</Text>
-                    </TouchableOpacity> 
+                    <View style = {{flexDirection: 'row', alignItems: 'center', marginLeft: 5}}>
+                         <Icon style = {{color:item.collapsed ?'black':'#0000FF'}} name = {item.collapsed ? 'ios-arrow-down' : 'ios-arrow-up'}/>
+                         <Text style = {{marginLeft: 5, color:item.collapsed ?'black':'#0000FF', fontSize: 20}}>{`${item.title}`}</Text>
+                    </View>
+                     :
+                    <TouchableOpacity onPress = {()=>this.clickItem(item)}>            
+                        <Text style = {{marginLeft: 30, color: '#000044', fontSize: 20, marginVertical: 5}}>{item.text_show}</Text>
+                    </TouchableOpacity>
                 }
-                </Text>
+                <View style = {{backgroundColor: '#000044', height: 1}}></View>
             </View>
             )}
         />
@@ -175,105 +194,47 @@ export default class HomeScreen extends Component {
 
     }
 
-    _renderRow = (rowItem, rowId, sectionId) => 
-    <TouchableOpacity onPress = {()=>{
-        if(rowItem.code.length == 1){
-            this.props.navigation.navigate('ResultLottery', {title: rowItem.name + " " + data[sectionId].header.title_screen_result, 
-            data_lottery: dataLoadingToServer, row: rowItem, })
-        }else {
-            this.props.navigation.navigate('ResultLottery2', {title: rowItem.name + " " + data[sectionId].header.title_screen_result, 
-            data_lottery: dataLoadingToServer, row: rowItem, })
-        }
-      }}
-    >
-        <ItemRow rowItem = {rowItem}/>
-    </TouchableOpacity>
-    ;
+    //ham 10s goi api lay ket qua tu server
+    refreshFromServer = ()=>{
 
-    _renderSection = (section, sectionId)  => 
-    // <TouchableOpacity onPress = {()=>{alert(0123)}}>
-         <ItemSection section = {section}/>
-    // </TouchableOpacity>
-    ;
+        getDataFromServer().then((data_)=>{
+            var dataLotteProvinces_ = data_;
+            var jsonString = JSON.stringify(dataLotteProvinces_);
+            console.log("API TRA VE KET QUA INTERVAL: " + JSON.stringify(dataLotteProvinces_));
+        }).catch((error) =>{
 
-    _headerOnClick = (sectionId)=> {
-        console.log('Status: ' + typeof data[sectionId].header.status);
-        console.log('Status222: ' + !data[sectionId].header.status);
-        data[sectionId].header.status = !data[sectionId].header.status;
+        });
     }
+
     onButtonFloatPress() {
         alert("floatButton")
     }
-}
 
-
-function getListDay_(){
-    for (var i = 0 ; i <= 15; i++){
-        var title = '';
-        var title_screen_result = '';
-        if(i == 0){
-            title = 'Hôm nay';
-        } else if (i == 1){
-            title = 'Hôm qua';
+    clickItem(item){
+        if(item.code.length == 1){
+            this.props.navigation.navigate('ResultLottery', {title: item.text_show , 
+            data_lottery: dataSwitchKey, row: item, })
+        }else {
+            this.props.navigation.navigate('ResultLottery2', {title: item.text_show , 
+            data_lottery: dataLoadingToServer, row: item, })
         }
-       
-        var item = {};
-        var to_day = {};
-        
-        var indexDay = date_.getDay();
-        title = title != '' ? title + ", " + getDayOfWeek(indexDay) + ", " + moment(date_).format('DD/MM')
-            : getDayOfWeek(indexDay) + ", " + moment(date_).format('DD/MM');
-        title_screen_result =  getDayOfWeek(indexDay) + ", " + moment(date_).format('DD/MM/YYYY');
-        var test_date= moment(date_).format('YYYY-MM-DD');
-        to_day.title = title;
-        to_day.title_screen_result = title_screen_result;
-        to_day.status = false;
-        item.header = to_day;
-        var member_= [];
-        var tmp_lottery_provinces = JSON.parse(JSON.stringify(lottery_provinces));
-        for(var j=0;j< tmp_lottery_provinces.length;j++){
-            if(indexDay == 0 && tmp_lottery_provinces[j].weekdays.indexOf(',1,') != -1){
-                tmp_lottery_provinces[j].rd = test_date;
-                member_.push(tmp_lottery_provinces[j]);
-            }else if(indexDay == 1 && tmp_lottery_provinces[j].weekdays.indexOf(',2,') != -1){
-                tmp_lottery_provinces[j].rd = test_date;
-                member_.push(tmp_lottery_provinces[j]);
-            }else if(indexDay == 2 && tmp_lottery_provinces[j].weekdays.indexOf(',3,') != -1){
-                tmp_lottery_provinces[j].rd = test_date;
-                member_.push(tmp_lottery_provinces[j]);
-            }else if(indexDay == 3 && tmp_lottery_provinces[j].weekdays.indexOf(',4,') != -1){
-                tmp_lottery_provinces[j].rd = test_date;
-                member_.push(tmp_lottery_provinces[j]);
-            }else if(indexDay == 4 && tmp_lottery_provinces[j].weekdays.indexOf(',5,') != -1){
-                tmp_lottery_provinces[j].rd = test_date;
-                member_.push(tmp_lottery_provinces[j]);
-            }else if(indexDay == 5 && tmp_lottery_provinces[j].weekdays.indexOf(',6,') != -1){
-                tmp_lottery_provinces[j].rd = test_date;
-                member_.push(tmp_lottery_provinces[j]);
-            }else if(indexDay == 6 && tmp_lottery_provinces[j].weekdays.indexOf(',7,') != -1){
-                tmp_lottery_provinces[j].rd = test_date;
-                member_.push(tmp_lottery_provinces[j]);
-            }         
-        }
-
-    
-        // add ket qua dac biet
-        member_ = pushPropsInItem(member_);
-
-        var _ = require('underscore');
-        var member = _.sortBy(member_, 'area_id');
-        item.member = member;  
-
-        listDay.push(item);
-        // set date
-        date_.setDate(date_.getDate() - 1);
     }
-    // var check_list_day = JSON.stringify(listDay);
-    //     console.log('GIa tri list SHow: ' + check_list_day);
-    return listDay;
 }
 
-// tam test
+// ham create key for item = code_ngay cho ds ket qua
+function createKeyItem(data){
+    var dataLotteryHaveKey = [];
+    for(var i=0; i<data.length; i++){
+        alert(i)
+        var date_quay = moment(data[i].rd).format('YYYY/MM/DD');
+        var key = data[i].pc + '_' + date_quay;
+        var key = data[i].pc;
+        dataLotteryHaveKey.push(data[i]);
+    }
+    return dataLotteryHaveKey;
+}
+
+// Tao danh sach ngay
 function getListDay_tam(date, countLoadmore, size){
     for (var i = countLoadmore ; i < countLoadmore + 40; i++){
         var title = '';
@@ -292,6 +253,7 @@ function getListDay_tam(date, countLoadmore, size){
             : getDayOfWeek(indexDay) + ", " + moment(dateTam).format('DD/MM');
         title_screen_result =  getDayOfWeek(indexDay) + ", " + moment(dateTam).format('DD/MM/YYYY');
         var test_date= moment(dateTam).format('YYYY-MM-DD');
+        to_day.id = i;
         to_day.title = title;
         to_day.title_screen_result = title_screen_result;
         to_day.status = false;
@@ -335,7 +297,7 @@ function getListDay_tam(date, countLoadmore, size){
         // set date
         dateTam.setDate(dateTam.getDate() - 1);
     }
-    alert(countLoadmore)
+    // alert(countLoadmore)
     // var check_list_day = JSON.stringify(listDay);
     //     console.log('GIa tri list SHow: ' + check_list_day);
     return listDayTam;
@@ -348,11 +310,11 @@ function pushPropsInItem(member_){
         var status_kq = '';
         var text_show = '';
         if(member_[i].area_id == 1){
-            text_show = 'Mien Bac';
+            text_show = 'Miền Bắc';
         }else if(member_[i].area_id == 2){
-            text_show = 'Mien Trung:';
+            text_show = 'Miền Trung:';
         }else{
-            text_show = 'Mien Nam:';
+            text_show = 'Miền Nam:';
         }
         for(var k=0; k< member_[i].code.length; k++){
             var check = false;
@@ -372,11 +334,19 @@ function pushPropsInItem(member_){
             }
             if(check == false){
                 if(member_[i].area_id == 1){
-                    text_show = "Mien Bac (quay luc 18h15')";
-                }else if(member_[i].area_id == 2){
-                    text_show = text_show + ' ' + member_[i].name[k];
-                }else{
-                    text_show = text_show + ' ' + member_[i].name[k];
+                    text_show = "Miền Bắc (quay lúc 18h15')";
+                }else {
+                    if(k == 0){
+                        text_show = text_show + ' ' + member_[i].name[k];          
+                    }else if(k == member_[i].code.length - 1){
+                        if(member_[i].area_id == 2){
+                            text_show = text_show + ' - ' + member_[i].name[k] + " (quay lúc 17h15')";
+                        }else {
+                            text_show = text_show + ' - ' + member_[i].name[k] + " (quay lúc 16h15')";
+                        }  
+                    }else {
+                        text_show = text_show + ' - ' + member_[i].name[k];
+                    }
                 }
             }
             

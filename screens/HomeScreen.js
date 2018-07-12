@@ -136,15 +136,14 @@ export default class HomeScreen extends Component {
         <TreeView
             data={item.array}
             renderItem={(item, level) => (
-            <View style = {{justifyContent:'center'}}> 
-                <Text
-                style={{
-                    marginLeft: 25 * level, justifyContent:'center', alignItems:'center'
-                }}>
+            <View> 
                 {
                     item.collapsed !== null ?
-                    <Text>{item.collapsed ? `V ${item.title}`: `> ${item.title}`}</Text>:
-                        <Text onPress = {()=>{
+                    <View style = {{flexDirection: 'row'}}>
+                    <Icon name = 'ios-arrow-down'/><Text >{item.collapsed ? `${item.title}`: `${item.title}`}</Text>
+                    </View>
+                     :
+                    <Text onPress = {()=>{
                         if(item.code.length == 1){
                             this.props.navigation.navigate('ResultLottery', {title: item.text_show , 
                             data_lottery: dataLoadingToServer, row: item, })
@@ -155,7 +154,7 @@ export default class HomeScreen extends Component {
                       }}>{item.text_show}</Text>
                     
                 }
-                </Text>
+                <View style = {{backgroundColor: 'black', height: 1}}></View>
             </View>
             )}
         />

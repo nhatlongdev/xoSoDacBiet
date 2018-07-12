@@ -143,7 +143,7 @@ export default class HomeScreen extends Component {
                 }}>
                 {
                     item.collapsed !== null ?
-                    <Text>{item.title}</Text>:
+                    <Text>{item.collapsed ? `V ${item.title}`: `> ${item.title}`}</Text>:
                         <Text onPress = {()=>{
                         if(item.code.length == 1){
                             this.props.navigation.navigate('ResultLottery', {title: item.text_show , 

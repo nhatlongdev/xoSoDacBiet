@@ -26,6 +26,7 @@ import {createArrPushInItem} from '../components/CreateArrPushInItem';
 import TreeView from '@zaguini/react-native-tree-view';
 // ham goi api lay ket qua tu server
 import {getDataFromServer} from '../networking/Server';
+import {getDataFromServerTrucTiep} from '../networking/Server';
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
@@ -42,9 +43,6 @@ var countLoadmore = 0;
 
 export default class HomeScreen extends Component {
 
-    componentWillMount(){
-        this.refreshFromServer();
-    }
 
     constructor(props){
         super(props);
@@ -79,7 +77,17 @@ export default class HomeScreen extends Component {
 
         setInterval(()=>{
             console.log("TIMER CHAY CHAY");
-            this.refreshFromServer();
+            // this.refreshFromServer();
+            var d = new Date().toLocaleTimeString('en-US', { hour12: false, 
+                hour: "numeric", 
+                minute: "numeric"});
+            console.log('GIo HIEN Tai:' + new Date().toLocaleTimeString('en-US', { hour12: false, 
+                hour: "numeric", 
+                minute: "numeric"}));
+            // if(d.indexOf('07:23') != -1){
+            //     alert('Bat dau quay');
+            // }    
+            // this.refreshFromServer10s();
         },5000)
     }
     
@@ -195,16 +203,31 @@ export default class HomeScreen extends Component {
     }
 
     //ham 10s goi api lay ket qua tu server
-    refreshFromServer = ()=>{
-
-        getDataFromServer().then((data_)=>{
+    refreshFromServer10s = ()=>{
+        var dateCurrent = new Date();
+        var paramsDateCurrent = moment(dateCurrent).format('YYYY-MM-DD');
+        console.log("Date CURRENTppp: " + paramsDateCurrent);
+        getDataFromServerTrucTiep(paramsDateCurrent).then((data_)=>{
             var dataLotteProvinces_ = data_;
             var jsonString = JSON.stringify(dataLotteProvinces_);
-            console.log("API TRA VE KET QUA INTERVAL: " + JSON.stringify(dataLotteProvinces_));
+            console.log("API TRA VE KET QUA INTERVAL===: " + JSON.stringify(dataLotteProvinces_));
         }).catch((error) =>{
 
         });
     }
+
+    
+    //ham 10s goi api lay ket qua tu server
+    refreshFromServer = ()=>{
+        getDataFromServer().then((data_)=>{
+            var dataLotteProvinces_ = data_;
+            var jsonString = JSON.stringify(dataLotteProvinces_);
+            console.log("API TRA VE KET QUA INTERVAL yy: " + JSON.stringify(dataLotteProvinces_));
+        }).catch((error) =>{
+
+        });
+    }
+
 
     onButtonFloatPress() {
         alert("floatButton")

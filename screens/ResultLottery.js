@@ -21,6 +21,7 @@ var dataLottery;
 var date_row;
 var checkRowItemIsCurrent = false;
 var checkDataNotNull = false;
+
 export default class ResultLottery extends Component {
 
     // ham format result lottery  
@@ -147,6 +148,7 @@ export default class ResultLottery extends Component {
         super(props);
         this.state = {
           drag_left: true,
+          value_test: 0,
         };
         dataLottery = this.props.navigation.state.params.data_lottery;
         var rowItem_source = this.props.navigation.state.params.row;
@@ -162,10 +164,44 @@ export default class ResultLottery extends Component {
             checkRowItemIsCurrent = true;
         }else{
             this.formatLottery(rowItem, dataLottery);
-        }
-        console.log("GIa Tri OBJ ROW ITEMooooooooooooooooSAU: ===>>>" + checkRowItemIsCurrent);
+        } 
+
+        setInterval(()=>{
+            var dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 16:15'); //.format('YYYY/MM/DD HH:mm:ss')
+            var dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
+            console.log("INTEVAL BEN RESUL CHAY");
+            if(moment() >= dateTimeBatDauQuay && moment() < dateTimeDungQuay){
+                this.setState({
+                    value_test: 1,
+                })
+            } 
+        },10000)
+        
       }
-    
+
+
+      shouldComponentUpdate(){
+          return true;
+      }
+
+      componentWillUpdate(){
+        // neu ngay dang xem la ngay hien tai ktra xem trong data ngay hien tai da co ket qua chua neu co thi set lai rowItem Ve ngay hien tai 
+        var dateCurrent = moment().format('YYYYMMDD');
+        var key_ketqua_hnay = 'MB_' + dateCurrent;
+        if(checkRowItemIsCurrent == true && dataLottery[key_ketqua_hnay] != null){
+            date_row.setDate(date_row.getDate() + 1);
+            rowItem.rd = moment(date_row).format('YYYY-MM-DD');
+        }
+        this.formatLottery(rowItem, dataLottery);
+        console.log("TIMER componentWillUpdate: " + JSON.stringify(rowItem));
+      }
+
+      componentDidUpdate(){
+        console.log("TIMER componentDidUpdate: " + JSON.stringify(rowItem));
+      }
+
+
+
       onSwipeUp(gestureState) {
         // this.setState({myText: 'You swiped up!'});
       }

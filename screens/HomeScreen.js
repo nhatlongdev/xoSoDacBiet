@@ -27,6 +27,7 @@ import TreeView from '@zaguini/react-native-tree-view';
 // ham goi api lay ket qua tu server
 import {getDataFromServer} from '../networking/Server';
 import {getDataFromServerTrucTiep} from '../networking/Server';
+import dataLottery_global from '../components/DataLottery';
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
@@ -41,9 +42,15 @@ var dataWithProvinces = {};
 //bien tang i khi load more
 var countLoadmore = 0;
 
+//thoi gian bat dau quay, thoi gian dung quay
+var dateTimeBatDauQuay;
+var dateTimeDungQuay;
+
+var kq_mb_hom_nay = {};
+
 export default class HomeScreen extends Component {
 
-
+    // Contructor
     constructor(props){
         super(props);
         // lấy ds kết quả chuyển từ màn splash sang
@@ -63,31 +70,25 @@ export default class HomeScreen extends Component {
        console.log("DataTAM===>>>"+ JSON.stringify(dataTam));
 
     // Chuyển đổi kết quả về dạng key - value (key moi item la--> mã tỉnh_ngày)
-        for(var i=0; i< dataLoadingToServer.length; i++){
-            var date_quay = moment(dataLoadingToServer[i].rd).format('YYYYMMDD');
-            var key = dataLoadingToServer[i].pc + '_' + date_quay;
-            dataSwitchKey[key] = dataLoadingToServer[i];
-        } 
-        console.log("GIA TRI SAU KHI CO KEY===>>>"+ JSON.stringify(dataSwitchKey));
+    // goi ham chuyen doi key
+
+      dataSwitchKey =  createKeyItem(dataLoadingToServer);
 
         //Test Timeer
-        setTimeout(() => {
-            console.log("TIMER DELAY");
-        }, 10000);
+        // setTimeout(() => {
+        //     console.log("TIMER DELAY");
+        // }, 10000);
 
+        //var dateNamThangNgay_v2 = moment(moment().format('YYYY-MM-DD') + ' 16:45').format('YYYY/MM/DD HH:mm:ss'); lay ra ngay hien tai va gio theo minh
+        dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 16:15'); //.format('YYYY/MM/DD HH:mm:ss')
+        dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
+       
         setInterval(()=>{
-            console.log("TIMER CHAY CHAY");
-            // this.refreshFromServer();
-            var d = new Date().toLocaleTimeString('en-US', { hour12: false, 
-                hour: "numeric", 
-                minute: "numeric"});
-            console.log('GIo HIEN Tai:' + new Date().toLocaleTimeString('en-US', { hour12: false, 
-                hour: "numeric", 
-                minute: "numeric"}));
-            // if(d.indexOf('07:23') != -1){
-            //     alert('Bat dau quay');
-            // }    
-            // this.refreshFromServer10s();
+            console.log("GIA TRI THAY DOI TRONG INTERVAL HOME");
+            var timeCurrent = moment();
+            if(timeCurrent>= dateTimeBatDauQuay && timeCurrent< dateTimeDungQuay){
+                this.refreshFromServer10s();
+            }  
         },5000)
     }
     
@@ -211,32 +212,39 @@ export default class HomeScreen extends Component {
             var dataLotteProvinces_ = data_;
             var jsonString = JSON.stringify(dataLotteProvinces_);
             console.log("API TRA VE KET QUA INTERVAL===: " + JSON.stringify(dataLotteProvinces_));
+
+
+            // var k = 'MB_20180712';
+            // dataSwitchKey[k].s1 = '56789';        
+
+
+            if(dataLotteProvinces_.length > 0){
+                console.log("BAT DAU CO DU LIEU QUAY TRUC TIEP");
+                this.progressDataQuayTrucTiep(dataLotteProvinces_);
+            }
         }).catch((error) =>{
 
         });
     }
 
-    
-    //ham 10s goi api lay ket qua tu server
-    refreshFromServer = ()=>{
-        getDataFromServer().then((data_)=>{
-            var dataLotteProvinces_ = data_;
-            var jsonString = JSON.stringify(dataLotteProvinces_);
-            console.log("API TRA VE KET QUA INTERVAL yy: " + JSON.stringify(dataLotteProvinces_));
-        }).catch((error) =>{
+    //ham xu ly data khi quay truc tiep
+    progressDataQuayTrucTiep(data){
+        for(var i=0; i< data.length; i++){
+            var date_quay = moment(data[i].rd).format('YYYYMMDD');
+            var key = data[i].pc + '_' + date_quay;
+            dataSwitchKey[key] = data[i];
+        } 
 
-        });
     }
-
 
     onButtonFloatPress() {
         alert("floatButton")
     }
-
+    
     clickItem(item){
         if(item.code.length == 1){
             this.props.navigation.navigate('ResultLottery', {title: item.text_show , 
-            data_lottery: dataSwitchKey, row: item, })
+            data_lottery: dataSwitchKey, row: item})
         }else {
             this.props.navigation.navigate('ResultLottery2', {title: item.text_show , 
             data_lottery: dataLoadingToServer, row: item, })
@@ -246,15 +254,13 @@ export default class HomeScreen extends Component {
 
 // ham create key for item = code_ngay cho ds ket qua
 function createKeyItem(data){
-    var dataLotteryHaveKey = [];
-    for(var i=0; i<data.length; i++){
-        alert(i)
-        var date_quay = moment(data[i].rd).format('YYYY/MM/DD');
+    var dataNew = {};
+    for(var i=0; i< data.length; i++){
+        var date_quay = moment(data[i].rd).format('YYYYMMDD');
         var key = data[i].pc + '_' + date_quay;
-        var key = data[i].pc;
-        dataLotteryHaveKey.push(data[i]);
-    }
-    return dataLotteryHaveKey;
+        dataNew[key] = data[i];
+    } 
+    return dataNew;
 }
 
 // Tao danh sach ngay
@@ -341,20 +347,31 @@ function pushPropsInItem(member_){
         }
         for(var k=0; k< member_[i].code.length; k++){
             var check = false;
+            var checkStatus = 2;
             for(var j=0;j< dataLoadingToServer.length; j++){
                 if(member_[i].code[k] == dataLoadingToServer[j].pc && member_[i].rd == dataLoadingToServer[j].rd){
                     check = true;
+                    checkStatus = dataLoadingToServer[j].s;
                     var kq_ = (dataLoadingToServer[j].s1?dataLoadingToServer[j].s1: "");
                     kq_ = kq_ + (dataLoadingToServer[j].s2?dataLoadingToServer[j].s2: "");
                     status_kq = dataLoadingToServer[j].s;
                     mang_kq.push(kq_);
                     if(member_[i].area_id == 1){
-                        text_show = text_show + '(' + kq_ + ')'; 
+                        if(checkStatus == 0){
+                            text_show = text_show + '(' + kq_ + ')'; 
+                        }else {
+                            text_show = text_show + '(Đang quay)';
+                        }
                     }else{
-                        text_show = text_show + ' ' + member_[i].name[k] + '(' + kq_ + ')'; 
+                        if(checkStatus == 0){
+                            text_show = text_show + ' ' + member_[i].name[k] + '(' + kq_ + ')';  
+                        }else {
+                            text_show = text_show + ' ' + member_[i].name[k] + '(Đang quay)'; 
+                        }
                     }
                 }
             }
+
             if(check == false){
                 if(member_[i].area_id == 1){
                     text_show = "Miền Bắc (quay lúc 18h15')";

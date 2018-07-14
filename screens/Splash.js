@@ -14,20 +14,11 @@ export default class Splash extends Component {
         this.refreshFromServer();
     }
 
-    refreshFromServer = ()=>{
-        getDataFromServer().then((data_)=>{
-            dataLotteProvinces = data_;
-            var jsonString = JSON.stringify(dataLotteProvinces);
-            console.log("API TRA VE KET QUA: " + JSON.stringify(dataLotteProvinces));
-            this.props.navigation.navigate('Home_Screen', {data_lottery: dataLotteProvinces});
-        }).catch((error) =>{
-
-        });
-    }
-
+   
     render(){
         return(
-            <View style ={style.container}>
+            //  ghi de style
+            <View style ={[style.container,{ backgroundColor: 'green' }]}>
                 <Image
                     source = {require('../images/ic_launcher.png')}
                 />
@@ -35,6 +26,19 @@ export default class Splash extends Component {
             </View>
         );
     }
+
+
+    refreshFromServer = ()=>{
+        getDataFromServer().then((data_)=>{
+            dataLotteProvinces = data_;
+            var jsonString = JSON.stringify(dataLotteProvinces);
+            console.log("API TRA VE KET QUA: " + JSON.stringify(dataLotteProvinces));
+            this.props.navigation.replace('Home_Screen', {data_lottery: dataLotteProvinces});
+        }).catch((error) =>{
+
+        });
+    }
+
 }
 
 var style = ({

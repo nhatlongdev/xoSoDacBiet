@@ -1,4 +1,4 @@
 
 var dataLottery_global = { keynew: 123 };
 
-module.exports = dataLottery_global;
+export default dataLottery_global;

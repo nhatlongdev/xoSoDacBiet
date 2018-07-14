@@ -10,6 +10,7 @@ import {
     stringify,
     TouchableOpacity,
     ScrollView,
+    ActivityIndicator
 } from 'react-native';
 import OptionsHome from '../components/OptionsHome';
 import listOptionHome from '../components/ListOptionHome';
@@ -28,6 +29,7 @@ import TreeView from '@zaguini/react-native-tree-view';
 import {getDataFromServer} from '../networking/Server';
 import {getDataFromServerTrucTiep} from '../networking/Server';
 import dataLottery_global from '../components/DataLottery';
+import Thongke from '../components/Thongke';
 
 //import color, string
 import Color from '../src/color';
@@ -39,7 +41,6 @@ var heightScreen = Dimensions.get('window').height;
 var listDay = [], listDayTam = [];
 var date_ = new Date(), dateTam = new Date();
 var lottery_provinces = require('../assets/lottery_provinces_.json');
-var dataTam;
 var dataLoadingToServer;
 var dataSwitchKey = {};
 var dataWithProvinces = {};
@@ -51,7 +52,7 @@ var dateTimeBatDauQuay;
 var dateTimeDungQuay;
 
 var kq_mb_hom_nay = {};
-
+const key = 0;
 export default class HomeScreen extends Component {
 
     // Contructor
@@ -62,18 +63,13 @@ export default class HomeScreen extends Component {
         console.log("pppppppppppppppppCHECK KET QUA TU PLAST SANG"+ JSON.stringify(dataLoadingToServer));
         this.state = {
             dataTam: [],
-            loading: false,
+            load: false,
         }
 
         // Tao mảng danh sách ngày cho listView
-        dataTam = this.getListDay_tam(dateTam, countLoadmore, 40);
-
+       
         // Tao mảng phuc vu viec thong ke, tra cuu
         dataWithProvinces = createArrPushInItem(dataLoadingToServer);
-
-       console.log("ppppppppppppppppp"+ JSON.stringify(dataWithProvinces));
-       console.log("DataTAM===>>>"+ JSON.stringify(dataTam));
-
     // Chuyển đổi kết quả về dạng key - value (key moi item la--> mã tỉnh_ngày)
     // goi ham chuyen doi key
       dataSwitchKey =  createKeyItem(dataLoadingToServer);
@@ -92,20 +88,10 @@ export default class HomeScreen extends Component {
         },10000)
     }
 
-    // hiện load more khi kéo lên
-    loading_view(style) {
-        if(this.state.loading) {
-          return (
-            <View style={style}>
-          <ActivityIndicator size="small" color="#00ff00" />
-          </View>
-          )
-        } else {
-          return null
-        }
-      
-      }
-    
+    componentWillMount() {
+        this.getListDay_tam(dateTam, countLoadmore, 40);
+    }
+
     render(){
         return(
             <View style = {{flex: 1, backgroundColor: 'white'}}>
@@ -131,13 +117,19 @@ export default class HomeScreen extends Component {
                                 <Text style= {{color: 'black', textAlign:'center'}}>Dò số</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Statistical_Screen'
+                        {/* <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Statistical_Screen'
                                     , {data: dataWithProvinces})}}>
                             <View style = {{width: 50, height: 50, borderRadius:  50/2, backgroundColor: 'green',justifyContent: 'center', alignItems: 'center'}}>
                                 <Icon name={'home'} style = {{fontSize: 40, color: 'white'}}/>
                             </View>
                             <Text style= {{color: 'black'}}>Thống kê</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
+
+                        <Thongke 
+                            title={'Thống kê'}
+                            style={style.item_option}
+                            onPress={()=>{this.props.navigation.navigate('Statistical_Screen'
+                            , {data: dataWithProvinces})}}/>
 
                         <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('By_Day_Screen',{data: dataLoadingToServer})}}>
                             <View style = {{width: 50, height: 50, borderRadius:  50/2, backgroundColor: 'green',justifyContent: 'center', alignItems: 'center'}}>
@@ -167,15 +159,15 @@ export default class HomeScreen extends Component {
 
                 <View style = {style.content}>
                     <FlatList
-                        data = {dataTam}
+                        data = {this.state.dataTam}
                         renderItem = {this.renderItem}
                         onEndReachedThreshold = {0.2}
-                        onEndReached = {()=>this.loadMoreData()}
-                        keyExtractor={item => item.id.toString()}
+                        onEndReached = {this.loadMoreData.bind(this)}
+                        keyExtractor={item => JSON.stringify(++key)}
                     />
                 </View>
 
-                {this.loading_view(style.load_more)}
+                {this.state.load && this.loading_view(style.load_more)}
 
                 <FloatButtonCompoment
                     onButtonFloatPress={this.onButtonFloatPress.bind(this)}
@@ -184,6 +176,13 @@ export default class HomeScreen extends Component {
             </View>
 
         );
+    }
+
+    // hiện load more khi kéo lên
+    loading_view(style) {
+        return  <View style={style}>
+                <ActivityIndicator size="small" color="#00ff00" />
+            </View>
     }
 
     // item flatlist ==== treeView
@@ -274,18 +273,18 @@ export default class HomeScreen extends Component {
             dateTam.setDate(dateTam.getDate() - 1);
         }
         this.setState({
-            loading: false,
-        })
-        return listDayTam;
+            load: false,
+            dataTam: listDayTam
+        });
     }  
 
     // ham load dữ liệu  
     loadMoreData(){
-        this.setState({
-            loading: true,
-        });
+        this.setState({ load: true });
         countLoadmore = countLoadmore + 40;
-        this.getListDay_tam(dateTam, countLoadmore, 40);
+        setTimeout(() => {
+            this.getListDay_tam(dateTam, countLoadmore, 40);
+        }, 1000);
     }  
 
     refresh(){
@@ -475,7 +474,10 @@ var style = StyleSheet.create({
         marginHorizontal: 5,
     },
     load_more: {
-        flex: 0.1,
-        backgroundColor: 'grey'
+        width: '100%',
+        height: 30,
+        backgroundColor: 'grey',
+        justifyContent: 'center',
+        alignItems: 'center',
       }
 });

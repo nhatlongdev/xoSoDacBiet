@@ -29,6 +29,10 @@ import {getDataFromServer} from '../networking/Server';
 import {getDataFromServerTrucTiep} from '../networking/Server';
 import dataLottery_global from '../components/DataLottery';
 
+//import color, string
+import Color from '../src/color';
+import _string from '../src/string';
+
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
 
@@ -57,11 +61,12 @@ export default class HomeScreen extends Component {
         dataLoadingToServer = this.props.navigation.state.params.data_lottery;
         console.log("pppppppppppppppppCHECK KET QUA TU PLAST SANG"+ JSON.stringify(dataLoadingToServer));
         this.state = {
-            dataTam: []
+            dataTam: [],
+            loading: false,
         }
 
         // Tao mảng danh sách ngày cho listView
-        dataTam = getListDay_tam(dateTam, countLoadmore, 40);
+        dataTam = this.getListDay_tam(dateTam, countLoadmore, 40);
 
         // Tao mảng phuc vu viec thong ke, tra cuu
         dataWithProvinces = createArrPushInItem(dataLoadingToServer);
@@ -71,15 +76,9 @@ export default class HomeScreen extends Component {
 
     // Chuyển đổi kết quả về dạng key - value (key moi item la--> mã tỉnh_ngày)
     // goi ham chuyen doi key
-
       dataSwitchKey =  createKeyItem(dataLoadingToServer);
 
-        //Test Timeer
-        // setTimeout(() => {
-        //     console.log("TIMER DELAY");
-        // }, 10000);
-
-        //var dateNamThangNgay_v2 = moment(moment().format('YYYY-MM-DD') + ' 16:45').format('YYYY/MM/DD HH:mm:ss'); lay ra ngay hien tai va gio theo minh
+        //set ngày hiện tại theo giờ
         dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 16:15'); //.format('YYYY/MM/DD HH:mm:ss')
         dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
        
@@ -87,10 +86,25 @@ export default class HomeScreen extends Component {
             console.log("GIA TRI THAY DOI TRONG INTERVAL HOME");
             var timeCurrent = moment();
             if(timeCurrent>= dateTimeBatDauQuay && timeCurrent< dateTimeDungQuay){
+                // đến khung giờ quay trực tiếp thì 10s request server một lần lấy kết quả
                 this.refreshFromServer10s();
             }  
-        },5000)
+        },10000)
     }
+
+    // hiện load more khi kéo lên
+    loading_view(style) {
+        if(this.state.loading) {
+          return (
+            <View style={style}>
+          <ActivityIndicator size="small" color="#00ff00" />
+          </View>
+          )
+        } else {
+          return null
+        }
+      
+      }
     
     render(){
         return(
@@ -149,7 +163,7 @@ export default class HomeScreen extends Component {
                    </ScrollView>
                 </View>
 
-                <Text style = {style.text_title_1}>Danh sách kết quả xổ số mới nhất</Text>
+                <Text style = {style.text_title_1}>{_string.msg_danh_sach_ket_qua_moi_nhat}</Text>
 
                 <View style = {style.content}>
                     <FlatList
@@ -160,6 +174,8 @@ export default class HomeScreen extends Component {
                         keyExtractor={item => item.id.toString()}
                     />
                 </View>
+
+                {this.loading_view(style.load_more)}
 
                 <FloatButtonCompoment
                     onButtonFloatPress={this.onButtonFloatPress.bind(this)}
@@ -180,8 +196,8 @@ export default class HomeScreen extends Component {
                 {
                     item.collapsed !== null ?
                     <View style = {{flexDirection: 'row', alignItems: 'center', marginLeft: 5}}>
-                         <Icon style = {{color:item.collapsed ?'black':'#0000FF'}} name = {item.collapsed ? 'ios-arrow-down' : 'ios-arrow-up'}/>
-                         <Text style = {{marginLeft: 5, color:item.collapsed ?'black':'#0000FF', fontSize: 20}}>{`${item.title}`}</Text>
+                         <Icon style = {{color:item.collapsed ? Color.black: Color.blue}} name = {item.collapsed ? 'ios-arrow-down' : 'ios-arrow-up'}/>
+                         <Text style = {{marginLeft: 5, color:item.collapsed ?Color.black : Color.blue, fontSize: 20}}>{`${item.title}`}</Text>
                     </View>
                      :
                     <TouchableOpacity onPress = {()=>this.clickItem(item)}>            
@@ -194,9 +210,82 @@ export default class HomeScreen extends Component {
         />
       )
 
+    // hàm tạo danh sách dữ liệu ngày
+    getListDay_tam(date, countLoadmore, size){
+        for (var i = countLoadmore ; i < countLoadmore + 40; i++){
+            var title = '';
+            var title_screen_result = '';
+            if(i == 0){
+                title = 'Hôm nay';
+            } else if (i == 1){
+                title = 'Hôm qua';
+            }
+            var item = {};
+            item.id = i;
+            var array = [];
+            var to_day = {};
+            var indexDay = dateTam.getDay();
+            title = title != '' ? title + ", " + getDayOfWeek(indexDay) + ", " + moment(dateTam).format('DD/MM')
+                : getDayOfWeek(indexDay) + ", " + moment(dateTam).format('DD/MM');
+            title_screen_result =  getDayOfWeek(indexDay) + ", " + moment(dateTam).format('DD/MM/YYYY');
+            var test_date= moment(dateTam).format('YYYY-MM-DD');
+            to_day.id = i;
+            to_day.title = title;
+            to_day.title_screen_result = title_screen_result;
+            to_day.status = false;
+            var member_= [];
+            var tmp_lottery_provinces = JSON.parse(JSON.stringify(lottery_provinces));
+            for(var j=0;j< tmp_lottery_provinces.length;j++){
+                if(indexDay == 0 && tmp_lottery_provinces[j].weekdays.indexOf(',1,') != -1){
+                    tmp_lottery_provinces[j].rd = test_date;
+                    member_.push(tmp_lottery_provinces[j]);
+                }else if(indexDay == 1 && tmp_lottery_provinces[j].weekdays.indexOf(',2,') != -1){
+                    tmp_lottery_provinces[j].rd = test_date;
+                    member_.push(tmp_lottery_provinces[j]);
+                }else if(indexDay == 2 && tmp_lottery_provinces[j].weekdays.indexOf(',3,') != -1){
+                    tmp_lottery_provinces[j].rd = test_date;
+                    member_.push(tmp_lottery_provinces[j]);
+                }else if(indexDay == 3 && tmp_lottery_provinces[j].weekdays.indexOf(',4,') != -1){
+                    tmp_lottery_provinces[j].rd = test_date;
+                    member_.push(tmp_lottery_provinces[j]);
+                }else if(indexDay == 4 && tmp_lottery_provinces[j].weekdays.indexOf(',5,') != -1){
+                    tmp_lottery_provinces[j].rd = test_date;
+                    member_.push(tmp_lottery_provinces[j]);
+                }else if(indexDay == 5 && tmp_lottery_provinces[j].weekdays.indexOf(',6,') != -1){
+                    tmp_lottery_provinces[j].rd = test_date;
+                    member_.push(tmp_lottery_provinces[j]);
+                }else if(indexDay == 6 && tmp_lottery_provinces[j].weekdays.indexOf(',7,') != -1){
+                    tmp_lottery_provinces[j].rd = test_date;
+                    member_.push(tmp_lottery_provinces[j]);
+                }         
+            }
+    
+        
+            // add ket qua dac biet
+            member_ = pushPropsInItem(member_);
+    
+            var _ = require('underscore');
+            var member = _.sortBy(member_, 'area_id');
+            to_day.children = member;  
+            array.push(to_day);
+            item.array = array;
+            listDayTam.push(item);
+            // set date
+            dateTam.setDate(dateTam.getDate() - 1);
+        }
+        this.setState({
+            loading: false,
+        })
+        return listDayTam;
+    }  
+
+    // ham load dữ liệu  
     loadMoreData(){
+        this.setState({
+            loading: true,
+        });
         countLoadmore = countLoadmore + 40;
-        getListDay_tam(dateTam, countLoadmore, 40);
+        this.getListDay_tam(dateTam, countLoadmore, 40);
     }  
 
     refresh(){
@@ -207,18 +296,11 @@ export default class HomeScreen extends Component {
     refreshFromServer10s = ()=>{
         var dateCurrent = new Date();
         var paramsDateCurrent = moment(dateCurrent).format('YYYY-MM-DD');
-        console.log("Date CURRENTppp: " + paramsDateCurrent);
         getDataFromServerTrucTiep(paramsDateCurrent).then((data_)=>{
             var dataLotteProvinces_ = data_;
             var jsonString = JSON.stringify(dataLotteProvinces_);
-            console.log("API TRA VE KET QUA INTERVAL===: " + JSON.stringify(dataLotteProvinces_));
-
-
-            // var k = 'MB_20180712';
-            // dataSwitchKey[k].s1 = '56789';        
-
-
-            if(dataLotteProvinces_.length > 0){
+            console.log("API TRA VE KET QUA TU REQUEST SERVER 10s: " + JSON.stringify(dataLotteProvinces_));
+            if(dataLotteProvinces_.length > 0){ // có kết quả thì xử lý
                 console.log("BAT DAU CO DU LIEU QUAY TRUC TIEP");
                 this.progressDataQuayTrucTiep(dataLotteProvinces_);
             }
@@ -264,73 +346,7 @@ function createKeyItem(data){
 }
 
 // Tao danh sach ngay
-function getListDay_tam(date, countLoadmore, size){
-    for (var i = countLoadmore ; i < countLoadmore + 40; i++){
-        var title = '';
-        var title_screen_result = '';
-        if(i == 0){
-            title = 'Hôm nay';
-        } else if (i == 1){
-            title = 'Hôm qua';
-        }
-        var item = {};
-        item.id = i;
-        var array = [];
-        var to_day = {};
-        var indexDay = dateTam.getDay();
-        title = title != '' ? title + ", " + getDayOfWeek(indexDay) + ", " + moment(dateTam).format('DD/MM')
-            : getDayOfWeek(indexDay) + ", " + moment(dateTam).format('DD/MM');
-        title_screen_result =  getDayOfWeek(indexDay) + ", " + moment(dateTam).format('DD/MM/YYYY');
-        var test_date= moment(dateTam).format('YYYY-MM-DD');
-        to_day.id = i;
-        to_day.title = title;
-        to_day.title_screen_result = title_screen_result;
-        to_day.status = false;
-        var member_= [];
-        var tmp_lottery_provinces = JSON.parse(JSON.stringify(lottery_provinces));
-        for(var j=0;j< tmp_lottery_provinces.length;j++){
-            if(indexDay == 0 && tmp_lottery_provinces[j].weekdays.indexOf(',1,') != -1){
-                tmp_lottery_provinces[j].rd = test_date;
-                member_.push(tmp_lottery_provinces[j]);
-            }else if(indexDay == 1 && tmp_lottery_provinces[j].weekdays.indexOf(',2,') != -1){
-                tmp_lottery_provinces[j].rd = test_date;
-                member_.push(tmp_lottery_provinces[j]);
-            }else if(indexDay == 2 && tmp_lottery_provinces[j].weekdays.indexOf(',3,') != -1){
-                tmp_lottery_provinces[j].rd = test_date;
-                member_.push(tmp_lottery_provinces[j]);
-            }else if(indexDay == 3 && tmp_lottery_provinces[j].weekdays.indexOf(',4,') != -1){
-                tmp_lottery_provinces[j].rd = test_date;
-                member_.push(tmp_lottery_provinces[j]);
-            }else if(indexDay == 4 && tmp_lottery_provinces[j].weekdays.indexOf(',5,') != -1){
-                tmp_lottery_provinces[j].rd = test_date;
-                member_.push(tmp_lottery_provinces[j]);
-            }else if(indexDay == 5 && tmp_lottery_provinces[j].weekdays.indexOf(',6,') != -1){
-                tmp_lottery_provinces[j].rd = test_date;
-                member_.push(tmp_lottery_provinces[j]);
-            }else if(indexDay == 6 && tmp_lottery_provinces[j].weekdays.indexOf(',7,') != -1){
-                tmp_lottery_provinces[j].rd = test_date;
-                member_.push(tmp_lottery_provinces[j]);
-            }         
-        }
 
-    
-        // add ket qua dac biet
-        member_ = pushPropsInItem(member_);
-
-        var _ = require('underscore');
-        var member = _.sortBy(member_, 'area_id');
-        to_day.children = member;  
-        array.push(to_day);
-        item.array = array;
-        listDayTam.push(item);
-        // set date
-        dateTam.setDate(dateTam.getDate() - 1);
-    }
-    // alert(countLoadmore)
-    // var check_list_day = JSON.stringify(listDay);
-    //     console.log('GIa tri list SHow: ' + check_list_day);
-    return listDayTam;
-}
 
 // ham push giai dac biet vao item
 function pushPropsInItem(member_){
@@ -458,4 +474,8 @@ var style = StyleSheet.create({
         justifyContent: 'center',
         marginHorizontal: 5,
     },
+    load_more: {
+        flex: 0.1,
+        backgroundColor: 'grey'
+      }
 });

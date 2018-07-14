@@ -24,7 +24,7 @@ var checkDataNotNull = false;
 
 export default class ResultLottery extends Component {
 
-    // ham format result lottery  
+    // hàm định đạng lại kết quả trả về ==> phục vụ cho việc hiển thị ra view  
     formatLottery(rowItem, dataLottery){
         checkDataNotNull = false;
         var date_quay = moment(rowItem.rd).format('YYYYMMDD');
@@ -96,7 +96,7 @@ export default class ResultLottery extends Component {
         }           
     }
 
-    // ham gop mang thanh text
+    // Hàm gộp mảng thành text
     margeArrToString(arr){
         var str = '';
         for(var i=0; i< arr.length; i++){
@@ -105,7 +105,7 @@ export default class ResultLottery extends Component {
         return str;
     }
 
-    // ham for mangr lo to tim cac so theo dau duoi
+    // hàm for mảng kết quả tìm đầu đuôi lô tô
     filterNumber(arr, number){
         var textShow = '';
         for(var i= 0; i< arr.length ; i++){

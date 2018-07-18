@@ -74,6 +74,7 @@ export default class HomeScreen extends Component {
        
         // Tao mảng phuc vu viec thong ke, tra cuu
         dataWithProvinces = createArrPushInItem(dataLoadingToServer);
+        
     // Chuyển đổi kết quả về dạng key - value (key moi item la--> mã tỉnh_ngày)
     // goi ham chuyen doi key
       dataSwitchKey =  createKeyItem(dataLoadingToServer);

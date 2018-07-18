@@ -109,7 +109,8 @@ export default class NumberDetectorScreen extends Component {
                             <Text style= {{flex: 2, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Giải</Text>
                             <Text style= {{flex: 2, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Ngày</Text>
                          </View>
-                         <FlatList
+                    </View>
+                    <FlatList 
                                 data = {data_detector}
                                 renderItem = {({item, index})=>{
                                     return(
@@ -119,8 +120,7 @@ export default class NumberDetectorScreen extends Component {
                                     );
                                 }}
                                 keyExtractor={ (item, index) => index.toString() }> 
-                        </FlatList>
-                    </View>
+                    </FlatList>
                 </View>
 
                 <FloatButtonCompomentExit

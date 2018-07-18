@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {Icon} from 'native-base';
 
+var dataWithProvinces = {};
 var heightScreen = Dimensions.get('window').height;
 var widthScreen = Dimensions.get('window').width;
 export default class SlideMenu extends Component {

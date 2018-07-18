@@ -5,6 +5,7 @@ import {
     Dimensions,
     StyleSheet
 } from 'react-native';
+import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit'; 
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
@@ -15,8 +16,16 @@ export default class CommunityScreen extends Component {
                 <View style = {style.header_style}>
                     <Text style = {style.text_style}>Cộng đồng dự đoán</Text>
                 </View>
+                <FloatButtonCompomentExit
+                     onButtonFloatPress={this.clickExit.bind(this)}
+                />
             </View>
         );
+    }
+
+    // back to home
+    clickExit(){
+        this.props.navigation.goBack();
     }
 }
 

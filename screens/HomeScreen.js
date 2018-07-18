@@ -311,7 +311,6 @@ export default class HomeScreen extends Component {
             var jsonString = JSON.stringify(dataLotteProvinces_);
             console.log("API TRA VE KET QUA TU REQUEST SERVER 10s: " + JSON.stringify(dataLotteProvinces_));
             if(dataLotteProvinces_.length > 0){ // có kết quả thì xử lý
-                console.log("BAT DAU CO DU LIEU QUAY TRUC TIEP");
                 this.progressDataQuayTrucTiep(dataLotteProvinces_);
             }
         }).catch((error) =>{

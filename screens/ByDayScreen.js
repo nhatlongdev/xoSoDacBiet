@@ -93,7 +93,7 @@ export default class ByDayScreen extends Component {
                         selectedValue = {this.state.selected}
                         onValueChange={
                             (itemValue, itemIndex, item) => {this.setState({selected: itemValue})
-                                alert(JSON.stringify(itemValue))
+                                // alert(JSON.stringify(itemValue))
                                 // alert(JSON.stringify(itemIndex))
                                 // alert(JSON.stringify(data[itemIndex].name))
                                 item_ = data[itemIndex];

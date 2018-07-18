@@ -217,9 +217,8 @@ export default class ResultLotteryByDay extends Component {
                     <Text style = {{textAlign: 'center', width: widthScreen, color: 'black', padding: 10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
                     <View style = {{flex: 1, backgroundColor: 'grey', marginHorizontal: 2}}>
                         <View style = {style.row_result}>
-                           <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', marginRight: 10}}>{objResult.db.title}</Text>
-                           <Text style = {{flex: 1, textAlign: 'center', color: 'red', 
-                                fontWeight: 'bold', fontSize: 18, borderLeftWidth: 1, borderLeftColor: 'grey'}}>{objResult.db.arr_kqdb}</Text>
+                           <Text style = {style.row_text_title_result}>{objResult.db.title}</Text>
+                           <Text style = {[style.row_text_content_result,{color: 'red'}]}>{objResult.db.arr_kqdb}</Text>
                         </View>
 
                         <View style = {style.row_result}>
@@ -374,6 +373,7 @@ var style = StyleSheet.create({
         marginBottom: 2
     },
     row_text_title_result: {
+        flex:1.5,
         textAlign: 'center', 
         color: 'white', 
         fontWeight: 'bold',
@@ -381,7 +381,7 @@ var style = StyleSheet.create({
         paddingHorizontal: 5,
     },
     row_text_content_result: {
-        flex: 1, 
+        flex: 20, 
         fontSize: 16,
         textAlign: 'center', 
         color: 'black', 

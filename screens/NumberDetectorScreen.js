@@ -9,7 +9,8 @@ import {
     TextInput,
     Image,
     TouchableOpacity,
-    FlatList
+    FlatList,
+    ScrollView
 } from 'react-native';
 import data from '../components/TinhThanh';
 import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';
@@ -32,7 +33,7 @@ export default class NumberDetectorScreen extends Component {
             selected: data[0],
             data_detector: data_detector,
             textSoDo: '',
-            textSoLanQuay: ''
+            textSoLanQuay: '30'
         }
         item_ = data[0];
         dataResultLottery = this.props.navigation.state.params.data;
@@ -82,7 +83,7 @@ export default class NumberDetectorScreen extends Component {
                         placeholderTextColor = {'grey'}
                         onChangeText = {(text)=>this.setState({textSoLanQuay: text})}
                         keyboardType='numeric'
-                        value={'30'}    
+                        value={this.state.textSoLanQuay}    
                     />
                     <Text style={{fontSize: 15, fontWeight: 'bold', color: 'black'}}>Số dò (ví dụ: 66 hoặc 68,86):</Text>
                     <TextInput
@@ -109,17 +110,16 @@ export default class NumberDetectorScreen extends Component {
                             <Text style= {{flex: 2, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Ngày</Text>
                          </View>
                          <FlatList
-                            data = {data_detector}
-                            renderItem = {({item, index})=>{
-                                return(
-                                    <ItemNumDetector
-                                        item = {item} index = {index}
-                                    />
-                                );
-                            }}
-                            keyExtractor={ (item, index) => index.toString() }
-                         > 
-                         </FlatList>
+                                data = {data_detector}
+                                renderItem = {({item, index})=>{
+                                    return(
+                                        <ItemNumDetector
+                                            item = {item} index = {index}
+                                        />
+                                    );
+                                }}
+                                keyExtractor={ (item, index) => index.toString() }> 
+                        </FlatList>
                     </View>
                 </View>
 
@@ -139,7 +139,7 @@ export default class NumberDetectorScreen extends Component {
         var arrLotteryOfProvinces = {};
         arrLotteryOfProvinces = dataResultLottery[_item.code];
         console.log('Data dua vao: ' + JSON.stringify(arrLotteryOfProvinces) + " -----" + arrLotteryOfProvinces.length)
-        data_detector = filterArrDetector(arrLotteryOfProvinces,soDo,10);
+        data_detector = filterArrDetector(arrLotteryOfProvinces,soDo,soLanQuay);
         this.setState({
             data_detector: data_detector
         })

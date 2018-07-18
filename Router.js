@@ -20,6 +20,7 @@ import ResultLotteryByDay from './screens/ResultLotteryByDay';
 import ResultStatistic from './screens/ResultStatistic';
 import ResultStatistic1 from './screens/ResultStatistic1';
 import ResultStatistic2 from './screens/ResultStatistic2';
+import ResultStatistic3 from './screens/ResultStatistic3';
 import Splash from './screens/Splash';
 import TestData from './screens/TestData';
 
@@ -99,6 +100,12 @@ export const HomeStack = StackNavigator({
     },
     ResultStatistic2: {
         screen: ResultStatistic2,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ResultStatistic3: {
+        screen: ResultStatistic3,
         navigationOptions: {
             header: null
         }

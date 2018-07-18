@@ -31,7 +31,8 @@ export default class NumberDetectorScreen extends Component {
         this.state= {
             selected: data[0],
             data_detector: data_detector,
-            textSoDo: ''
+            textSoDo: '',
+            textSoLanQuay: ''
         }
         item_ = data[0];
         dataResultLottery = this.props.navigation.state.params.data;
@@ -58,9 +59,15 @@ export default class NumberDetectorScreen extends Component {
                     <Picker 
                         selectedValue = {this.state.selected}
                         onValueChange={
-                            (itemValue, itemIndex, item) => {this.setState({selected: itemValue})
+                            (itemValue, itemIndex, item) => {
+                                this.setState({
+                                    selected: itemValue
+                                })
                                 // alert(JSON.stringify(itemIndex))
                                 // alert(JSON.stringify(data[itemIndex].name))
+                                // alert(JSON.stringify(data[itemIndex]))
+                                // console.log('GIA TRI ITEMVALUE: ' + JSON.stringify(itemValue))
+                                // console.log('GIA TRI ITEM THEO ITEMINDEX: ' + JSON.stringify(data[itemIndex]))
                                 item_ = data[itemIndex];
                             }
                             }
@@ -73,6 +80,7 @@ export default class NumberDetectorScreen extends Component {
                         maxLength = {2}   
                         placeholder={'Số lần quay'}
                         placeholderTextColor = {'grey'}
+                        onChangeText = {(text)=>this.setState({textSoLanQuay: text})}
                         keyboardType='numeric'
                         value={'30'}    
                     />
@@ -86,7 +94,7 @@ export default class NumberDetectorScreen extends Component {
                         value = {this.state.textSoDo}
                     />
                     <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center',borderRadius: 2, backgroundColor: '#CCCCCC', height: 50,padding: 5}}
-                                    onPress = {()=>this.numberDetector(item_, this.state.textSoDo, 30)}
+                                    onPress = {()=>this.numberDetector(item_, this.state.textSoDo, this.state.textSoLanQuay)}
                     >
                          <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>TRA CỨU LÔ TÔ, DÒ SỐ</Text>   
                          <Image

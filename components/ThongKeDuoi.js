@@ -5,14 +5,14 @@ import {
 import moment from 'moment';
 var tongGiai = 0;
 var tongLanQuay = 0;
-function thongKeDuoi_(data){
+function thongKeDuoi_(data, item, soLanQuay){
     var mangData = [];
     var countDau0DacBiet = 0, countDau0LoTo = 0, countDau1DacBiet = 0, countDau1LoTo = 0, countDau2DacBiet = 0, countDau2LoTo = 0
     , countDau3DacBiet = 0, countDau3LoTo = 0, countDau4DacBiet = 0, countDau4LoTo = 0, countDau5DacBiet = 0, countDau5LoTo = 0
     , countDau6DacBiet = 0, countDau6LoTo = 0, countDau7DacBiet = 0, countDau7LoTo = 0, countDau8DacBiet = 0, countDau8LoTo = 0
     , countDau9DacBiet = 0, countDau9LoTo = 0; 
-    for(var i=0; i< data.length; i++){
-        if(i>= 30) break;
+    for(var i=0; i< parseInt(soLanQuay); i++){
+        if(data[i] == null) break;
         tongLanQuay = tongLanQuay + 1;
         for(var j=0; j< data[i].length; j++){
             tongGiai = tongGiai + 1;

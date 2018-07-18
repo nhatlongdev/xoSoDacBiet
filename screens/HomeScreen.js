@@ -21,6 +21,7 @@ import ExpanableList from 'react-native-expandable-section-flatlist';
 import {Icon} from 'native-base';
 import CircleOption from '../components/CircleOption';
 import FloatButtonCompoment from '../components/FloatButtonCompoment';
+import ProgressReact from '../components/ProgressReact';
 import moment from 'moment';
 // import {getDataFromServer} from '../networking/Server';
 import {createArrPushInItem} from '../components/CreateArrPushInItem';
@@ -30,6 +31,8 @@ import {getDataFromServer} from '../networking/Server';
 import {getDataFromServerTrucTiep} from '../networking/Server';
 import dataLottery_global from '../components/DataLottery';
 import Thongke from '../components/Thongke';
+
+
 
 //import color, string
 import Color from '../src/color';
@@ -64,6 +67,7 @@ export default class HomeScreen extends Component {
         this.state = {
             dataTam: [],
             load: false,
+            showProgress_: true,
         }
 
         // Tao mảng danh sách ngày cho listView
@@ -86,10 +90,12 @@ export default class HomeScreen extends Component {
                 this.refreshFromServer10s();
             }  
         },10000)
+
     }
 
     componentWillMount() {
         this.getListDay_tam(dateTam, countLoadmore, 40);
+        this.setTimeShowProgress();
     }
 
     render(){
@@ -159,6 +165,8 @@ export default class HomeScreen extends Component {
                         onEndReached = {this.loadMoreData.bind(this)}
                         keyExtractor={item => JSON.stringify(++key)}
                     />
+
+                    <ProgressReact show={this.state.showProgress_}/>
                 </View>
 
                 {this.state.load && this.loading_view(style.load_more)}
@@ -172,6 +180,15 @@ export default class HomeScreen extends Component {
         );
     }
 
+    // set time out cho  progress
+    setTimeShowProgress(){
+        setTimeout(() => {
+           this.setState({
+            showProgress_: false,
+           })
+        }, 10000);
+    }
+    
     // hiện load more khi kéo lên
     loading_view(style) {
         return  <View style={style}>
@@ -270,7 +287,6 @@ export default class HomeScreen extends Component {
             load: false,
             dataTam: listDayTam
         });
-        alert(listDayTam.length)
     }  
 
     // ham load dữ liệu  
@@ -314,7 +330,6 @@ export default class HomeScreen extends Component {
     }
 
     onButtonFloatPress() {
-        alert("floatButton")
         listDayTam = [];
         this.setState({ load: true });
         dateTam = new Date();

@@ -17,6 +17,7 @@ import {thongKeDau_} from '../components/ThongKeDau';
 import {thongKeDuoi_} from '../components/ThongKeDuoi';
 import {thongKeTongHaiSoCuoi_} from '../components/ThongKeTong2SoCuoi';
 import {thongKe_00_99} from '../components/ThongKe_00_99';
+import {ThongKeLoKhan} from '../components/ThongKeLoKhan';
 var dataResultLottery = {};
 
 var widthScreen = Dimensions.get('window').width;
@@ -52,11 +53,12 @@ export default class StatisticalScreen extends Component {
                     <Picker 
                         selectedValue = {this.state.selected}
                         onValueChange={
-                            (itemValue, itemIndex, item) => {this.setState({selected: itemValue})
-                                // alert(JSON.stringify(itemValue))
-                                // alert(JSON.stringify(itemIndex))
-                                // alert(JSON.stringify(data[itemIndex].name))
+                            (itemValue, itemIndex, item) => {
+                                this.setState({
+                                    selected: itemValue
+                                })
                                 item_ = data[itemIndex];
+                                // console.log('CHECKCKCK: ' + JSON.stringify(item_))
                             }
                             }
                        mode={'dropdown'}
@@ -66,16 +68,17 @@ export default class StatisticalScreen extends Component {
                     <Text style={{fontSize: 15, fontWeight: 'bold', color: 'black'}}>Chọn số lần quay:</Text>
                     <TextInput
                         placeholder={'Số lần quay'}
-                        placeholderTextColor = {'grey'}
-                        keyboardType = {'number-pad'}
-                        onChangeText = {(text)=>this.setState({
+                        placeholderTextColor={'grey'}
+                        keyboardType='numeric'
+                        maxLength={2}
+                        onChangeText={(text)=>this.setState({
                             textSoLanQuay: text
                         })}
-                        value = {this.state.textSoLanQuay}
+                        value={this.state.textSoLanQuay}
                     />
                     
                     <TouchableOpacity style={style.style_button}
-                                    onPress = {()=>this.thongKeDauDuoi(item_)}
+                                    onPress = {()=>this.thongKeDauDuoi(item_, this.state.textSoLanQuay)}
                     >
                          <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ ĐẦU, ĐUÔI LÔ TÔ</Text>   
                          <Image
@@ -84,7 +87,7 @@ export default class StatisticalScreen extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={style.style_button}
-                        onPress = {()=>this.thongKeHaiSoCuoi(item_)}
+                        onPress = {()=>this.thongKeHaiSoCuoi(item_, this.state.textSoLanQuay)}
                     >
                         <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ TỔNG 2 SỐ CUỐI</Text>   
                         <Image
@@ -93,7 +96,7 @@ export default class StatisticalScreen extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={style.style_button}
-                        onPress = {()=>this.thongKe0099(item_)}
+                        onPress = {()=>this.thongKe0099(item_, this.state.textSoLanQuay)}
                     >
                         <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ 00-99</Text>   
                         <Image
@@ -102,7 +105,7 @@ export default class StatisticalScreen extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={style.style_button}
-                        onPress = {()=>this.thongKeCacSoVeNhieu(item_)}
+                        onPress = {()=>this.thongKeCacSoVeNhieu(item_, this.state.textSoLanQuay)}
                     >
                         <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ CÁC SỐ VỀ NHIỀU</Text>   
                         <Image
@@ -111,7 +114,7 @@ export default class StatisticalScreen extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={style.style_button}
-                        onPress = {()=>this.thongKeCacSoLauRa(item_)}
+                        onPress = {()=>this.thongKeCacSoLauRa(item_, this.state.textSoLanQuay)}
                     >
                         <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ CÁC SỐ LÂU RA</Text>   
                         <Image
@@ -132,40 +135,47 @@ export default class StatisticalScreen extends Component {
         this.props.navigation.goBack();
     }
 
-    thongKeDauDuoi(_item){
+    thongKeDauDuoi(_item, soLanQuay){
         var arrLotteryOfProvinces = arrLotteryOfProvinces = dataResultLottery[_item.code];
-        var arrTKDau = thongKeDau_(arrLotteryOfProvinces);
-        var arrTKDuoi = thongKeDuoi_(arrLotteryOfProvinces);
-        console.log('MANG TRUOC KHI GUI: ' + JSON.stringify(arrTKDau))
-        this.props.navigation.navigate('ResultStatistic', {arrDau: arrTKDau, arrDuoi: arrTKDuoi});
+        console.log('MANG TRUOC KHI GUIhhhhhh: ' + JSON.stringify(arrLotteryOfProvinces))
+        var arrTKDau = thongKeDau_(arrLotteryOfProvinces,_item, soLanQuay);
+        var arrTKDuoi = thongKeDuoi_(arrLotteryOfProvinces,_item, soLanQuay);
+        this.props.navigation.navigate('ResultStatistic', {arrDau: arrTKDau, arrDuoi: arrTKDuoi, nameTinh:_item.name, soLanQuay:this.state.textSoLanQuay});
     }
 
-    thongKeHaiSoCuoi(_item){
+    thongKeHaiSoCuoi(_item, soLanQuay){
         var arrLotteryOfProvinces = arrLotteryOfProvinces = dataResultLottery[_item.code];
-        var arrTongHaiSoCuoi = thongKeTongHaiSoCuoi_(arrLotteryOfProvinces);
+        var arrTongHaiSoCuoi = thongKeTongHaiSoCuoi_(arrLotteryOfProvinces, soLanQuay);
         console.log('MANG TRUOC KHI GUI: ' + JSON.stringify(arrTongHaiSoCuoi))
-        this.props.navigation.navigate('ResultStatistic1', {arr: arrTongHaiSoCuoi, type: '0'});
+        this.props.navigation.navigate('ResultStatistic1', {arr: arrTongHaiSoCuoi, type: '0', nameTinh:_item.name, soLanQuay:this.state.textSoLanQuay});
     }
     
-    thongKe0099(_item){
+    thongKe0099(_item, soLanQuay){
         var arrLotteryOfProvinces = arrLotteryOfProvinces = dataResultLottery[_item.code];
-        var arr_00_99 = thongKe_00_99(arrLotteryOfProvinces);
+        var arr_00_99 = thongKe_00_99(arrLotteryOfProvinces, soLanQuay);
+        console.log('DATA BAN DAU: ' + JSON.stringify(arrLotteryOfProvinces))
         console.log('MANG TRUOC KHI GUI: ' + JSON.stringify(arr_00_99))
-        this.props.navigation.navigate('ResultStatistic1', {arr: arr_00_99, type: '1'});
+        this.props.navigation.navigate('ResultStatistic1', {arr: arr_00_99, type: '1', nameTinh:_item.name, soLanQuay:this.state.textSoLanQuay});
     }
 
-    thongKeCacSoVeNhieu(_item){
+    thongKeCacSoVeNhieu(_item, soLanQuay){
         var arrLotteryOfProvinces = arrLotteryOfProvinces = dataResultLottery[_item.code];
-        var arr_00_99 = thongKe_00_99(arrLotteryOfProvinces);
+        var arr_00_99 = thongKe_00_99(arrLotteryOfProvinces, soLanQuay);
         var _ = require('underscore');
         var arrVeNhieuTam = _.sortBy(arr_00_99, 'countLoTo');
         var arrVeNhieu_ = arrVeNhieuTam.reverse();
         var arrVeNhieu = arrVeNhieu_.slice(0, 20);    
-        this.props.navigation.navigate('ResultStatistic2', {arr: arrVeNhieu});
+        this.props.navigation.navigate('ResultStatistic2', {arr: arrVeNhieu, nameTinh:_item.name, soLanQuay:this.state.textSoLanQuay});
     }
 
-    thongKeCacSoLauRa(_item){
-        alert(1)
+    thongKeCacSoLauRa(_item, soLanQuay){
+        var arrLotteryOfProvinces = arrLotteryOfProvinces = dataResultLottery[_item.code];
+        var arr_lo_khan = ThongKeLoKhan(arrLotteryOfProvinces, soLanQuay);
+        console.log('DS LÔT GAN: ' + JSON.stringify(arr_lo_khan))
+        var _ = require('underscore');
+        var arrLoKhan = _.sortBy(arr_lo_khan, 'soNgayLoKhan');
+        var arrLoKhan_ = arrLoKhan.reverse(); 
+        this.props.navigation.navigate('ResultStatistic3', {arr: arrLoKhan_, nameTinh:_item.name, soLanQuay:this.state.textSoLanQuay});
     }
 }
 

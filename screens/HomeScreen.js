@@ -117,16 +117,10 @@ export default class HomeScreen extends Component {
                                 <Text style= {{color: 'black', textAlign:'center'}}>Dò số</Text>
                         </TouchableOpacity>
 
-                        {/* <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Statistical_Screen'
-                                    , {data: dataWithProvinces})}}>
-                            <View style = {{width: 50, height: 50, borderRadius:  50/2, backgroundColor: 'green',justifyContent: 'center', alignItems: 'center'}}>
-                                <Icon name={'home'} style = {{fontSize: 40, color: 'white'}}/>
-                            </View>
-                            <Text style= {{color: 'black'}}>Thống kê</Text>
-                        </TouchableOpacity> */}
-
+                       {/* Goi component format */}
                         <Thongke 
                             title={'Thống kê'}
+                            nameIcon={'home'}
                             style={style.item_option}
                             onPress={()=>{this.props.navigation.navigate('Statistical_Screen'
                             , {data: dataWithProvinces})}}/>
@@ -276,6 +270,7 @@ export default class HomeScreen extends Component {
             load: false,
             dataTam: listDayTam
         });
+        alert(listDayTam.length)
     }  
 
     // ham load dữ liệu  
@@ -320,6 +315,13 @@ export default class HomeScreen extends Component {
 
     onButtonFloatPress() {
         alert("floatButton")
+        listDayTam = [];
+        this.setState({ load: true });
+        dateTam = new Date();
+        countLoadmore = 0;
+        setTimeout(() => {
+            this.getListDay_tam(dateTam, countLoadmore, 40);
+        }, 2000);
     }
     
     clickItem(item){

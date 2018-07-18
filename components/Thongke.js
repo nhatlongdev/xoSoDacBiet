@@ -10,7 +10,7 @@ class Thongke extends PureComponent {
             style={this.props.style} 
             onPress={this.props.onPress}>
                 <View style={{width: 50, height: 50, borderRadius:  50/2, backgroundColor: 'green',justifyContent: 'center', alignItems: 'center'}}>
-                    <Icon name={'home'} style={{fontSize: 40, color: 'white'}}/>
+                    <Icon name={this.props.nameIcon} style={{fontSize: 40, color: 'white'}}/>
                 </View>
                 <Text style={{color: 'black'}}>{this.props.title}</Text>
             </TouchableOpacity>

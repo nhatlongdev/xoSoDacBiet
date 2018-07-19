@@ -124,7 +124,7 @@ export default class HomeScreen extends Component {
                                 <Text style= {{color: 'black', textAlign:'center'}}>Dò số</Text>
                         </TouchableOpacity>
 
-                       {/* Goi component format */}
+                       {/* Goi component format ==> THongKe */}
                         <Thongke 
                             title={'Thống kê'}
                             nameIcon={'home'}

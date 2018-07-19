@@ -171,11 +171,6 @@ export default class ResultLottery extends Component {
         dataLottery = this.props.navigation.state.params.data_lottery;
         var rowItem_source = this.props.navigation.state.params.row;
         rowItem = JSON.parse(JSON.stringify(rowItem_source));
-        if(rowItem.rd == moment().format('YYYY-MM-DD')){
-            checkRowItemIsCurrent = true;
-        }else{
-            checkRowItemIsCurrent = false;
-        }
         date_row = new Date(rowItem.rd);
         console.log("DATA: ===>>>" + JSON.stringify(dataLottery));
         
@@ -189,9 +184,14 @@ export default class ResultLottery extends Component {
                 var timeCurrent = moment();
                 // nếu trong khung giờ quay
                 if(timeCurrent>= dateTimeBatDauQuay && timeCurrent< dateTimeDungQuay){
-                    checkRowItemIsCurrent = true;
                     showResult = false;
+                    checkRowItemIsCurrent = false;
                 }else {
+                    if(rowItem.rd == moment().format('YYYY-MM-DD')){
+                        checkRowItemIsCurrent = true;
+                    }else{
+                        checkRowItemIsCurrent = false;
+                    }
                     date_row.setDate(date_row.getDate() - 1);
                     rowItem.rd = moment(date_row).format('YYYY-MM-DD');
                     if(this.checkObjData(rowItem, dataLottery) == true){
@@ -201,9 +201,9 @@ export default class ResultLottery extends Component {
                     }else {
                         showResult = false;
                     }
-                    checkRowItemIsCurrent = true;
                 }
             }else{ // kết quả ngày hiện tại đã có
+                checkRowItemIsCurrent = false;
                 console.log("CHay vao 3");
                 this.formatLottery(rowItem, dataLottery);
                 showResult = true;
@@ -482,7 +482,9 @@ export default class ResultLottery extends Component {
     }
 
     clickRefresh(){
-        alert('doing....')
+        this.setState({
+            value_test: 1,
+        })
     }
 }
 

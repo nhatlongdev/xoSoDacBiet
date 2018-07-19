@@ -87,13 +87,11 @@ export default class ResultLottery extends Component {
             obj_cli.mang_loto7 = mang_loto7;
             mang_kq_tong[key_push] = obj_cli;
         }
-        var checkobj = JSON.stringify(mang_kq_tong);
-                    console.log("GIa Tri OBJ cli TOng: ===>>>" + checkobj);
         if(checkDataNotNull == false){
             date_row.setDate(date_row.getDate()-1);
             rowItem.rd = moment(date_row).format('YYYY-MM-DD');
             checkRowItemIsCurrent = true;
-        }           
+        }          
     }
 
     // Hàm gộp mảng thành text
@@ -116,6 +114,17 @@ export default class ResultLottery extends Component {
             }
         }
         return textShow;
+    }
+
+    // ham kiem tra xem obj da co trong mang ket qua chua
+    checkObjData(rowItem, dataLottery){
+        var date_quay = moment(rowItem.rd).format('YYYYMMDD');
+        var keyItem = rowItem.code[0] + '_'+date_quay;
+        if(dataLottery[keyItem] != null){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     setTitle(rowItem, _date){
@@ -149,6 +158,7 @@ export default class ResultLottery extends Component {
         this.state = {
           drag_left: true,
           value_test: 0,
+          result: false
         };
         dataLottery = this.props.navigation.state.params.data_lottery;
         var rowItem_source = this.props.navigation.state.params.row;
@@ -157,26 +167,40 @@ export default class ResultLottery extends Component {
         date_row = new Date(rowItem.rd);
         console.log("GIa Tri OBJ ROW ITEM: ===>>>" + JSON.stringify(rowItem));
         console.log("GIa Tri OBJ ROW ITEMooooooooooooooooTRƯƠC: ===>>>" + checkRowItemIsCurrent);
-        if(rowItem.status_kq == ''){
-            date_row.setDate(date_row.getDate() - 1);
-            rowItem.rd = moment(date_row).format('YYYY-MM-DD');
-            this.formatLottery(rowItem, dataLottery);
-            checkRowItemIsCurrent = true;
-        }else{
-            this.formatLottery(rowItem, dataLottery);
-        } 
+      }
 
-        setInterval(()=>{
-            var dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 16:15'); //.format('YYYY/MM/DD HH:mm:ss')
-            var dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
-            console.log("INTEVAL BEN RESUL CHAY");
-            if(moment() >= dateTimeBatDauQuay && moment() < dateTimeDungQuay){
-                this.setState({
-                    value_test: 1,
-                })
+      componentWillMount(){
+            if(this.checkObjData(rowItem, dataLottery) == false){
+                console.log("CHay vao 0");
+                date_row.setDate(date_row.getDate() - 1);
+                rowItem.rd = moment(date_row).format('YYYY-MM-DD');
+                if(this.checkObjData(rowItem, dataLottery) == true){
+                    this.formatLottery(rowItem, dataLottery);
+                    console.log("CHay vao 1");
+                    this.setState({
+                        result: true,
+                    })
+                }else {
+                    this.setState({
+                        result: false,
+                    })
+                }
+                checkRowItemIsCurrent = true;
+            }else{
+                console.log("CHay vao 3");
+                this.formatLottery(rowItem, dataLottery);
             } 
-        },10000)
-        
+
+            setInterval(()=>{
+                var dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 16:15'); //.format('YYYY/MM/DD HH:mm:ss')
+                var dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
+                console.log("INTEVAL BEN RESUL CHAY");
+                if(moment() >= dateTimeBatDauQuay && moment() < dateTimeDungQuay){
+                    this.setState({
+                        value_test: 1,
+                    })
+                } 
+            },10000)
       }
 
 
@@ -214,13 +238,22 @@ export default class ResultLottery extends Component {
         date_row = new Date(rowItem.rd); 
         date_row.setDate(date_row.getDate()+1);
         rowItem.rd = moment(date_row).format('YYYY-MM-DD');
-        this.formatLottery(rowItem, dataLottery);
-        var dxxxt = JSON.stringify(rowItem);
-        console.log('GIa tri ROW: ===>' + dxxxt);
-        console.log('===============================================================');
-        var dxxx = JSON.stringify(mang_kq_tong);
-        console.log('MANG: ===>' + dxxx);
-        console.log('===============================================================' + checkDataNotNull);
+        if(this.checkObjData(rowItem, dataLottery) == true){
+            this.formatLottery(rowItem, dataLottery);
+            this.setState({
+                result: true,
+            })
+        }else {
+            this.setState({
+                result: false,
+            })
+        }
+        // var dxxxt = JSON.stringify(rowItem);
+        // console.log('GIa tri ROW: ===>' + dxxxt);
+        // console.log('===============================================================');
+        // var dxxx = JSON.stringify(mang_kq_tong);
+        // console.log('MANG: ===>' + dxxx);
+        // console.log('===============================================================' + checkDataNotNull);
       }
     
       onSwipeRight(gestureState) {
@@ -229,7 +262,18 @@ export default class ResultLottery extends Component {
         date_row.setDate(date_row.getDate()-1);
         rowItem.rd = moment(date_row).format('YYYY-MM-DD');
         rowItem.status_kq = '0';
-        this.formatLottery(rowItem, dataLottery);
+        if(this.checkObjData(rowItem, dataLottery) == true){
+            console.log("CHAY VAO KEO PHAI");
+            this.formatLottery(rowItem, dataLottery);
+            this.setState({
+                result: true,
+            })
+        }else {
+            console.log("CHAY VAO KEO PHAI 0");
+            this.setState({
+                result: false,
+            })
+        }
       }
     
       onSwipe(gestureName, gestureState) {
@@ -283,6 +327,10 @@ export default class ResultLottery extends Component {
                     <Text style = {{textAlign: 'center', width: widthScreen, color: '#0000FF', padding: checkRowItemIsCurrent == true? 10 : 0, fontSize: 16}}>
                         {checkRowItemIsCurrent == true? this.setTitleToday(1) : ''}
                     </Text>
+
+                    {/* if else neu chua co ket qua va chuan bi den gio quay truc tiep */}
+                    {this.state.result === true ? 
+                    <View style = {{flex: 1}}>
                     <Text style = {{textAlign: 'center', width: widthScreen, color: 'black', padding: 10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
                     <View style = {{flex: 1, backgroundColor: 'grey', marginHorizontal: 2}}>
                         <View style = {style.row_result}>
@@ -385,6 +433,9 @@ export default class ResultLottery extends Component {
                            <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,9)}</Text>
                         </View>
                     </View>
+                    </View>
+                    :null}
+                    
                     </View>
                     </ScrollView>
                     <FloatButtonCompomentScreenResult

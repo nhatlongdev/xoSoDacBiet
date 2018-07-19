@@ -22,6 +22,13 @@ var date_row;
 var checkRowItemIsCurrent = false;
 var checkDataNotNull = false;
 
+//thoi gian bat dau quay, thoi gian dung quay
+var dateTimeBatDauQuay;
+var dateTimeDungQuay;
+
+// Biến kiểm tra hiển thị hay ẩn kết quả
+var showResult = false;
+
 export default class ResultLottery extends Component {
 
     // hàm định đạng lại kết quả trả về ==> phục vụ cho việc hiển thị ra view  
@@ -85,6 +92,8 @@ export default class ResultLottery extends Component {
             var mang_loto7 = mang_loto6.concat(arr_kq7);
             obj_cli.g7 = ob7;
             obj_cli.mang_loto7 = mang_loto7;
+
+            
             mang_kq_tong[key_push] = obj_cli;
         }
         if(checkDataNotNull == false){
@@ -149,7 +158,7 @@ export default class ResultLottery extends Component {
         if(value == 1){
             str = 'Miền Bắc - Hôm nay, ';
         }
-        str = str + getDayOfWeek(indexDay) +  ", " + moment(date_current).format('DD/MM/YYYY') + "(quay lúc 18h 10')";
+        str = str + getDayOfWeek(indexDay) +  ", " + moment(date_current).format('DD/MM/YYYY') + "(quay lúc 18h 15')";
         return str;
     }
 
@@ -158,44 +167,64 @@ export default class ResultLottery extends Component {
         this.state = {
           drag_left: true,
           value_test: 0,
-          result: false
         };
         dataLottery = this.props.navigation.state.params.data_lottery;
         var rowItem_source = this.props.navigation.state.params.row;
         rowItem = JSON.parse(JSON.stringify(rowItem_source));
-        checkRowItemIsCurrent = false;
+        if(rowItem.rd == moment().format('YYYY-MM-DD')){
+            checkRowItemIsCurrent = true;
+        }else{
+            checkRowItemIsCurrent = false;
+        }
         date_row = new Date(rowItem.rd);
-        console.log("GIa Tri OBJ ROW ITEM: ===>>>" + JSON.stringify(rowItem));
-        console.log("GIa Tri OBJ ROW ITEMooooooooooooooooTRƯƠC: ===>>>" + checkRowItemIsCurrent);
+        console.log("DATA: ===>>>" + JSON.stringify(dataLottery));
+        
+        //set ngày hiện tại theo giờ
+        dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 18:10'); //.format('YYYY/MM/DD HH:mm:ss')
+        dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
       }
 
       componentWillMount(){
-            if(this.checkObjData(rowItem, dataLottery) == false){
-                console.log("CHay vao 0");
-                date_row.setDate(date_row.getDate() - 1);
-                rowItem.rd = moment(date_row).format('YYYY-MM-DD');
-                if(this.checkObjData(rowItem, dataLottery) == true){
-                    this.formatLottery(rowItem, dataLottery);
-                    console.log("CHay vao 1");
-                    this.setState({
-                        result: true,
-                    })
+            if(this.checkObjData(rowItem, dataLottery) == false){ // nếu kết quả ngày hiện tại chưa có
+                var timeCurrent = moment();
+                // nếu trong khung giờ quay
+                if(timeCurrent>= dateTimeBatDauQuay && timeCurrent< dateTimeDungQuay){
+                    checkRowItemIsCurrent = true;
+                    showResult = false;
                 }else {
-                    this.setState({
-                        result: false,
-                    })
+                    date_row.setDate(date_row.getDate() - 1);
+                    rowItem.rd = moment(date_row).format('YYYY-MM-DD');
+                    if(this.checkObjData(rowItem, dataLottery) == true){
+                        this.formatLottery(rowItem, dataLottery);
+                        console.log("CHay vao 1");
+                        showResult = true;
+                    }else {
+                        showResult = false;
+                    }
+                    checkRowItemIsCurrent = true;
                 }
-                checkRowItemIsCurrent = true;
-            }else{
+            }else{ // kết quả ngày hiện tại đã có
                 console.log("CHay vao 3");
                 this.formatLottery(rowItem, dataLottery);
+                showResult = true;
             } 
 
             setInterval(()=>{
-                var dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 16:15'); //.format('YYYY/MM/DD HH:mm:ss')
-                var dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
-                console.log("INTEVAL BEN RESUL CHAY");
+                // console.log("INTEVAL BEN RESUL CHAY");
                 if(moment() >= dateTimeBatDauQuay && moment() < dateTimeDungQuay){
+                    //kiểm tra nếu đang ở ngày hiện tại mà trong khung giờ quay mà đang hiện kq ngày hôm trước thì set lại rowItem
+                    if(checkRowItemIsCurrent == true && showResult ==  true){
+                        rowItem.rd = moment().format('YYYY-MM-DD');
+                        //nếu kq ngày hiện tại đã có (trực tiếp)
+                        if(this.checkObjData(rowItem, dataLottery) == true){
+                            console.log("CO ket quả trực tiếp ngày hôm nay");
+                            checkRowItemIsCurrent = false;
+                            this.formatLottery(rowItem, dataLottery);
+                            showResult = true;
+                        }else {
+                            showResult = false;
+                        }
+                    }
                     this.setState({
                         value_test: 1,
                     })
@@ -209,14 +238,7 @@ export default class ResultLottery extends Component {
       }
 
       componentWillUpdate(){
-        // neu ngay dang xem la ngay hien tai ktra xem trong data ngay hien tai da co ket qua chua neu co thi set lai rowItem Ve ngay hien tai 
-        var dateCurrent = moment().format('YYYYMMDD');
-        var key_ketqua_hnay = 'MB_' + dateCurrent;
-        if(checkRowItemIsCurrent == true && dataLottery[key_ketqua_hnay] != null){
-            date_row.setDate(date_row.getDate() + 1);
-            rowItem.rd = moment(date_row).format('YYYY-MM-DD');
-        }
-        this.formatLottery(rowItem, dataLottery);
+        
         console.log("TIMER componentWillUpdate: " + JSON.stringify(rowItem));
       }
 
@@ -235,25 +257,37 @@ export default class ResultLottery extends Component {
       }
     
       onSwipeLeft(gestureState) {
-        date_row = new Date(rowItem.rd); 
-        date_row.setDate(date_row.getDate()+1);
-        rowItem.rd = moment(date_row).format('YYYY-MM-DD');
-        if(this.checkObjData(rowItem, dataLottery) == true){
-            this.formatLottery(rowItem, dataLottery);
-            this.setState({
-                result: true,
-            })
-        }else {
-            this.setState({
-                result: false,
-            })
+        if(rowItem.rd != moment().format('YYYY-MM-DD')){
+            date_row = new Date(rowItem.rd); 
+            date_row.setDate(date_row.getDate()+1);
+            rowItem.rd = moment(date_row).format('YYYY-MM-DD');
+            if(this.checkObjData(rowItem, dataLottery) == true){
+                this.formatLottery(rowItem, dataLottery);
+                showResult = true;
+            }else {
+                var timeCurrent = moment();
+                if(timeCurrent>= dateTimeBatDauQuay && timeCurrent< dateTimeDungQuay){
+                    console.log('KEO TRAI TH DANG TRONG KG QUAY: ===>' + JSON.stringify(rowItem));
+                    checkRowItemIsCurrent = true;
+                    showResult = false;
+                }else {
+                    console.log('KEO TRAI TH DANG Ngoai khung gio quay: ===>' + JSON.stringify(rowItem));
+                    if(rowItem.rd === moment().format('YYYY-MM-DD')){
+                        console.log('KEO TRAI TH DANG TRONG KG QUAY: TMDK===>' + JSON.stringify(rowItem));
+                        date_row.setDate(date_row.getDate()-1);
+                        rowItem.rd = moment(date_row).format('YYYY-MM-DD');
+                        if(this.checkObjData(rowItem, dataLottery) == true){
+                            this.formatLottery(rowItem, dataLottery);
+                            showResult = true;
+                        }else {
+                            showResult = false;
+                        }
+                        checkRowItemIsCurrent = true;
+                    }
+                }
+                
+            }
         }
-        // var dxxxt = JSON.stringify(rowItem);
-        // console.log('GIa tri ROW: ===>' + dxxxt);
-        // console.log('===============================================================');
-        // var dxxx = JSON.stringify(mang_kq_tong);
-        // console.log('MANG: ===>' + dxxx);
-        // console.log('===============================================================' + checkDataNotNull);
       }
     
       onSwipeRight(gestureState) {
@@ -265,14 +299,10 @@ export default class ResultLottery extends Component {
         if(this.checkObjData(rowItem, dataLottery) == true){
             console.log("CHAY VAO KEO PHAI");
             this.formatLottery(rowItem, dataLottery);
-            this.setState({
-                result: true,
-            })
+            showResult = true;
         }else {
             console.log("CHAY VAO KEO PHAI 0");
-            this.setState({
-                result: false,
-            })
+            showResult = false;
         }
       }
     
@@ -329,7 +359,7 @@ export default class ResultLottery extends Component {
                     </Text>
 
                     {/* if else neu chua co ket qua va chuan bi den gio quay truc tiep */}
-                    {this.state.result === true ? 
+                    {showResult ? 
                     <View style = {{flex: 1}}>
                     <Text style = {{textAlign: 'center', width: widthScreen, color: 'black', padding: 10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
                     <View style = {{flex: 1, backgroundColor: 'grey', marginHorizontal: 2}}>

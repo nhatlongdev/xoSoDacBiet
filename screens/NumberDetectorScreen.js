@@ -16,6 +16,7 @@ import data from '../components/TinhThanh';
 import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';
 import ItemNumDetector from '../components/ItemNumDetector';
 import {filterArrDetector} from '../components/FilterArrDetector';
+import Color from '../src/color';
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
@@ -103,11 +104,11 @@ export default class NumberDetectorScreen extends Component {
                          />
                     </TouchableOpacity>
                     <View style = {{marginTop: 5}}>
-                         <Text>Số {this.state.textSoDo} xuất hiện {data_detector.length} lần</Text> 
+                         <Text style ={{color: Color.blue}}>Số {this.state.textSoDo} xuất hiện {data_detector.length} lần</Text> 
                          <View style = {{backgroundColor: 'red', flexDirection: 'row'}}>
-                            <Text style= {{flex: 3, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Số</Text>
+                            <Text style= {{flex: 2, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Số</Text>
                             <Text style= {{flex: 2, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Giải</Text>
-                            <Text style= {{flex: 2, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Ngày</Text>
+                            <Text style= {{flex: 3, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Ngày</Text>
                          </View>
                     </View>
                     <FlatList 

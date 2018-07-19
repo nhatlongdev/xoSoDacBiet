@@ -21,80 +21,97 @@ var mang_kq_tong = {};
 var rowItem;
 var dataLottery;
 var date_row;
+//biến kiểm tra xem ngày đang xem có phải ngày hiện tại hay ko, true = ngày hiện tại, false = ngày khác
 var checkRowItemIsCurrent = false;
 var checkDataNotNull = false;
+
+//thoi gian bat dau quay, thoi gian dung quay
+var dateTimeBatDauQuay;
+var dateTimeDungQuay;
+
+// bien kiem tra truong hop hien ket qua hay an
+var showResult = false;
+
 export default class ResultLottery2 extends Component {
 
     // ham format result lottery  
     formatLottery(rowItem, dataLottery){
         checkDataNotNull = false;
         for (var i = 0; i< rowItem.code.length; i++){
-           for(var j=0;j<dataLottery.length; j++){
-               if(rowItem.code[i] == dataLottery[j].pc && rowItem.rd == dataLottery[j].rd){
-                    checkDataNotNull = true;
+            var date_quay = moment(rowItem.rd).format('YYYYMMDD');
+            var keyItem = rowItem.code[i] + '_'+date_quay;
+            if(dataLottery[keyItem] != null){
+                checkDataNotNull = true;
                     var obj_cli={};
 
                     var key_push = (rowItem.code[i]);
-                    var title_kq = dataLottery[j].pc + dataLottery[j].rd;
-                    var obdb = {}, ob1 = {}, ob2 = {}, ob3 = {}, ob4 = {}, ob5 = {}, ob6 = {}, ob7 = {};
-                    obdb.title = 'ĐB'; ob1.title = 'G.1'; ob2.title = 'G.2'; ob3.title = 'G.3'; ob4.title = 'G.4'; ob5.title = 'G.5'; ob6.title = 'G.6'; ob7.title = 'G.7'; 
-                    var s1s2 = (dataLottery[j].s1? dataLottery[j].s1 :dataLottery[j].s2);
+                    var title_kq = dataLottery[keyItem].pc + dataLottery[keyItem].rd;
+                    var obdb = {}, ob1 = {}, ob2 = {}, ob3 = {}, ob4 = {}, ob5 = {}, ob6 = {}, ob7 = {}; ob8 = {};
+                    obdb.title = 'ĐB'; ob1.title = 'G.1'; ob2.title = 'G.2'; ob3.title = 'G.3'; ob4.title = 'G.4'; 
+                    ob5.title = 'G.5'; ob6.title = 'G.6'; ob7.title = 'G.7'; ob8.title = 'G.8';
+                    var s1s2 = (dataLottery[keyItem].s1? dataLottery[keyItem].s1 :dataLottery[keyItem].s2);
                     var arr_kqdb = s1s2.split(' - ');
                     obdb.arr_kqdb = arr_kqdb;
                     obj_cli.db = obdb;
         
-                    var kq1_string = dataLottery[j].p1;
+                    var kq1_string = dataLottery[keyItem].p1;
                     var arr_kq1 = kq1_string.split(' - ');
                     ob1.arr_kq1 = arr_kq1;
                     var mang_loto1 = arr_kqdb.concat(arr_kq1);
                     obj_cli.g1 = ob1;
         
-                    var kq2_string = dataLottery[j].p2;
+                    var kq2_string = dataLottery[keyItem].p2;
                     var arr_kq2 = kq2_string.split(' - ');
                     ob2.arr_kq2 = arr_kq2;
                     var mang_loto2 = mang_loto1.concat(arr_kq2);
                     obj_cli.g2 = ob2;
         
-                    var kq3_string = dataLottery[j].p3;
+                    var kq3_string = dataLottery[keyItem].p3;
                     var arr_kq3 = kq3_string.split(' - ');
                     ob3.arr_kq3 = arr_kq3;
                     var mang_loto3 = mang_loto2.concat(arr_kq3);
                     obj_cli.g3 = ob3;
         
-                    var kq4_string = dataLottery[j].p4;
+                    var kq4_string = dataLottery[keyItem].p4;
                     var arr_kq4 = kq4_string.split(' - ');
                     ob4.arr_kq4 = arr_kq4;
                     var mang_loto4 = mang_loto3.concat(arr_kq4);
                     obj_cli.g4 = ob4;
         
-                    var kq5_string = dataLottery[j].p5;
+                    var kq5_string = dataLottery[keyItem].p5;
                     var arr_kq5 = kq5_string.split(' - ');
                     ob5.arr_kq5 = arr_kq5;
                     var mang_loto5 = mang_loto4.concat(arr_kq5);
                     obj_cli.g5 = ob5;
         
-                    var kq6_string = dataLottery[j].p6;
+                    var kq6_string = dataLottery[keyItem].p6;
                     var arr_kq6 = kq6_string.split(' - ');
                     ob6.arr_kq6 = arr_kq6;
                     var mang_loto6 = mang_loto5.concat(arr_kq6);
                     obj_cli.g6 = ob6;
         
-                    var kq7_string = dataLottery[j].p7;
+                    var kq7_string = dataLottery[keyItem].p7;
                     var arr_kq7 = kq7_string.split(' - ');
                     ob7.arr_kq7 = arr_kq7;
-                    var mang_loto7 = mang_loto6.concat(arr_kq7);
+                    var mang_loto_7 = mang_loto6.concat(arr_kq7);
                     obj_cli.g7 = ob7;
-                    obj_cli.mang_loto7 = mang_loto7;
+
+                    var kq8_string = dataLottery[keyItem].p8;
+                    var arr_kq8 = kq8_string.split(' - ');
+                    ob8.arr_kq8 = arr_kq8;
+                    var mang_loto7 = mang_loto_7.concat(arr_kq8);
+                    obj_cli.g8 = ob8;
+                    obj_cli.mang_loto7 = mang_loto_7;
+
                     mang_kq_tong[key_push] = obj_cli;
-               }
-           }
+            }
         }
         var checkobj = JSON.stringify(mang_kq_tong);
-                    console.log("GIa Tri OBJ cli TOng: ===>>>" + checkobj);
         if(checkDataNotNull == false){
             rowItem = setItemRowDrag(rowItem, date_row, 0);
             checkRowItemIsCurrent = true;
-        }   
+        }
+
     }
 
     // ham gop mang thanh text
@@ -119,6 +136,27 @@ export default class ResultLottery2 extends Component {
         return textShow;
     }
 
+    // ham kiem tra xem obj da co trong mang ket qua chua
+    checkObjData(rowItem, dataLottery){
+        var date_quay = moment(rowItem.rd).format('YYYYMMDD');
+        var check = false;
+        console.log("ROW ITEMjjj: ===>>>" + JSON.stringify(rowItem));
+        for(var i=0; i< rowItem.code.length; i++){
+            var keyItem = rowItem.code[i] + '_'+date_quay;
+            console.log("KEY: ===>>>" + keyItem);
+            console.log("OBJ: ===>>>" + JSON.stringify(dataLottery[keyItem]));
+            console.log("data: ===>>>" + JSON.stringify(dataLottery));
+            if(dataLottery[keyItem] == null){
+                check = true;
+            }
+        }
+        if(check == false){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     setTitle(rowItem, _date){
         var indexDay = _date.getDay();
         var title_result =  '';
@@ -141,10 +179,10 @@ export default class ResultLottery2 extends Component {
         var time = '';
         if(value == 2){
             str = 'Miền Trung - Hôm nay, ';
-            time = "(quay lúc 17h 10')";
+            time = "(quay lúc 17h 15')";
         }else if(value == 3){
             str = 'Miền Nam - Hôm nay, ';
-            time = "(quay lúc 16h 10')";
+            time = "(quay lúc 16h 15')";
         }
         
         str = str + getDayOfWeek(indexDay) +  ", " + moment(date_current).format('DD/MM/YYYY') + time;
@@ -155,21 +193,97 @@ export default class ResultLottery2 extends Component {
         super(props);
         this.state = {
             drag_left: true,
+            value_test: 0,
+            // result: false
           };
           dataLottery = this.props.navigation.state.params.data_lottery;
           var rowItem_source = this.props.navigation.state.params.row;
-          checkRowItemIsCurrent = false;
           rowItem = JSON.parse(JSON.stringify(rowItem_source));
-          date_row = new Date(rowItem.rd);
-          if(rowItem.status_kq == ''){
-              rowItem = setItemRowDrag(rowItem, date_row,0);
-              this.formatLottery(rowItem, dataLottery);
-              checkRowItemIsCurrent = true;
+          if(rowItem.rd == moment().format('YYYY-MM-DD')){
+            checkRowItemIsCurrent = true;
           }else{
-              this.formatLottery(rowItem, dataLottery);
+              checkRowItemIsCurrent = false;
           }
+          console.log("GIa tri ROW ITEM LAY RA: " + JSON.stringify(rowItem));
+          date_row = new Date(rowItem.rd);
+          console.log("DATA2: ===>>>" + JSON.stringify(dataLottery));
+
+          //set ngày hiện tại theo giờ
+            dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 15:49'); //.format('YYYY/MM/DD HH:mm:ss')
+            dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
       }
-    
+
+      componentWillMount(){
+        if(this.checkObjData(rowItem, dataLottery) == false){ // nếu kết quả ngày hiện tại chưa có
+            var timeCurrent = moment();
+            // nếu trong khung giờ quay
+            if(timeCurrent>= dateTimeBatDauQuay && timeCurrent< dateTimeDungQuay){
+                console.log("CHay vao 1");
+                checkRowItemIsCurrent = true;
+                showResult = false;
+            }else {
+                console.log("CHay vao 2");
+                rowItem = setItemRowDrag(rowItem, date_row,0);
+                if(this.checkObjData(rowItem, dataLottery) == true){
+                    this.formatLottery(rowItem, dataLottery);
+                    console.log("CHay vao 1");
+                    showResult = true;
+                }else {
+                    showResult = false;
+                }
+                checkRowItemIsCurrent = true;
+            }
+        }else{ // kết quả ngày hiện tại đã có
+            console.log("CHay vao 3");
+            console.log("GIA TRI STATE dau vao: " + this.state.result);
+            this.formatLottery(rowItem, dataLottery);
+            showResult = true;
+            checkRowItemIsCurrent = false;
+            console.log("GIA TRI STATE dau ra: " + this.state.result);
+        } 
+
+        setInterval(()=>{
+            console.log("INTEVAL BEN RESUL CHAY");
+            if(moment() >= dateTimeBatDauQuay && moment() < dateTimeDungQuay){
+                //kiểm tra nếu đang ở ngày hiện tại mà trong khung giờ quay mà đang hiện kq ngày hôm trước thì set lại rowItem
+                console.log("INTEVAL BEN RESUL CHAY: TMDK KHUNG GIO QUAY" + checkRowItemIsCurrent + '   và  '+ showResult);
+                
+                if(checkRowItemIsCurrent == true){
+                    console.log("INTEVAL BEN RESUL CHAY: TMDK NGAY HIEN TAI VA : " + showResult );
+                    rowItem.rd = moment().format('YYYY-MM-DD');
+                    date_row = new Date(rowItem.rd);
+                    rowItem = setItemRowDrag(rowItem, date_row,2);
+                    //nếu kq ngày hiện tại đã có (trực tiếp)
+                    if(this.checkObjData(rowItem, dataLottery) == true){
+                        console.log("CO ket quả trực tiếp ngày hôm nay");
+                        checkRowItemIsCurrent = false;
+                        this.formatLottery(rowItem, dataLottery);
+                        showResult = true;
+                    }else {
+                        showResult = false;
+                    }
+                }
+                this.setState({
+                    value_test: 1,
+                })
+                } 
+            },10000)
+    }
+
+
+    shouldComponentUpdate(){
+        return true;
+    }
+
+    componentWillUpdate(){
+      
+      console.log("TIMER componentWillUpdate: " + JSON.stringify(rowItem));
+    }
+
+    componentDidUpdate(){
+      console.log("TIMER componentDidUpdate: " + JSON.stringify(rowItem));
+    }
+
       onSwipeUp(gestureState) {
         // this.setState({myText: 'You swiped up!'});
       }
@@ -179,9 +293,37 @@ export default class ResultLottery2 extends Component {
       }
     
       onSwipeLeft(gestureState) {
-        rowItem = setItemRowDrag(rowItem, date_row, 1);
-        date_row = new Date(rowItem.rd); 
-        this.formatLottery(rowItem, dataLottery);
+        if(rowItem.rd != moment().format('YYYY-MM-DD')){
+            rowItem = setItemRowDrag(rowItem, date_row, 1);
+            date_row = new Date(rowItem.rd); 
+            if(this.checkObjData(rowItem, dataLottery) == true){
+                this.formatLottery(rowItem, dataLottery);
+                showResult = true;
+            }else {
+                var timeCurrent = moment();
+                if(timeCurrent>= dateTimeBatDauQuay && timeCurrent< dateTimeDungQuay){
+                    console.log('KEO TRAI TH DANG TRONG KG QUAY: ===>' + JSON.stringify(rowItem));
+                    checkRowItemIsCurrent = true;
+                    showResult = false;
+                }else {
+                    console.log('KEO TRAI TH DANG Ngoai khung gio quay: ===>' + JSON.stringify(rowItem));
+                    if(rowItem.rd === moment().format('YYYY-MM-DD')){
+                        console.log('KEO TRAI TH DANG TRONG KG QUAY: TMDK===>' + JSON.stringify(rowItem));
+                        rowItem = setItemRowDrag(rowItem, date_row, 0);
+                        checkRowItemIsCurrent = false; 
+                        date_row = new Date(rowItem.rd); 
+                        if(this.checkObjData(rowItem, dataLottery) == true){
+                            this.formatLottery(rowItem, dataLottery);
+                            showResult = true;
+                        }else {
+                            showResult = false;
+                        }
+                        checkRowItemIsCurrent = true;
+                    }
+                }
+                
+            }
+        }  
       }
     
       onSwipeRight(gestureState) {
@@ -189,7 +331,14 @@ export default class ResultLottery2 extends Component {
         checkRowItemIsCurrent = false; 
         date_row = new Date(rowItem.rd); 
         rowItem.status_kq = '0';
-        this.formatLottery(rowItem, dataLottery);
+        if(this.checkObjData(rowItem, dataLottery) == true){
+            console.log("CHAY VAO KEO PHAI");
+            this.formatLottery(rowItem, dataLottery);
+            showResult = true;
+        }else {
+            console.log("CHAY VAO KEO PHAI 0");
+            showResult = false;
+        }
       }
     
       onSwipe(gestureName, gestureState) {
@@ -250,399 +399,426 @@ export default class ResultLottery2 extends Component {
                     <Text style = {{textAlign: 'center', width: widthScreen, color: '#0000FF', padding: checkRowItemIsCurrent == true? 10 : 0, fontSize: 16}}>
                         {checkRowItemIsCurrent == true? this.setTitleToday(rowItem.area_id == 2?2:3) : ''}
                     </Text>
-                    <Text style = {{textAlign: 'center', width: widthScreen, color: 'black', padding: 10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
-                    <View style = {{flex: 1, backgroundColor: 'grey', marginHorizontal: 2}}>
 
-                        <View style = {style.row_result_title}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5 ,
-                                textAlign: 'center', color: 'white', fontWeight: 'bold',fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>Giải</Text>
-                            
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
-                                {rowItem.name[0]}
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
-                                {rowItem.name[1]}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: rowItem.code.length == 4? 1 : 0,}}>
-                                {rowItem.code.length >= 3? rowItem.name[2] : ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red'}}>
-                                {rowItem.code.length == 4? rowItem.name[3] : ''}
-                            </Text>
+                    {
+                        showResult?
+                        <View style={{flex:1}}>
+                        <Text style = {{textAlign: 'center', width: widthScreen, color: 'black', padding: 10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
+                        <View style = {{flex: 1, backgroundColor: 'grey', marginHorizontal: 2}}>
+    
+                            <View style = {style.row_result_title}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5 ,
+                                    textAlign: 'center', color: 'white', fontWeight: 'bold',fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>Giải</Text>
+                                
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
+                                    {rowItem.name[0]}
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
+                                    {rowItem.name[1]}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: rowItem.code.length == 4? 1 : 0,}}>
+                                    {rowItem.code.length >= 3? rowItem.name[2] : ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red'}}>
+                                    {rowItem.code.length == 4? rowItem.name[3] : ''}
+                                </Text>
+                            </View>
+
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g8.title}</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.margeArrToString(objResult_1.g8.arr_kq8)}
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.margeArrToString(objResult_2.g8.arr_kq8)}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g8.arr_kq8) : ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g8.arr_kq8) : ''}
+                                </Text>
+                            </View> 
+    
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g7.title}</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.margeArrToString(objResult_1.g7.arr_kq7)}
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.margeArrToString(objResult_2.g7.arr_kq7)}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g7.arr_kq7) : ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g7.arr_kq7) : ''}
+                                </Text>
+                            </View>
+    
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g6.title}</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.margeArrToString(objResult_1.g6.arr_kq6)}
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.margeArrToString(objResult_2.g6.arr_kq6)}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g6.arr_kq6) : ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g6.arr_kq6) : ''}
+                                </Text>
+                            </View>
+    
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g5.title}</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.margeArrToString(objResult_1.g5.arr_kq5)}
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.margeArrToString(objResult_2.g5.arr_kq5)}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g5.arr_kq5) : ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g5.arr_kq5) : ''}
+                                </Text>
+                            </View>
+    
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g4.title}</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.margeArrToString(objResult_1.g4.arr_kq4)}
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.margeArrToString(objResult_2.g4.arr_kq4)}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g4.arr_kq4) : ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g4.arr_kq4) : ''}
+                                </Text>
+                            </View>
+    
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g3.title}</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.margeArrToString(objResult_1.g3.arr_kq3)}
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.margeArrToString(objResult_2.g3.arr_kq3)}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g3.arr_kq3) : ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g3.arr_kq3) : ''}
+                                </Text>
+                            </View>
+    
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g2.title}</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.margeArrToString(objResult_1.g2.arr_kq2)}
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.margeArrToString(objResult_2.g2.arr_kq2)}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g2.arr_kq2) : ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g2.arr_kq2) : ''}
+                                </Text>
+                            </View>
+    
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g1.title}</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.margeArrToString(objResult_1.g1.arr_kq1)}
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.margeArrToString(objResult_2.g1.arr_kq1)}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g1.arr_kq1) : ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g1.arr_kq1) : ''}
+                                </Text>
+                            </View>
+    
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.db.title}</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.margeArrToString(objResult_1.db.arr_kqdb)}
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.margeArrToString(objResult_2.db.arr_kqdb)}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.db.arr_kqdb) : ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.margeArrToString(objResult_4.db.arr_kqdb) : ''}
+                                </Text>
+                            </View>
+    
+                            <View style = {{flexDirection: 'row', height: 20, backgroundColor: 'yellow', alignItems: 'center', marginBottom: 2}}>
+                               
+                            </View>
+    
+                            <View style = {style.row_loto}>
+                               <Text style = {style.row_text_title_loto}>Đầu</Text>
+                               <Text style = {style.row_text_content_loto}>Đuôi</Text>
+                            </View>
+    
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>0</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_1.mang_loto7,0) + " "}   
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_2.mang_loto7,0) + " "} 
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,0) + " " : ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,0) + " " : ''}
+                                </Text>
+                            </View>
+    
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>1</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_1.mang_loto7,1)+ " "}   
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_2.mang_loto7,1)+ " "} 
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,1)+ " " : ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,1) + " " : ''}
+                                </Text>
+                            </View>
+    
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>2</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_1.mang_loto7,2)+ " "}   
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_2.mang_loto7,2)+ " "} 
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,2) + " ": ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,2) + " " : ''}
+                                </Text>
+                            </View>
+    
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>3</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_1.mang_loto7,3)+ " "}   
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_2.mang_loto7,3)+ " "} 
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,3) + " ": ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,3) + " " : ''}
+                                </Text>
+                            </View>
+    
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>4</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_1.mang_loto7,4)+ " "}   
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_2.mang_loto7,4)+ " "} 
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,4)+ " " : ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,4) + " " : ''}
+                                </Text>
+                            </View>
+    
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>5</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_1.mang_loto7,5)+ " "}   
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_2.mang_loto7,5)+ " "} 
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,5)+ " " : ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,5) + " " : ''}
+                                </Text>
+                            </View>
+    
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>6</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_1.mang_loto7,6)+ " "}   
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_2.mang_loto7,6)+ " "} 
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,6) + " ": ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,6) + " " : ''}
+                                </Text>
+                            </View>
+    
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>7</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_1.mang_loto7,7)+ " "}   
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_2.mang_loto7,7)+ " "} 
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,7) + " ": ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,7) + " " : ''}
+                                </Text>
+                            </View>
+    
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>8</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_1.mang_loto7,8)+ " "}   
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_2.mang_loto7,8)+ " "} 
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,8)+ " " : ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,8) + " " : ''}
+                                </Text>
+                            </View>
+    
+                            <View style = {style.row_result}>
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>9</Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_1.mang_loto7,9)+ " "}   
+                                </Text>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    {this.filterNumber(objResult_2.mang_loto7,9)+ " "} 
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,9) + " ": ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,9) + " " : ''}
+                                </Text>
+                            </View>
+    
                         </View>
+                        </View>:null
+                    }
 
-                        <View style = {style.row_result}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
-                                fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g7.title}</Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.margeArrToString(objResult_1.g7.arr_kq7)}
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.margeArrToString(objResult_2.g7.arr_kq7)}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g7.arr_kq7) : ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g7.arr_kq7) : ''}
-                            </Text>
-                        </View>
-
-                        <View style = {style.row_result}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
-                                fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g6.title}</Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.margeArrToString(objResult_1.g6.arr_kq6)}
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.margeArrToString(objResult_2.g6.arr_kq6)}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g6.arr_kq6) : ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g6.arr_kq6) : ''}
-                            </Text>
-                        </View>
-
-                        <View style = {style.row_result}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
-                                fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g5.title}</Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.margeArrToString(objResult_1.g5.arr_kq5)}
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.margeArrToString(objResult_2.g5.arr_kq5)}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g5.arr_kq5) : ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g5.arr_kq5) : ''}
-                            </Text>
-                        </View>
-
-                        <View style = {style.row_result}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
-                                fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g4.title}</Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.margeArrToString(objResult_1.g4.arr_kq4)}
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.margeArrToString(objResult_2.g4.arr_kq4)}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g4.arr_kq4) : ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g4.arr_kq4) : ''}
-                            </Text>
-                        </View>
-
-                        <View style = {style.row_result}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
-                                fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g3.title}</Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.margeArrToString(objResult_1.g3.arr_kq3)}
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.margeArrToString(objResult_2.g3.arr_kq3)}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g3.arr_kq3) : ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g3.arr_kq3) : ''}
-                            </Text>
-                        </View>
-
-                        <View style = {style.row_result}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
-                                fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g2.title}</Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.margeArrToString(objResult_1.g2.arr_kq2)}
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.margeArrToString(objResult_2.g2.arr_kq2)}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g2.arr_kq2) : ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g2.arr_kq2) : ''}
-                            </Text>
-                        </View>
-
-                        <View style = {style.row_result}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
-                                fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g1.title}</Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.margeArrToString(objResult_1.g1.arr_kq1)}
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.margeArrToString(objResult_2.g1.arr_kq1)}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g1.arr_kq1) : ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g1.arr_kq1) : ''}
-                            </Text>
-                        </View>
-
-                        <View style = {style.row_result}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
-                                fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.db.title}</Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.margeArrToString(objResult_1.db.arr_kqdb)}
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.margeArrToString(objResult_2.db.arr_kqdb)}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.db.arr_kqdb) : ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'black', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length == 4?  this.margeArrToString(objResult_4.db.arr_kqdb) : ''}
-                            </Text>
-                        </View>
-
-                        <View style = {{flexDirection: 'row', height: 20, backgroundColor: 'yellow', alignItems: 'center', marginBottom: 2}}>
-                           
-                        </View>
-
-                        <View style = {style.row_loto}>
-                           <Text style = {style.row_text_title_loto}>Đầu</Text>
-                           <Text style = {style.row_text_content_loto}>Đuôi</Text>
-                        </View>
-
-                        <View style = {style.row_result}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
-                                fontWeight: 'bold',fontSize: 16, marginRight: 1}}>0</Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_1.mang_loto7,0) + " "}   
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_2.mang_loto7,0) + " "} 
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,0) + " " : ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,0) + " " : ''}
-                            </Text>
-                        </View>
-
-                        <View style = {style.row_result}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
-                                fontWeight: 'bold',fontSize: 16, marginRight: 1}}>1</Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_1.mang_loto7,1)+ " "}   
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_2.mang_loto7,1)+ " "} 
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,1)+ " " : ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,1) + " " : ''}
-                            </Text>
-                        </View>
-
-                        <View style = {style.row_result}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
-                                fontWeight: 'bold',fontSize: 16, marginRight: 1}}>2</Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_1.mang_loto7,2)+ " "}   
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_2.mang_loto7,2)+ " "} 
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,2) + " ": ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,2) + " " : ''}
-                            </Text>
-                        </View>
-
-                        <View style = {style.row_result}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
-                                fontWeight: 'bold',fontSize: 16, marginRight: 1}}>3</Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_1.mang_loto7,3)+ " "}   
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_2.mang_loto7,3)+ " "} 
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,3) + " ": ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,3) + " " : ''}
-                            </Text>
-                        </View>
-
-                        <View style = {style.row_result}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
-                                fontWeight: 'bold',fontSize: 16, marginRight: 1}}>4</Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_1.mang_loto7,4)+ " "}   
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_2.mang_loto7,4)+ " "} 
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,4)+ " " : ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,4) + " " : ''}
-                            </Text>
-                        </View>
-
-                        <View style = {style.row_result}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
-                                fontWeight: 'bold',fontSize: 16, marginRight: 1}}>5</Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_1.mang_loto7,5)+ " "}   
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_2.mang_loto7,5)+ " "} 
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,5)+ " " : ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,5) + " " : ''}
-                            </Text>
-                        </View>
-
-                        <View style = {style.row_result}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
-                                fontWeight: 'bold',fontSize: 16, marginRight: 1}}>6</Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_1.mang_loto7,6)+ " "}   
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_2.mang_loto7,6)+ " "} 
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,6) + " ": ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,6) + " " : ''}
-                            </Text>
-                        </View>
-
-                        <View style = {style.row_result}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
-                                fontWeight: 'bold',fontSize: 16, marginRight: 1}}>7</Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_1.mang_loto7,7)+ " "}   
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_2.mang_loto7,7)+ " "} 
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,7) + " ": ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,7) + " " : ''}
-                            </Text>
-                        </View>
-
-                        <View style = {style.row_result}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
-                                fontWeight: 'bold',fontSize: 16, marginRight: 1}}>8</Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_1.mang_loto7,8)+ " "}   
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_2.mang_loto7,8)+ " "} 
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,8)+ " " : ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,8) + " " : ''}
-                            </Text>
-                        </View>
-
-                        <View style = {style.row_result}>
-                            <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
-                                fontWeight: 'bold',fontSize: 16, marginRight: 1}}>9</Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_1.mang_loto7,9)+ " "}   
-                            </Text>
-                            <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                {this.filterNumber(objResult_2.mang_loto7,9)+ " "} 
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length >= 3? this.filterNumber(objResult_3.mang_loto7,9) + " ": ''}
-                            </Text>
-                            <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                {rowItem.code.length == 4?  this.filterNumber(objResult_4.mang_loto7,9) + " " : ''}
-                            </Text>
-                        </View>
-
-                    </View>
                     </View>
                     </ScrollView>
                     <FloatButtonCompomentScreenResult

@@ -27,7 +27,7 @@ export default class ResultStatistic1 extends Component{
                    'Thống kê tổng hai số cuối xuất hiện trong ' + soLanQuay + ' lần quay xổ số ' + nameTinh:
                    'Thống kê số lần 00 - 99 xuất hiện trong ' + soLanQuay + ' lần quay xổ số ' + nameTinh} 
                 </Text>
-                <View style={{flexDirection: 'row', backgroundColor: 'red', borderBottomColor: 'grey', borderBottomWidth: 1}}>
+                <View style={{flexDirection: 'row', backgroundColor: 'red', borderBottomColor: 'grey', borderBottomWidth: 1, paddingVertical: 2}}>
                     <Text style={{flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold'}}>{type == '0'?'Tổng': 'Số'}</Text>
                     <Text style={{flex: 3, textAlign: 'center', color: 'white', fontWeight: 'bold'}}>Đặc biệt</Text>
                     <Text style={{flex: 3, textAlign: 'center', color: 'white', fontWeight: 'bold'}}>Lô tô</Text>

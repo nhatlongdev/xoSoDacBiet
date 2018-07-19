@@ -26,7 +26,7 @@ export default class ResultStatistic extends Component{
         return(
             <SafeAreaView style = {{flex: 1, marginHorizontal: 2, marginTop: Platform.OS === 'ios'? 30 : 0}}>
                 <Text style = {{fontSize: 14, fontWeight: 'bold', textAlign: 'center', color: 'black'}}>Đầu số xuất hiện trong {soLanQuay} lần quay xổ số {nameTinh}</Text>
-                <View style={{flexDirection: 'row', backgroundColor: 'red', borderBottomColor: 'grey', borderBottomWidth: 1}}>
+                <View style={{flexDirection: 'row', backgroundColor: 'red', borderBottomColor: 'grey', borderBottomWidth: 1, paddingVertical: 2}}>
                     <Text style={{flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold'}}>Đầu</Text>
                     <Text style={{flex: 3, textAlign: 'center', color: 'white', fontWeight: 'bold'}}>Đặc biệt</Text>
                     <Text style={{flex: 3, textAlign: 'center', color: 'white', fontWeight: 'bold'}}>Lô tô</Text>
@@ -44,7 +44,7 @@ export default class ResultStatistic extends Component{
                 >
                 </FlatList>
                 <Text style = {{marginTop: 10, fontSize: 16, fontWeight: 'bold', textAlign: 'center', color: 'black'}}>Đuôi số xuất hiện trong {soLanQuay} lần quay xổ số {nameTinh}</Text>
-                <View style={{flexDirection: 'row', backgroundColor: 'red', borderBottomColor: 'grey', borderBottomWidth: 1}}>
+                <View style={{flexDirection: 'row', backgroundColor: 'red', borderBottomColor: 'grey', borderBottomWidth: 1, paddingVertical: 2}}>
                     <Text style={{flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold'}}>Đuôi</Text>
                     <Text style={{flex: 3, textAlign: 'center', color: 'white', fontWeight: 'bold'}}>Đặc biệt</Text>
                     <Text style={{flex: 3, textAlign: 'center', color: 'white', fontWeight: 'bold'}}>Lô tô</Text>

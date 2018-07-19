@@ -20,7 +20,7 @@ export default class ResultStatistic2 extends Component{
     render(){
         return(
             <View style = {{flex: 1, marginHorizontal: 2}}>
-                <Text style = {{fontSize: 14, fontWeight: 'bold', textAlign: 'center', color: 'black'}}>
+                <Text style = {{fontSize: 14, fontWeight: 'bold', textAlign: 'center', color: 'black', paddingVertical: 2}}>
                     Số xuất hiện nhiều trong {soLanQuay} lần quay xổ số {nameTinh}
                 </Text>
                 <View style={{flexDirection: 'row', backgroundColor: 'red', borderBottomColor: 'grey', borderBottomWidth: 1}}>

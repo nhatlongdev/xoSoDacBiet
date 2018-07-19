@@ -9,9 +9,9 @@ export default class ItemNumDetector extends Component {
     render(){
         return(
             <View style = {{flexDirection: 'row', backgroundColor: 'white'}}>
-                <Text style= {{flex: 3, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'black'}}>{this.props.item.number}</Text>
+                <Text style= {{flex: 2, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'black'}}>{this.props.item.number}</Text>
                 <Text style= {{flex: 2, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'black'}}>{this.props.item.giai}</Text>
-                <Text style= {{flex: 2, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'black'}}>{this.convertDate(this.props.item.date)}</Text>
+                <Text style= {{flex: 3, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'black'}}>{this.convertDate(this.props.item.date)}</Text>
             </View>
         );
     }

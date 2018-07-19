@@ -23,7 +23,7 @@ export default class ResultStatistic3 extends Component{
                 <Text style = {{fontSize: 14, fontWeight: 'bold', textAlign: 'center', color: 'black'}}>
                     Thống kê các số lâu ra trong {soLanQuay} lần quay xổ số {nameTinh}
                 </Text>
-                <View style={{flexDirection: 'row', backgroundColor: 'red', borderBottomColor: 'grey', borderBottomWidth: 1}}>
+                <View style={{flexDirection: 'row', backgroundColor: 'red', borderBottomColor: 'grey', borderBottomWidth: 1, paddingVertical: 2}}>
                     <Text style={{flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold'}}>Số</Text>
                     <Text style={{flex: 6, textAlign: 'center', justifyContent: 'center' , color: 'white', fontWeight: 'bold'}}>Số ngày chưa ra</Text>
                 </View>

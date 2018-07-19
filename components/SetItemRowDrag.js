@@ -8,10 +8,9 @@ var lottery_provinces_schedule = require('../assets/lottery_provinces_.json');
 function setItemRowDrag(rowItem, date_lottery, direction_drag){
         if(direction_drag == 0){
             date_lottery.setDate(date_lottery.getDate()-1);
-        }else {
+        }else if(direction_drag == 1){
             date_lottery.setDate(date_lottery.getDate()+1);
         }
-        
         var day_ = date_lottery.getDay() + 1;
         var value_date = moment(date_lottery).format('YYYY-MM-DD');
         rowItem.rd = value_date;

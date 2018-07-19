@@ -84,7 +84,7 @@ export default class HomeScreen extends Component {
         dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
        
         setInterval(()=>{
-            console.log("GIA TRI THAY DOI TRONG INTERVAL HOME");
+            console.log("INTERVAL HOME");
             var timeCurrent = moment();
             if(timeCurrent>= dateTimeBatDauQuay && timeCurrent< dateTimeDungQuay){
                 // đến khung giờ quay trực tiếp thì 10s request server một lần lấy kết quả
@@ -345,7 +345,7 @@ export default class HomeScreen extends Component {
             data_lottery: dataSwitchKey, row: item})
         }else {
             this.props.navigation.navigate('ResultLottery2', {title: item.text_show , 
-            data_lottery: dataLoadingToServer, row: item, })
+            data_lottery: dataSwitchKey, row: item})
         }
     }
 }

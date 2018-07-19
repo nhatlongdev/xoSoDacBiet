@@ -248,7 +248,7 @@ export default class ResultLottery2 extends Component {
                 //kiểm tra nếu đang ở ngày hiện tại mà trong khung giờ quay mà đang hiện kq ngày hôm trước thì set lại rowItem
                 console.log("INTEVAL BEN RESUL CHAY: TMDK KHUNG GIO QUAY" + checkRowItemIsCurrent + '   và  '+ showResult);
                 
-                if(checkRowItemIsCurrent == true){
+                if(rowItem.rd == moment().format('YYYY-MM-DD')){
                     console.log("INTEVAL BEN RESUL CHAY: TMDK NGAY HIEN TAI VA : " + showResult );
                     rowItem.rd = moment().format('YYYY-MM-DD');
                     date_row = new Date(rowItem.rd);

@@ -93,7 +93,7 @@ export default class ResultLottery extends Component {
             obj_cli.g7 = ob7;
             obj_cli.mang_loto7 = mang_loto7;
 
-            
+
             mang_kq_tong[key_push] = obj_cli;
         }
         if(checkDataNotNull == false){
@@ -213,8 +213,7 @@ export default class ResultLottery extends Component {
                 // console.log("INTEVAL BEN RESUL CHAY");
                 if(moment() >= dateTimeBatDauQuay && moment() < dateTimeDungQuay){
                     //kiểm tra nếu đang ở ngày hiện tại mà trong khung giờ quay mà đang hiện kq ngày hôm trước thì set lại rowItem
-                    if(checkRowItemIsCurrent == true && showResult ==  true){
-                        rowItem.rd = moment().format('YYYY-MM-DD');
+                    if(rowItem.rd == moment().format('YYYY-MM-DD')){
                         //nếu kq ngày hiện tại đã có (trực tiếp)
                         if(this.checkObjData(rowItem, dataLottery) == true){
                             console.log("CO ket quả trực tiếp ngày hôm nay");

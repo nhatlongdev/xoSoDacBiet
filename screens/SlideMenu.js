@@ -14,6 +14,12 @@ var heightScreen = Dimensions.get('window').height;
 var widthScreen = Dimensions.get('window').width;
 export default class SlideMenu extends Component {
 
+    constructor(props){
+        super(props);
+        // dataResultLottery = this.props.navigation.state.params.data;
+        // console.log('XXX: ' + JSON.stringify(dataResultLottery))
+    }
+
     render(){
         return(
             <View style = {style.container}>

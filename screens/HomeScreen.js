@@ -21,6 +21,7 @@ import ExpanableList from 'react-native-expandable-section-flatlist';
 import {Icon} from 'native-base';
 import CircleOption from '../components/CircleOption';
 import FloatButtonCompoment from '../components/FloatButtonCompoment';
+import TextSetting from '../components/TextSetting';
 import ProgressReact from '../components/ProgressReact';
 import moment from 'moment';
 // import {getDataFromServer} from '../networking/Server';
@@ -68,6 +69,7 @@ export default class HomeScreen extends Component {
             dataTam: [],
             load: false,
             showProgress_: true,
+            showSetting: false,
         }
 
         // Tao mảng danh sách ngày cho listView
@@ -109,9 +111,11 @@ export default class HomeScreen extends Component {
                         />
                     </TouchableOpacity>
                     <Text style = {style.text_title}>Xổ số 98 - Trực tiếp</Text>
-                    <Image
-                        source = {require('../images/dots_vertical.png')}
-                    />
+                    <TouchableOpacity onPress = {()=>{this.clickBaChamGocPhai()}}>
+                        <Image
+                            source = {require('../images/dots_vertical.png')}
+                        />
+                    </TouchableOpacity>
                 </View>
 
                 <View style = {style.container_option}>
@@ -175,7 +179,13 @@ export default class HomeScreen extends Component {
                 <FloatButtonCompoment
                     onButtonFloatPress={this.onButtonFloatPress.bind(this)}
                 />
-
+                {
+                    this.state.showSetting?
+                    <TextSetting
+                        onButtonSetting={this.onClickSetting.bind(this)}
+                    /> : null
+                }
+                
             </View>
 
         );
@@ -337,6 +347,18 @@ export default class HomeScreen extends Component {
         setTimeout(() => {
             this.getListDay_tam(dateTam, countLoadmore, 40);
         }, 2000);
+    }
+
+    //click setting
+    onClickSetting(){
+        alert(123)
+    }
+
+    //click ba cham goc phai
+    clickBaChamGocPhai(){
+        this.setState({
+            showSetting: true,
+        })
     }
     
     clickItem(item){

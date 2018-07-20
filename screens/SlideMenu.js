@@ -31,20 +31,20 @@ export default class SlideMenu extends Component {
                     <Text style={{color: 'white', marginTop: 10}}>Xổ số 98 - Trực tiếp</Text>
                     <Text style={{color: '#424242'}}>cskh@xoso98.com</Text>
                 </View>
-                <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Number_Detector_Screen')}}>
+                <TouchableOpacity style = {style.item_option}>
                     <Icon name = {'md-eye'} style = {{color: '#848484', marginRight: 20, marginTop: 10,fontSize: 30,}}/>
                     <Text style = {{marginTop: 10}}>Dò số</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Statistical_Screen')}}>
+                <TouchableOpacity style = {style.item_option} >
                     <Icon name = {'home'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
                     <Text>Thống kê</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('By_Day_Screen')}}>
+                <TouchableOpacity style = {style.item_option} >
                     <Icon name = {'md-calendar'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
                     <Text>Xem kết quả theo ngày</Text>
-                    </TouchableOpacity>
+                </TouchableOpacity>
 
                 <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Comunity_Screen')}}>
                     <Icon name = {'md-star'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
@@ -93,3 +93,19 @@ var style = ({
     }
 
 })
+
+
+// <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Number_Detector_Screen')}}>
+//                     <Icon name = {'md-eye'} style = {{color: '#848484', marginRight: 20, marginTop: 10,fontSize: 30,}}/>
+//                     <Text style = {{marginTop: 10}}>Dò số</Text>
+//                 </TouchableOpacity>
+
+//                 <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Statistical_Screen')}}>
+//                     <Icon name = {'home'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
+//                     <Text>Thống kê</Text>
+//                 </TouchableOpacity>
+
+//                 <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('By_Day_Screen')}}>
+//                     <Icon name = {'md-calendar'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
+//                     <Text>Xem kết quả theo ngày</Text>
+//                 </TouchableOpacity>

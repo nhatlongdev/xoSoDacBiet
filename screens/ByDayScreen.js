@@ -17,13 +17,16 @@ var heightScreen = Dimensions.get('window').height;
 var date_quay = '';
 var item_;
 var day_current;
-var day_click = '';
-var dataFromServer;
+var dataFromServer, dataFromServerWithKey;
+
+// ma code tinh duoc chon
+var codeTinh = 'MB';
 export default class ByDayScreen extends Component {
 
     constructor(props){
         super(props);
         dataFromServer = this.props.navigation.state.params.data;
+        dataFromServerWithKey = this.props.navigation.state.params.data_lottery;
         this.state= {
             selected: data[0]
         }
@@ -78,13 +81,8 @@ export default class ByDayScreen extends Component {
                     }}
                         // onDayPress={(day) => alert()}
                         onDayPress={(day) => {
-                            day_click = `${day.day}-${day.month}-${day.year}`;
-                            if(day.dateString > day_current){
-                                alert('Hiện tại ngày ' + day_click  + ' chưa quay')
-                            }else {
-                                item_.rd = day.dateString;
-                                this.findeResultWithDate(item_, day.dateString);
-                            }
+                            item_.rd = day.dateString;//day.dateString ra dinh dang ngay YYYY-MM-DD
+                            this.findeResultWithDate(item_);
                         }}
                     />
 
@@ -97,6 +95,7 @@ export default class ByDayScreen extends Component {
                                 // alert(JSON.stringify(itemIndex))
                                 // alert(JSON.stringify(data[itemIndex].name))
                                 item_ = data[itemIndex];
+                                codeTinh = item_.code;
                             }
                             }
                        mode={'dropdown'}
@@ -118,14 +117,28 @@ export default class ByDayScreen extends Component {
 
     // ham kiem tra ngay click co ket qua hay ko
     findeResultWithDate(item, date_){
-        var _date = new Date(date_);
+        var _date = new Date(item.rd);
         var day =  _date.getDay()+1;
         var dayString = "," + day + ",";
         if(item_.weekdays.indexOf(dayString) != -1){
-            this.props.navigation.navigate('ResultLotteryByDay',
-            {row: item_, data: dataFromServer})
+            var key = codeTinh + "_" + moment(_date).format('YYYYMMDD')
+            if(dataFromServerWithKey[key] != null){
+                this.props.navigation.navigate('ResultLotteryByDay',
+                {row: item_, data: dataFromServer})
+            }else {
+                var milisecondsDateCurrent = moment(moment().format('YYYY-MM-DD'));
+                var milisecondsDateSelect = moment(item.rd);
+                alert(milisecondsDateCurrent + '----chon ' + milisecondsDateSelect)
+                if(milisecondsDateSelect > milisecondsDateCurrent){
+                    alert('Ngày ' + moment(item.rd).format('DD/MM/YYYY') + " xổ số " + item.name + ' chưa quay')
+                }else if(milisecondsDateSelect < milisecondsDateCurrent){
+                    alert('Ngày ' + moment(item.rd).format('DD/MM/YYYY') + " xổ số " + item.name + ' không có dữ liệu')
+                }else {
+                    alert('Ngày ' + moment(item.rd).format('DD/MM/YYYY') + " xổ số " + item.name + ' chưa quay')
+                }
+            }
         }else {
-            alert('Ngày ' + day_click + " xổ số " + item.name + ' không có lịch quay')
+            alert('Ngày ' + moment(item.rd).format('DD/MM/YYYY') + " xổ số " + item.name + ' không có lịch quay')
         }
     }
 }

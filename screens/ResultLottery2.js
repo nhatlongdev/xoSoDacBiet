@@ -217,6 +217,8 @@ export default class ResultLottery2 extends Component {
                 showResult = false;
                 if(rowItem.rd == moment().format('YYYY-MM-DD')){
                     checkRowItemIsCurrent = true;
+                }else{
+                    checkRowItemIsCurrent = false;
                 }
             }else {
                 if(rowItem.rd == moment().format('YYYY-MM-DD')){
@@ -247,8 +249,8 @@ export default class ResultLottery2 extends Component {
             if(moment() >= dateTimeBatDauQuay && moment() < dateTimeDungQuay){
                 //kiểm tra nếu đang ở ngày hiện tại mà trong khung giờ quay mà đang hiện kq ngày hôm trước thì set lại rowItem
                 console.log("INTEVAL BEN RESUL CHAY: TMDK KHUNG GIO QUAY" + checkRowItemIsCurrent + '   và  '+ showResult);
-                
-                if(rowItem.rd == moment().format('YYYY-MM-DD')){
+                console.log("HHHHHHHHHHHHHHHHHHH---->>>>>" + JSON.stringify(rowItem) + '   và  '+ moment().format('YYYY-MM-DD'));
+                if(checkRowItemIsCurrent == true ||   rowItem.rd == moment().format('YYYY-MM-DD')){
                     console.log("INTEVAL BEN RESUL CHAY: TMDK NGAY HIEN TAI VA : " + showResult );
                     rowItem.rd = moment().format('YYYY-MM-DD');
                     date_row = new Date(rowItem.rd);

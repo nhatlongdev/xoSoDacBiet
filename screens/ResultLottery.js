@@ -45,8 +45,8 @@ export default class ResultLottery extends Component {
             var title_kq = lotteryItem.pc + lotteryItem.rd;
             var obdb = {}, ob1 = {}, ob2 = {}, ob3 = {}, ob4 = {}, ob5 = {}, ob6 = {}, ob7 = {};
             obdb.title = 'ĐB'; ob1.title = 'G.1'; ob2.title = 'G.2'; ob3.title = 'G.3'; ob4.title = 'G.4'; ob5.title = 'G.5'; ob6.title = 'G.6'; ob7.title = 'G.7'; 
-            var s1s2 = (lotteryItem.s1? lotteryItem.s1 :lotteryItem.s2);
-            var arr_kqdb = s1s2.split(' - ');
+            var s1 = lotteryItem.s1;
+            var arr_kqdb = s1.split(' - ');
             obdb.arr_kqdb = arr_kqdb;
             obj_cli.db = obdb;
 
@@ -175,7 +175,7 @@ export default class ResultLottery extends Component {
         console.log("DATA: ===>>>" + JSON.stringify(dataLottery));
         
         //set ngày hiện tại theo giờ
-        dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 18:10'); //.format('YYYY/MM/DD HH:mm:ss')
+        dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 16:46'); //.format('YYYY/MM/DD HH:mm:ss')
         dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
       }
 
@@ -185,7 +185,11 @@ export default class ResultLottery extends Component {
                 // nếu trong khung giờ quay
                 if(timeCurrent>= dateTimeBatDauQuay && timeCurrent< dateTimeDungQuay){
                     showResult = false;
-                    checkRowItemIsCurrent = false;
+                    if(rowItem.rd == moment().format('YYYY-MM-DD')){
+                        checkRowItemIsCurrent = true;
+                    }else { 
+                        checkRowItemIsCurrent = false;
+                    }
                 }else {
                     if(rowItem.rd == moment().format('YYYY-MM-DD')){
                         checkRowItemIsCurrent = true;
@@ -210,10 +214,13 @@ export default class ResultLottery extends Component {
             } 
 
             setInterval(()=>{
-                // console.log("INTEVAL BEN RESUL CHAY");
+                console.log("INTEVAL BEN RESUL CHAY");
                 if(moment() >= dateTimeBatDauQuay && moment() < dateTimeDungQuay){
                     //kiểm tra nếu đang ở ngày hiện tại mà trong khung giờ quay mà đang hiện kq ngày hôm trước thì set lại rowItem
-                    if(rowItem.rd == moment().format('YYYY-MM-DD')){
+                    console.log("TRONG KHUNG GIO QUAY GIa TRi " + rowItem.rd + " ----" + moment().format('YYYY-MM-DD'));
+                    if(checkRowItemIsCurrent == true ||   rowItem.rd == moment().format('YYYY-MM-DD')){
+                        console.log("VAO DAY");
+                        rowItem.rd = moment().format('YYYY-MM-DD');
                         //nếu kq ngày hiện tại đã có (trực tiếp)
                         if(this.checkObjData(rowItem, dataLottery) == true){
                             console.log("CO ket quả trực tiếp ngày hôm nay");
@@ -221,6 +228,8 @@ export default class ResultLottery extends Component {
                             this.formatLottery(rowItem, dataLottery);
                             showResult = true;
                         }else {
+                            console.log("KO CO KET QUA");
+                            checkRowItemIsCurrent = true;
                             showResult = false;
                         }
                     }

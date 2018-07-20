@@ -82,11 +82,11 @@ export default class HomeScreen extends Component {
       dataSwitchKey =  createKeyItem(dataLoadingToServer);
 
         //set ngày hiện tại theo giờ
-        dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 16:15'); //.format('YYYY/MM/DD HH:mm:ss')
+        dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 15:15'); //.format('YYYY/MM/DD HH:mm:ss')
         dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
        
         setInterval(()=>{
-            console.log("INTERVAL HOME");
+            console.log("INTERVAL HOME=====>>>");
             var timeCurrent = moment();
             if(timeCurrent>= dateTimeBatDauQuay && timeCurrent< dateTimeDungQuay){
                 // đến khung giờ quay trực tiếp thì 10s request server một lần lấy kết quả
@@ -136,7 +136,7 @@ export default class HomeScreen extends Component {
                             onPress={()=>{this.props.navigation.navigate('Statistical_Screen'
                             , {data: dataWithProvinces})}}/>
 
-                        <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('By_Day_Screen',{data: dataLoadingToServer})}}>
+                        <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('By_Day_Screen',{data: dataLoadingToServer, data_lottery: dataSwitchKey})}}>
                             <View style = {{width: 50, height: 50, borderRadius:  50/2, backgroundColor: 'green',justifyContent: 'center', alignItems: 'center'}}>
                                 <Icon name={'md-calendar'} style = {{fontSize: 40, color: 'white'}}/>
                             </View>

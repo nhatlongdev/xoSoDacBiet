@@ -64,9 +64,9 @@ export default class HomeScreen extends Component {
         super(props);
         // lấy ds kết quả chuyển từ màn splash sang
         dataLoadingToServer = this.props.navigation.state.params.data_lottery;
-        console.log("pppppppppppppppppCHECK KET QUA TU PLAST SANG"+ JSON.stringify(dataLoadingToServer));
+        // console.log("pppppppppppppppppCHECK KET QUA TU PLAST SANG"+ JSON.stringify(dataLoadingToServer));
         this.state = {
-            dataTam: [],
+            dataTam: this.getListDay_(),
             load: false,
             showProgress_: true,
             showSetting: false,
@@ -97,11 +97,23 @@ export default class HomeScreen extends Component {
     }
 
     componentWillMount() {
-        this.getListDay_tam(dateTam, countLoadmore, 40);
-        this.setTimeShowProgress();
+        
+    }
+
+    shouldComponentUpdate(){
+        return true;
+    }
+
+    componentWillUpdate(){
+        
+    }
+
+    componentDidUpdate(){
+
     }
 
     render(){
+        alert('render lai view')
         return(
             <View style = {{flex: 1, backgroundColor: 'white'}}>
                 <View style = {style.header_style}>
@@ -163,21 +175,30 @@ export default class HomeScreen extends Component {
                 <Text style = {style.text_title_1}>{_string.msg_danh_sach_ket_qua_moi_nhat}</Text>
 
                 <View style = {style.content}>
-                    <FlatList
-                        data = {this.state.dataTam}
-                        renderItem = {this.renderItem}
-                        onEndReachedThreshold = {0.2}
-                        onEndReached = {this.loadMoreData.bind(this)}
-                        keyExtractor={item => JSON.stringify(++key)}
-                    />
+                    <ExpanableList
+                        refreshing = {false}
+                        onRefresh = {()=>{this.refresh()}}
 
-                    <ProgressReact show={this.state.showProgress_}/>
+                        onEndReachedThreshold = {0}
+                        onEndReached = {()=>{
+                            alert('Cham day roi')
+                        }}
+                        dataSource={this.state.dataTam}
+                        headerKey="header"
+                        memberKey="member"
+                        renderRow={this._renderRow}
+                        headerOnPress = {this._headerOnClick}
+                        renderSectionHeaderX={this._renderSection}
+                        openOptions={[]}
+                        isOpen = {false}
+                        keyExtractor={ (item, index) => index.toString() }
+                    />
                 </View>
 
                 {this.state.load && this.loading_view(style.load_more)}
 
                 <FloatButtonCompoment
-                    onButtonFloatPress={this.onButtonFloatPress.bind(this)}
+                    onButtonFloatPress={this.clickRefreshDsDay.bind(this)}
                 />
                 {
                     this.state.showSetting?
@@ -191,49 +212,30 @@ export default class HomeScreen extends Component {
         );
     }
 
-    // set time out cho  progress
-    setTimeShowProgress(){
-        setTimeout(() => {
-           this.setState({
-            showProgress_: false,
-           })
-        }, 10000);
+    _renderRow = (rowItem, rowId, sectionId) => 
+        <TouchableOpacity onPress = {()=>this.clickItem(rowItem, sectionId)}>
+            <ItemRow rowItem = {rowItem}/>
+        </TouchableOpacity>
+    ;
+
+    _renderSection = (section, sectionId)  => 
+         <ItemSection section = {section}/>
+    ;
+
+    _headerOnClick = (sectionId)=> {
+        this.state.dataTam[sectionId].header.status = !this.state.dataTam[sectionId].header.status;
+    }
+
+    // click refresh bottom right
+    clickRefreshDsDay(){
+        this.setState({
+            dataTam: this.state.dataTam,
+        })
     }
     
-    // hiện load more khi kéo lên
-    loading_view(style) {
-        return  <View style={style}>
-                <ActivityIndicator size="small" color="#00ff00" />
-            </View>
-    }
-
-    // item flatlist ==== treeView
-    renderItem = ({ item }) => (
-        <TreeView
-            collapsedItemHeight = {30}
-            data={item.array}
-            renderItem={(item) => (
-            <View style = {{justifyContent: 'center'}}> 
-                {
-                    item.collapsed !== null ?
-                    <View style = {{flexDirection: 'row', alignItems: 'center', marginLeft: 5}}>
-                         <Icon style = {{color:item.collapsed ? Color.black: Color.blue}} name = {item.collapsed ? 'ios-arrow-down' : 'ios-arrow-up'}/>
-                         <Text style = {{marginLeft: 5, color:item.collapsed ?Color.black : Color.blue, fontSize: 20}}>{`${item.title}`}</Text>
-                    </View>
-                     :
-                    <TouchableOpacity onPress = {()=>this.clickItem(item)}>            
-                        <Text style = {{marginLeft: 30, color: '#000044', fontSize: 20, marginVertical: 5}}>{item.text_show}</Text>
-                    </TouchableOpacity>
-                }
-                <View style = {{backgroundColor: '#000044', height: 1}}></View>
-            </View>
-            )}
-        />
-      )
-
-    // hàm tạo danh sách dữ liệu ngày
-    getListDay_tam(date, countLoadmore, size){
-        for (var i = countLoadmore ; i < countLoadmore + 40; i++){
+    // Tạo ds ngày
+    getListDay_(){
+        for (var i = 0 ; i <= 30; i++){
             var title = '';
             var title_screen_result = '';
             if(i == 0){
@@ -241,19 +243,19 @@ export default class HomeScreen extends Component {
             } else if (i == 1){
                 title = 'Hôm qua';
             }
+           
             var item = {};
-            item.id = i;
-            var array = [];
             var to_day = {};
-            var indexDay = dateTam.getDay();
-            title = title != '' ? title + ", " + getDayOfWeek(indexDay) + ", " + moment(dateTam).format('DD/MM')
-                : getDayOfWeek(indexDay) + ", " + moment(dateTam).format('DD/MM');
-            title_screen_result =  getDayOfWeek(indexDay) + ", " + moment(dateTam).format('DD/MM/YYYY');
-            var test_date= moment(dateTam).format('YYYY-MM-DD');
-            to_day.id = i;
+            
+            var indexDay = date_.getDay();
+            title = title != '' ? title + ", " + getDayOfWeek(indexDay) + ", " + moment(date_).format('DD/MM')
+                : getDayOfWeek(indexDay) + ", " + moment(date_).format('DD/MM');
+            title_screen_result =  getDayOfWeek(indexDay) + ", " + moment(date_).format('DD/MM/YYYY');
+            var test_date= moment(date_).format('YYYY-MM-DD');
             to_day.title = title;
             to_day.title_screen_result = title_screen_result;
             to_day.status = false;
+            item.header = to_day;
             var member_= [];
             var tmp_lottery_provinces = JSON.parse(JSON.stringify(lottery_provinces));
             for(var j=0;j< tmp_lottery_provinces.length;j++){
@@ -287,28 +289,16 @@ export default class HomeScreen extends Component {
     
             var _ = require('underscore');
             var member = _.sortBy(member_, 'area_id');
-            to_day.children = member;  
-            array.push(to_day);
-            item.array = array;
-            listDayTam.push(item);
+            item.member = member;  
+    
+            listDay.push(item);
             // set date
-            dateTam.setDate(dateTam.getDate() - 1);
+            date_.setDate(date_.getDate() - 1);
         }
-        this.setState({
-            load: false,
-            dataTam: listDayTam
-        });
+        return listDay;
     }  
 
-    // ham load dữ liệu  
-    loadMoreData(){
-        this.setState({ load: true });
-        countLoadmore = countLoadmore + 40;
-        setTimeout(() => {
-            this.getListDay_tam(dateTam, countLoadmore, 40);
-        }, 1000);
-    }  
-
+    //hàm refresh
     refresh(){
 
     }
@@ -361,13 +351,14 @@ export default class HomeScreen extends Component {
         })
     }
     
-    clickItem(item){
-        if(item.code.length == 1){
-            this.props.navigation.navigate('ResultLottery', {title: item.text_show , 
-            data_lottery: dataSwitchKey, row: item})
+    // hàm click item 
+    clickItem(rowItem, sectionId){
+        if(rowItem.code.length == 1){
+            this.props.navigation.navigate('ResultLottery', {title: rowItem.name + " " + this.state.dataTam[sectionId].header.title_screen_result , 
+            data_lottery: dataSwitchKey, row: rowItem})
         }else {
-            this.props.navigation.navigate('ResultLottery2', {title: item.text_show , 
-            data_lottery: dataSwitchKey, row: item})
+            this.props.navigation.navigate('ResultLottery2', {title: rowItem.name + " " + this.state.dataTam[sectionId].header.title_screen_result , 
+            data_lottery: dataSwitchKey, row: rowItem})
         }
     }
 }
@@ -383,75 +374,28 @@ function createKeyItem(data){
     return dataNew;
 }
 
-// Tao danh sach ngay
-
-
 // ham push giai dac biet vao item
 function pushPropsInItem(member_){
     for (var i = 0; i< member_.length; i++){
         var mang_kq = [];
         var status_kq = '';
-        var text_show = '';
-        if(member_[i].area_id == 1){
-            text_show = 'Miền Bắc';
-        }else if(member_[i].area_id == 2){
-            text_show = 'Miền Trung:';
-        }else{
-            text_show = 'Miền Nam:';
-        }
         for(var k=0; k< member_[i].code.length; k++){
-            var check = false;
-            var checkStatus = 2;
             for(var j=0;j< dataLoadingToServer.length; j++){
                 if(member_[i].code[k] == dataLoadingToServer[j].pc && member_[i].rd == dataLoadingToServer[j].rd){
-                    check = true;
-                    checkStatus = dataLoadingToServer[j].s;
                     var kq_ = (dataLoadingToServer[j].s1?dataLoadingToServer[j].s1: "");
                     kq_ = kq_ + (dataLoadingToServer[j].s2?dataLoadingToServer[j].s2: "");
                     status_kq = dataLoadingToServer[j].s;
                     mang_kq.push(kq_);
-                    if(member_[i].area_id == 1){
-                        if(checkStatus == 0){
-                            text_show = text_show + '(' + kq_ + ')'; 
-                        }else {
-                            text_show = text_show + '(Đang quay)';
-                        }
-                    }else{
-                        if(checkStatus == 0){
-                            text_show = text_show + ' ' + member_[i].name[k] + '(' + kq_ + ')';  
-                        }else {
-                            text_show = text_show + ' ' + member_[i].name[k] + '(Đang quay)'; 
-                        }
-                    }
                 }
             }
-
-            if(check == false){
-                if(member_[i].area_id == 1){
-                    text_show = "Miền Bắc (quay lúc 18h15')";
-                }else {
-                    if(k == 0){
-                        text_show = text_show + ' ' + member_[i].name[k];          
-                    }else if(k == member_[i].code.length - 1){
-                        if(member_[i].area_id == 2){
-                            text_show = text_show + ' - ' + member_[i].name[k] + " (quay lúc 17h15')";
-                        }else {
-                            text_show = text_show + ' - ' + member_[i].name[k] + " (quay lúc 16h15')";
-                        }  
-                    }else {
-                        text_show = text_show + ' - ' + member_[i].name[k];
-                    }
-                }
-            }
-            
         }
-        member_[i].text_show = text_show;
         member_[i].status_kq = status_kq;
         member_[i].mang_kq = mang_kq;
     }
     return member_;
 }
 
+// tra ve ngay
 function getDayOfWeek(value){
     switch (value){
         case 0:

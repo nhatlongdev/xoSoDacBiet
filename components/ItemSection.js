@@ -6,23 +6,18 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { Icon } from 'native-base';
+import Color from '../src/color';
 
 export default class ItemSection extends Component {
-
-    // changeStateClick(){
-    //     this.setState({
-    //         stateArrow: this.state.stateArrow === 'ios-arrow-down'? 'ios-arrow-up': 'ios-arrow-down'
-    //     })
-    // }
 
     render(){
         return(
                 <View style = {style.container}>
                     <View style = {style.container_1}>
-                        <Icon style={{fontSize: 18, color: 'grey'}} 
+                        <Icon style={{fontSize: 18, color: this.props.section.status == false? Color.black : Color.blue}} 
                             name = {this.props.section.status == false ? 'ios-arrow-down' : 'ios-arrow-up'}
                         />
-                        <Text style={style.text_section}>{this.props.section.title}</Text>
+                        <Text style={[style.text_section,{color: this.props.section.status == false? Color.black : Color.blue}]}>{this.props.section.title}</Text>
                     </View>
                     <View style = {{height : 1, backgroundColor: 'grey'}}></View>
                 </View>

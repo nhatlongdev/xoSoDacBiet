@@ -12,12 +12,14 @@ import {Icon} from 'native-base';
 var dataWithProvinces = {};
 var heightScreen = Dimensions.get('window').height;
 var widthScreen = Dimensions.get('window').width;
+
+//biến lấy dữ liệu kết quả sổ xố đã qua xử lý từng miền, từng giải con thành obj riêng
+var dataDetectorStatistic;
+
 export default class SlideMenu extends Component {
 
     constructor(props){
         super(props);
-        // dataResultLottery = this.props.navigation.state.params.data;
-        // console.log('XXX: ' + JSON.stringify(dataResultLottery))
     }
 
     render(){
@@ -31,7 +33,7 @@ export default class SlideMenu extends Component {
                     <Text style={{color: 'white', marginTop: 10}}>Xổ số 98 - Trực tiếp</Text>
                     <Text style={{color: '#424242'}}>cskh@xoso98.com</Text>
                 </View>
-                <TouchableOpacity style = {style.item_option}>
+                <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Number_Detector_Screen')}}>
                     <Icon name = {'md-eye'} style = {{color: '#848484', marginRight: 20, marginTop: 10,fontSize: 30,}}/>
                     <Text style = {{marginTop: 10}}>Dò số</Text>
                 </TouchableOpacity>

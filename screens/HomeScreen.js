@@ -76,6 +76,7 @@ export default class HomeScreen extends Component {
        
         // Tao mảng phuc vu viec thong ke, tra cuu
         dataWithProvinces = createArrPushInItem(dataLoadingToServer);
+        console.log('BBBBB===>>>' + JSON.stringify(dataWithProvinces))
         
     // Chuyển đổi kết quả về dạng key - value (key moi item la--> mã tỉnh_ngày)
     // goi ham chuyen doi key
@@ -113,7 +114,6 @@ export default class HomeScreen extends Component {
     }
 
     render(){
-        alert('render lai view')
         return(
             <View style = {{flex: 1, backgroundColor: 'white'}}>
                 <View style = {style.header_style}>

@@ -5,6 +5,8 @@ import {
     Image
 } from 'react-native';
 import { getDataFromServer } from '../networking/Server';
+import dataLottery_detector_statistic from '../components/DataLottery';
+import {createArrPushInItem} from '../components/CreateArrPushInItem';
 
 var dataLotteProvinces;
 export default class Splash extends Component {
@@ -31,8 +33,8 @@ export default class Splash extends Component {
     refreshFromServer = ()=>{
         getDataFromServer().then((data_)=>{
             dataLotteProvinces = data_;
-            var jsonString = JSON.stringify(dataLotteProvinces);
-            console.log("API TRA VE KET QUA: " + JSON.stringify(dataLotteProvinces));
+            dataLottery_detector_statistic.data = createArrPushInItem(data_);
+            console.log("API TRA VE KET QUA dataLottery_detector_statistic: " + JSON.stringify(dataLottery_detector_statistic));
             this.props.navigation.replace('Home_Screen', {data_lottery: dataLotteProvinces});
         }).catch((error) =>{
 

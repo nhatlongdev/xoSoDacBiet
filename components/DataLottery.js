@@ -1,4 +1,4 @@
 
-var dataLottery_global = { keynew: 123 };
+var dataLottery_detector_statistic = { data: 'hhh' };
 
-export default dataLottery_global;
+export default dataLottery_detector_statistic;

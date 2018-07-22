@@ -17,6 +17,7 @@ import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';
 import ItemNumDetector from '../components/ItemNumDetector';
 import {filterArrDetector} from '../components/FilterArrDetector';
 import Color from '../src/color';
+import dataLottery_detector_statistic from '../components/DataLottery';
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
@@ -37,8 +38,9 @@ export default class NumberDetectorScreen extends Component {
             textSoLanQuay: '30'
         }
         item_ = data[0];
-        dataResultLottery = this.props.navigation.state.params.data;
-        // console.log('HHHH=====>>>>' + JSON.stringify(dataResultLottery));
+
+        dataResultLottery = dataLottery_detector_statistic.data;
+        // console.log('HHHHNEw=====>>>>' + JSON.stringify(dataResultLottery));
     
     }
 

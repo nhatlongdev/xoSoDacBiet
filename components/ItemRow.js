@@ -18,7 +18,7 @@ export default class ItemRow extends Component {
                 if(this.props.rowItem.status_kq != ''){
                     text != '' ? text = text + " - " + arr[i] : text = text + arr[i] + "(" + arr_kq[i] + ")" ;
                 } else {
-                    text != '' ? text = text + " - " + arr[i] : text = text + arr[i] + "(quay lúc 18h 10')";
+                    text != '' ? text = text + " - " + arr[i] : text = text + arr[i] + "(quay lúc 18h 15')";
                 }
             } else if( this.props.rowItem.area_id == 2){
                 if(this.props.rowItem.status_kq != ''){
@@ -26,7 +26,7 @@ export default class ItemRow extends Component {
                 } else {
                     text != '' ? text = text + " - " + arr[i] : text = text + 'Miền Trung: ' + arr[i] ;
                     if(i == arr.length -1){
-                        text = text + "(quay lúc 17h 10')";
+                        text = text + "(quay lúc 17h 15')";
                     }
                 }
             } else{
@@ -35,7 +35,7 @@ export default class ItemRow extends Component {
                 } else {
                     text != '' ? text = text + " - " + arr[i] : text = text + 'Miền Nam: ' + arr[i];
                     if(i == arr.length -1){
-                        text = text + "(quay lúc 16h 10')";
+                        text = text + "(quay lúc 16h 15')";
                     }
                 } 
             }
@@ -62,6 +62,7 @@ var style = ({
     text_style: {
         flex: 1,
         color: 'black',
+        fontWeight: 'bold',
         fontSize: 15,
         marginLeft: 30,
         paddingVertical: 5,

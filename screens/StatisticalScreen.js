@@ -19,6 +19,7 @@ import {thongKeTongHaiSoCuoi_} from '../components/ThongKeTong2SoCuoi';
 import {thongKe_00_99} from '../components/ThongKe_00_99';
 import {ThongKeLoKhan} from '../components/ThongKeLoKhan';
 var dataResultLottery = {};
+import dataLottery_detector_statistic from '../components/DataLottery';
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
@@ -31,7 +32,7 @@ export default class StatisticalScreen extends Component {
             textSoLanQuay: '30'
         }
         item_ = data[0];
-        dataResultLottery = this.props.navigation.state.params.data;
+        dataResultLottery = dataLottery_detector_statistic.data;
     }
 
     renderItem(){

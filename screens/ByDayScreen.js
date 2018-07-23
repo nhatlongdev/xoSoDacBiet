@@ -11,6 +11,8 @@ import {Calendar} from 'react-native-calendars';
 import data from '../components/TinhThanh';
 import moment from 'moment';
 import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';
+import dataSwitchKey_global from '../components/DataLotterySwitchKey_Global';
+import dataLoadingServer_global from '../components/DataLottery_loading_server';
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
@@ -25,8 +27,8 @@ export default class ByDayScreen extends Component {
 
     constructor(props){
         super(props);
-        dataFromServer = this.props.navigation.state.params.data;
-        dataFromServerWithKey = this.props.navigation.state.params.data_lottery;
+        dataFromServer = dataLoadingServer_global.data;
+        dataFromServerWithKey = dataSwitchKey_global.data;
         this.state= {
             selected: data[0]
         }
@@ -128,7 +130,6 @@ export default class ByDayScreen extends Component {
             }else {
                 var milisecondsDateCurrent = moment(moment().format('YYYY-MM-DD'));
                 var milisecondsDateSelect = moment(item.rd);
-                alert(milisecondsDateCurrent + '----chon ' + milisecondsDateSelect)
                 if(milisecondsDateSelect > milisecondsDateCurrent){
                     alert('Ngày ' + moment(item.rd).format('DD/MM/YYYY') + " xổ số " + item.name + ' chưa quay')
                 }else if(milisecondsDateSelect < milisecondsDateCurrent){

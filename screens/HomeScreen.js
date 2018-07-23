@@ -30,7 +30,8 @@ import TreeView from '@zaguini/react-native-tree-view';
 // ham goi api lay ket qua tu server
 import {getDataFromServer} from '../networking/Server';
 import {getDataFromServerTrucTiep} from '../networking/Server';
-import dataLottery_global from '../components/DataLottery';
+import dataSwitchKey_global from '../components/DataLotterySwitchKey_Global';
+import dataLoadingServer_global from '../components/DataLottery_loading_server';
 import Thongke from '../components/Thongke';
 
 
@@ -64,6 +65,7 @@ export default class HomeScreen extends Component {
         super(props);
         // lấy ds kết quả chuyển từ màn splash sang
         dataLoadingToServer = this.props.navigation.state.params.data_lottery;
+        dataLoadingServer_global.data = this.props.navigation.state.params.data_lottery;
         // console.log("pppppppppppppppppCHECK KET QUA TU PLAST SANG"+ JSON.stringify(dataLoadingToServer));
         this.state = {
             dataTam: this.getListDay_(),
@@ -81,6 +83,7 @@ export default class HomeScreen extends Component {
     // Chuyển đổi kết quả về dạng key - value (key moi item la--> mã tỉnh_ngày)
     // goi ham chuyen doi key
       dataSwitchKey =  createKeyItem(dataLoadingToServer);
+      dataSwitchKey_global.data = createKeyItem(dataLoadingToServer);
 
         //set ngày hiện tại theo giờ
         dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 15:15'); //.format('YYYY/MM/DD HH:mm:ss')

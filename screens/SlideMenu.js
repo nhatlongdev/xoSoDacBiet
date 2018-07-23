@@ -38,12 +38,12 @@ export default class SlideMenu extends Component {
                     <Text style = {{marginTop: 10}}>Dò số</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style = {style.item_option} >
+                <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Statistical_Screen')}}>
                     <Icon name = {'home'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
                     <Text>Thống kê</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style = {style.item_option} >
+                <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('By_Day_Screen')}}>
                     <Icon name = {'md-calendar'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
                     <Text>Xem kết quả theo ngày</Text>
                 </TouchableOpacity>

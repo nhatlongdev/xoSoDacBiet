@@ -204,7 +204,7 @@ export default class ResultLottery2 extends Component {
           console.log("DATA2: ===>>>" + JSON.stringify(dataLottery));
 
           //set ngày hiện tại theo giờ
-            dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 15:49'); //.format('YYYY/MM/DD HH:mm:ss')
+            dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 16:10'); //.format('YYYY/MM/DD HH:mm:ss')
             dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
       }
 
@@ -431,183 +431,257 @@ export default class ResultLottery2 extends Component {
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g8.title}</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    {this.margeArrToString(objResult_1.g8.arr_kq8)}
-                                </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    {this.margeArrToString(objResult_2.g8.arr_kq8)}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                    {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g8.arr_kq8) : ''}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                    {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g8.arr_kq8) : ''}
-                                </Text>
+                                <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {this.margeArrToString(objResult_1.g8.arr_kq8)+" "}
+                                    </Text>
+                                </View>    
+                                
+                                <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {this.margeArrToString(objResult_2.g8.arr_kq8)+" "}
+                                    </Text>
+                                </View>
+                                
+                                <View style={{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0,borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    <Text style = {{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g8.arr_kq8)+" " : ''}
+                                    </Text>
+                                </View>                
+
+                                <View style={{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0,borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    <Text style = {{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g8.arr_kq8)+" " : ''}
+                                    </Text>
+                                </View>  
+                                
                             </View> 
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g7.title}</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    {this.margeArrToString(objResult_1.g7.arr_kq7)}
-                                </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    {this.margeArrToString(objResult_2.g7.arr_kq7)}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                    {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g7.arr_kq7) : ''}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                    {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g7.arr_kq7) : ''}
-                                </Text>
-                            </View>
+                                <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {this.margeArrToString(objResult_1.g7.arr_kq7)+" "}
+                                    </Text>
+                                </View>    
+                                
+                                <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {this.margeArrToString(objResult_2.g7.arr_kq7)+" "}
+                                    </Text>
+                                </View>
+                                
+                                <View style={{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0,borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    <Text style = {{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g7.arr_kq7)+" " : ''}
+                                    </Text>
+                                </View>                
+
+                                <View style={{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0,borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    <Text style = {{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g7.arr_kq7)+" " : ''}
+                                    </Text>
+                                </View>  
+                                
+                            </View> 
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g6.title}</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    {this.margeArrToString(objResult_1.g6.arr_kq6)}
-                                </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    {this.margeArrToString(objResult_2.g6.arr_kq6)}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                    {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g6.arr_kq6) : ''}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                    {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g6.arr_kq6) : ''}
-                                </Text>
-                            </View>
+                                <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {this.margeArrToString(objResult_1.g6.arr_kq6)+" "}
+                                    </Text>
+                                </View>    
+                                
+                                <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {this.margeArrToString(objResult_2.g6.arr_kq6)+" "}
+                                    </Text>
+                                </View>
+                                
+                                <View style={{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0,borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    <Text style = {{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g6.arr_kq6)+" " : ''}
+                                    </Text>
+                                </View>                
+
+                                <View style={{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0,borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    <Text style = {{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g6.arr_kq6)+" " : ''}
+                                    </Text>
+                                </View>     
+                            </View> 
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g5.title}</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    {this.margeArrToString(objResult_1.g5.arr_kq5)}
-                                </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    {this.margeArrToString(objResult_2.g5.arr_kq5)}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                    {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g5.arr_kq5) : ''}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                    {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g5.arr_kq5) : ''}
-                                </Text>
-                            </View>
+                                <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {this.margeArrToString(objResult_1.g5.arr_kq5)+" "}
+                                    </Text>
+                                </View>    
+                                
+                                <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {this.margeArrToString(objResult_2.g5.arr_kq5)+" "}
+                                    </Text>
+                                </View>
+                                
+                                <View style={{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0,borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    <Text style = {{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g5.arr_kq5)+" " : ''}
+                                    </Text>
+                                </View>                
+
+                                <View style={{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0,borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    <Text style = {{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g5.arr_kq5)+" " : ''}
+                                    </Text>
+                                </View>     
+                            </View> 
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g4.title}</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    {this.margeArrToString(objResult_1.g4.arr_kq4)}
-                                </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    {this.margeArrToString(objResult_2.g4.arr_kq4)}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                    {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g4.arr_kq4) : ''}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                    {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g4.arr_kq4) : ''}
-                                </Text>
-                            </View>
+                                <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {this.margeArrToString(objResult_1.g4.arr_kq4)+" "}
+                                    </Text>
+                                </View>    
+                                
+                                <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {this.margeArrToString(objResult_2.g4.arr_kq4)+" "}
+                                    </Text>
+                                </View>
+                                
+                                <View style={{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0,borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    <Text style = {{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g4.arr_kq4)+" " : ''}
+                                    </Text>
+                                </View>                
+
+                                <View style={{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0,borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    <Text style = {{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g4.arr_kq4)+" " : ''}
+                                    </Text>
+                                </View>     
+                            </View> 
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g3.title}</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    {this.margeArrToString(objResult_1.g3.arr_kq3)}
-                                </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    {this.margeArrToString(objResult_2.g3.arr_kq3)}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                    {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g3.arr_kq3) : ''}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                    {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g3.arr_kq3) : ''}
-                                </Text>
-                            </View>
+                                <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {this.margeArrToString(objResult_1.g3.arr_kq3)+" "}
+                                    </Text>
+                                </View>    
+                                
+                                <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {this.margeArrToString(objResult_2.g3.arr_kq3)+" "}
+                                    </Text>
+                                </View>
+                                
+                                <View style={{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0,borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    <Text style = {{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g3.arr_kq3)+" " : ''}
+                                    </Text>
+                                </View>                
+
+                                <View style={{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0,borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    <Text style = {{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g3.arr_kq3)+" " : ''}
+                                    </Text>
+                                </View>     
+                            </View> 
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g2.title}</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    {this.margeArrToString(objResult_1.g2.arr_kq2)}
-                                </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    {this.margeArrToString(objResult_2.g2.arr_kq2)}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                    {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g2.arr_kq2) : ''}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                    {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g2.arr_kq2) : ''}
-                                </Text>
-                            </View>
+                                <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {this.margeArrToString(objResult_1.g2.arr_kq2)+" "}
+                                    </Text>
+                                </View>    
+                                
+                                <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {this.margeArrToString(objResult_2.g2.arr_kq2)+" "}
+                                    </Text>
+                                </View>
+                                
+                                <View style={{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0,borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    <Text style = {{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g2.arr_kq2)+" " : ''}
+                                    </Text>
+                                </View>                
+
+                                <View style={{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0,borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    <Text style = {{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g2.arr_kq2)+" " : ''}
+                                    </Text>
+                                </View>     
+                            </View> 
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.g1.title}</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    {this.margeArrToString(objResult_1.g1.arr_kq1)}
-                                </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    {this.margeArrToString(objResult_2.g1.arr_kq1)}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                    {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g1.arr_kq1) : ''}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                    {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g1.arr_kq1) : ''}
-                                </Text>
-                            </View>
+                                <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {this.margeArrToString(objResult_1.g1.arr_kq1)+" "}
+                                    </Text>
+                                </View>    
+                                
+                                <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {this.margeArrToString(objResult_2.g1.arr_kq1)+" "}
+                                    </Text>
+                                </View>
+                                
+                                <View style={{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0,borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    <Text style = {{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.g1.arr_kq1)+" " : ''}
+                                    </Text>
+                                </View>                
+
+                                <View style={{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0,borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    <Text style = {{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {rowItem.code.length == 4?  this.margeArrToString(objResult_4.g1.arr_kq1)+" " : ''}
+                                    </Text>
+                                </View>     
+                            </View> 
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>{objResult_1.db.title}</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    {this.margeArrToString(objResult_1.db.arr_kqdb)}
-                                </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    {this.margeArrToString(objResult_2.db.arr_kqdb)}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
-                                    , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                    {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.db.arr_kqdb) : ''}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'black', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                    {rowItem.code.length == 4?  this.margeArrToString(objResult_4.db.arr_kqdb) : ''}
-                                </Text>
-                            </View>
-    
+                                <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {this.margeArrToString(objResult_1.db.arr_kqdb)+" "}
+                                    </Text>
+                                </View>    
+                                
+                                <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                    <Text style = {{textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {this.margeArrToString(objResult_2.db.arr_kqdb)+" "}
+                                    </Text>
+                                </View>
+                                
+                                <View style={{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0,borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
+                                    <Text style = {{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {rowItem.code.length >= 3?  this.margeArrToString(objResult_3.db.arr_kqdb)+" " : ''}
+                                    </Text>
+                                </View>                
+
+                                <View style={{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0,borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    <Text style = {{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                        {rowItem.code.length == 4?  this.margeArrToString(objResult_4.db.arr_kqdb)+" " : ''}
+                                    </Text>
+                                </View>     
+                            </View> 
+                            
                             <View style = {{flexDirection: 'row', height: 20, backgroundColor: 'yellow', alignItems: 'center', marginBottom: 2}}>
                                
                             </View>
@@ -868,7 +942,7 @@ var style = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#CC9900',
         alignItems: 'center',
-        marginBottom: 1,
+        borderWidth: 0.5,
         borderColor: 'grey',
     },
     row_result_title:{

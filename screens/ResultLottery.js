@@ -175,7 +175,7 @@ export default class ResultLottery extends Component {
         console.log("DATA: ===>>>" + JSON.stringify(dataLottery));
         
         //set ngày hiện tại theo giờ
-        dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 16:46'); //.format('YYYY/MM/DD HH:mm:ss')
+        dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 18:10'); //.format('YYYY/MM/DD HH:mm:ss')
         dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
       }
 
@@ -223,7 +223,7 @@ export default class ResultLottery extends Component {
                         rowItem.rd = moment().format('YYYY-MM-DD');
                         //nếu kq ngày hiện tại đã có (trực tiếp)
                         if(this.checkObjData(rowItem, dataLottery) == true){
-                            console.log("CO ket quả trực tiếp ngày hôm nay");
+                            alert("CO ket quả trực tiếp ngày hôm nay");
                             checkRowItemIsCurrent = false;
                             this.formatLottery(rowItem, dataLottery);
                             showResult = true;
@@ -373,43 +373,58 @@ export default class ResultLottery extends Component {
                     <View style = {{flex: 1, backgroundColor: 'grey', marginHorizontal: 2}}>
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.db.title}</Text>
-                           <Text style = {{flex: 2, textAlign: 'center', color: 'red', 
-                                fontWeight: 'bold', fontSize: 18, borderLeftWidth: 1, borderLeftColor: 'grey'}}>{objResult.db.arr_kqdb}</Text>
+                           <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
+                                <Text style = {[style.row_text_content_result,{color:'red'}]}>{objResult.db.arr_kqdb + " "}</Text>
+                           </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g1.title}</Text>
-                           <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g1.arr_kq1)}</Text>
+                           <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g1.arr_kq1)+" "}</Text>
+                           </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g2.title}</Text>
-                           <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g2.arr_kq2)}</Text>
+                           <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g2.arr_kq2)+" "}</Text>
+                           </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g3.title}</Text>
-                           <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g3.arr_kq3)}</Text>
+                           <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g3.arr_kq3)+" "}</Text>
+                           </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g4.title}</Text>
-                           <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g4.arr_kq4)}</Text>
+                           <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g4.arr_kq4)+" "}</Text>
+                           </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g5.title}</Text>
-                           <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g5.arr_kq5)}</Text>
+                           <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g5.arr_kq5)+" "}</Text>
+                           </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g6.title}</Text>
-                           <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g6.arr_kq6)}</Text>
+                           <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g6.arr_kq6)+" "}</Text>
+                           </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g7.title}</Text>
-                           <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g7.arr_kq7)}</Text>
+                           <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g7.arr_kq7)+" "}</Text>
+                           </View>
                         </View>
 
                         <View style = {{flexDirection: 'row', height: 20, backgroundColor: 'yellow', alignItems: 'center', marginBottom: 2}}>
@@ -518,12 +533,16 @@ var style = StyleSheet.create({
         textAlign: 'center'
     },
     row_result:{
+        borderLeftWidth:1,
+        borderLeftColor:'grey',
+        borderBottomWidth: 1,
+        borderBottomColor: 'grey',
+        borderRightWidth: 1,
+        borderRightColor: 'grey',
         flexDirection: 'row',
         backgroundColor: '#CC9900',
         alignItems: 'center',
-        marginBottom: 1,
-        borderColor: 'grey',
-        
+        marginBottom: 1,   
     },
     row_loto: {
         flexDirection: 'row', 
@@ -541,14 +560,11 @@ var style = StyleSheet.create({
         marginRight: 10,
         paddingHorizontal: 5,
     },
-    row_text_content_result: {
-        flex: 2, 
+    row_text_content_result: { 
         fontSize: 16,
         textAlign: 'center', 
         color: 'black', 
         fontWeight: 'bold',
-        borderLeftWidth: 1, 
-        borderLeftColor: 'grey'
     },
     row_text_title_loto: {
         textAlign: 'center', 

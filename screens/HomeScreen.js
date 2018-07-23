@@ -10,7 +10,8 @@ import {
     stringify,
     TouchableOpacity,
     ScrollView,
-    ActivityIndicator
+    ActivityIndicator,
+    AsyncStorage
 } from 'react-native';
 import OptionsHome from '../components/OptionsHome';
 import listOptionHome from '../components/ListOptionHome';
@@ -34,11 +35,12 @@ import dataSwitchKey_global from '../components/DataLotterySwitchKey_Global';
 import dataLoadingServer_global from '../components/DataLottery_loading_server';
 import Thongke from '../components/Thongke';
 
-
-
 //import color, string
 import Color from '../src/color';
 import _string from '../src/string';
+
+//PushNotification
+import PushNotification from 'react-native-push-notification';
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
@@ -64,8 +66,25 @@ export default class HomeScreen extends Component {
     constructor(props){
         super(props);
         // lấy ds kết quả chuyển từ màn splash sang
-        dataLoadingToServer = this.props.navigation.state.params.data_lottery;
-        dataLoadingServer_global.data = this.props.navigation.state.params.data_lottery;
+        if(this.props.navigation.state.params.net == true){
+            dataLoadingToServer = this.props.navigation.state.params.data_lottery;
+            dataLoadingServer_global.data = this.props.navigation.state.params.data_lottery;
+        }else {
+            console.log('MANG LAY TU SPLASH TRUYEN SANG===>>>' + JSON.parse(this.props.navigation.state.params.data_lottery))
+            dataLoadingToServer = JSON.parse(this.props.navigation.state.params.data_lottery);
+            dataLoadingServer_global.data = JSON.parse(this.props.navigation.state.params.data_lottery);
+        }
+        
+        //save cache
+        if(this.props.navigation.state.params.net == true){
+            this.saveKey(JSON.stringify(dataLoadingToServer));
+        }
+
+        // Chuyển đổi kết quả về dạng key - value (key moi item la--> mã tỉnh_ngày)
+        // goi ham chuyen doi key
+        dataSwitchKey =  createKeyItem(dataLoadingToServer);
+        dataSwitchKey_global.data = createKeyItem(dataLoadingToServer);
+
         // console.log("pppppppppppppppppCHECK KET QUA TU PLAST SANG"+ JSON.stringify(dataLoadingToServer));
         this.state = {
             dataTam: this.getListDay_(),
@@ -80,11 +99,6 @@ export default class HomeScreen extends Component {
         dataWithProvinces = createArrPushInItem(dataLoadingToServer);
         console.log('BBBBB===>>>' + JSON.stringify(dataWithProvinces))
         
-    // Chuyển đổi kết quả về dạng key - value (key moi item la--> mã tỉnh_ngày)
-    // goi ham chuyen doi key
-      dataSwitchKey =  createKeyItem(dataLoadingToServer);
-      dataSwitchKey_global.data = createKeyItem(dataLoadingToServer);
-
         //set ngày hiện tại theo giờ
         dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 15:15'); //.format('YYYY/MM/DD HH:mm:ss')
         dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
@@ -100,8 +114,38 @@ export default class HomeScreen extends Component {
 
     }
 
+    //save cache
+    async getKey() {
+        try {
+          const value = await AsyncStorage.getItem('key_data');
+          console.log('GIA TRI CACHEiiii: ' + value)
+          return value;
+        } catch (error) {
+          console.log("Error retrieving data" + error);
+        }
+    }
+    
+    async saveKey(value) {
+        try {
+          await AsyncStorage.setItem('key_data', value);
+        } catch (error) {
+          console.log("Error saving data" + error);
+        }
+    }
+    
+    async resetKey() {
+        try {
+          await AsyncStorage.removeItem('key_data');
+          const value = await AsyncStorage.getItem('key_data');
+        //   this.setState({myKey: value});
+          
+        } catch (error) {
+          console.log("Error resetting data" + error);
+        }
+    }
+
     componentWillMount() {
-        
+        this.getKey();
     }
 
     shouldComponentUpdate(){
@@ -229,12 +273,20 @@ export default class HomeScreen extends Component {
         this.state.dataTam[sectionId].header.status = !this.state.dataTam[sectionId].header.status;
     }
 
+    //refresh ds 
+    loading_view(style) {
+        <View style={style}>
+            <ActivityIndicator size="small" color="#00ff00" />
+        </View>
+      }
+
     // click refresh bottom right
     clickRefreshDsDay(){
         this.setState({
             dataTam: this.state.dataTam,
         })
     }
+
     
     // Tạo ds ngày
     getListDay_(){
@@ -344,7 +396,14 @@ export default class HomeScreen extends Component {
 
     //click setting
     onClickSetting(){
-        alert(123)
+        this.setState({
+            showSetting: false,
+        })
+        PushNotification.localNotification({
+            message: "My Notification Message", // (required)
+            bigText: "My big text that will be shown when notification is expanded", // (optional) default: "message" prop
+            subText: "This is a subText", // (optional) default: none
+        })
     }
 
     //click ba cham goc phai
@@ -383,13 +442,12 @@ function pushPropsInItem(member_){
         var mang_kq = [];
         var status_kq = '';
         for(var k=0; k< member_[i].code.length; k++){
-            for(var j=0;j< dataLoadingToServer.length; j++){
-                if(member_[i].code[k] == dataLoadingToServer[j].pc && member_[i].rd == dataLoadingToServer[j].rd){
-                    var kq_ = (dataLoadingToServer[j].s1?dataLoadingToServer[j].s1: "");
-                    kq_ = kq_ + (dataLoadingToServer[j].s2?dataLoadingToServer[j].s2: "");
-                    status_kq = dataLoadingToServer[j].s;
+            var key = member_[i].code[k] + "_" + moment(member_[i].rd).format('YYYYMMDD');
+            if(dataSwitchKey[key]!=null){
+                var kq_ = (dataSwitchKey[key].s1?dataSwitchKey[key].s1: "");
+                    kq_ = kq_ + (dataSwitchKey[key].s2?dataSwitchKey[key].s2: "");
+                    status_kq = dataSwitchKey[key].s;
                     mang_kq.push(kq_);
-                }
             }
         }
         member_[i].status_kq = status_kq;

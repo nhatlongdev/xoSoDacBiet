@@ -3,10 +3,10 @@ import {
 
 } from 'react-native';
 import moment from 'moment';
-var tongGiai = 0;
-var tongLanQuay = 0;
 function thongKeDuoi_(data, item, soLanQuay){
     var mangData = [];
+    var tongGiai = 0;
+    var tongLanQuay = 0;
     var countDau0DacBiet = 0, countDau0LoTo = 0, countDau1DacBiet = 0, countDau1LoTo = 0, countDau2DacBiet = 0, countDau2LoTo = 0
     , countDau3DacBiet = 0, countDau3LoTo = 0, countDau4DacBiet = 0, countDau4LoTo = 0, countDau5DacBiet = 0, countDau5LoTo = 0
     , countDau6DacBiet = 0, countDau6LoTo = 0, countDau7DacBiet = 0, countDau7LoTo = 0, countDau8DacBiet = 0, countDau8LoTo = 0
@@ -70,6 +70,7 @@ function thongKeDuoi_(data, item, soLanQuay){
             }
         }
     }
+
     var obj_0 = {}, obj_1 = {}, obj_2 = {}, obj_3 = {}, obj_4 = {}, obj_5 = {}, obj_6 = {}, obj_7 = {}, obj_8 = {}, obj_9 = {};
     var phanTramDBDau_0 = (countDau0DacBiet / tongLanQuay * 100).toFixed(2);
     var phanTramLoToDau_0 = (countDau0LoTo / tongGiai * 100).toFixed(2);
@@ -162,7 +163,41 @@ function thongKeDuoi_(data, item, soLanQuay){
     obj_9.phanTramLoTo = phanTramLoToDau_9;
     mangData.push(obj_9);
 
-    return mangData;
+    // set min count db, loto
+    var _ = require('underscore');
+    var mangDataAZDB = _.sortBy(mangData, 'countDB');
+    console.log('DB' + JSON.stringify(mangDataAZDB));
+    for(var i=0; i<mangDataAZDB.length; i++){
+        if(i == 0){
+            mangDataAZDB[i].minDB = true;
+            mangDataAZDB[i].maxDB = false;
+        }else if(i === mangDataAZDB.length -1){
+            mangDataAZDB[i].minDB = false;
+            mangDataAZDB[i].maxDB = true;
+        }else {
+            mangDataAZDB[i].minDB = false;
+            mangDataAZDB[i].maxDB = false; 
+        }
+    }
+
+    var mangDataAZLoTo = _.sortBy(mangData, 'countLoTo');
+    console.log('LOTO' + JSON.stringify(mangDataAZLoTo));
+    for(var i=0; i<mangDataAZLoTo.length; i++){
+        if(i == 0){
+            mangDataAZLoTo[i].minLoTo = true;
+            mangDataAZLoTo[i].maxLoTo = false;
+        }else if(i === mangDataAZDB.length -1){
+            mangDataAZLoTo[i].minLoTo = false;
+            mangDataAZLoTo[i].maxLoTo = true;
+        }else {
+            mangDataAZLoTo[i].minLoTo = false;
+            mangDataAZLoTo[i].maxLoTo = false; 
+        }
+    }
+    
+    var mangDataExport = _.sortBy(mangDataAZLoTo, 'name');
+
+    return mangDataExport;
 };
 
 export {thongKeDuoi_};

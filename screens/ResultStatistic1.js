@@ -37,7 +37,7 @@ export default class ResultStatistic1 extends Component{
                     renderItem = {({item, index})=>{
                         return(
                             <ItemStatistic
-                                item = {item} index = {index}
+                                rate1={type === '0'?1.4:5} rate2={type === '0'?1.6:10} item = {item} index = {index}
                             />
                         );
                     }}

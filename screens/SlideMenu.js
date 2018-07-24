@@ -30,8 +30,7 @@ export default class SlideMenu extends Component {
                        style ={{width: 50, height: 50}}
                        source = {require('../images/ic_launcher.png')}
                     />
-                    <Text style={{color: 'white', marginTop: 10}}>Xổ số 98 - Trực tiếp</Text>
-                    <Text style={{color: '#424242'}}>cskh@xoso98.com</Text>
+                    <Text style={{color: 'white', marginTop: 10}}>Xổ số đặc biệt - Trực tiếp</Text>
                 </View>
                 <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Number_Detector_Screen')}}>
                     <Icon name = {'md-eye'} style = {{color: '#848484', marginRight: 20, marginTop: 10,fontSize: 30,}}/>

@@ -30,12 +30,13 @@ export default class NumberDetectorScreen extends Component {
 
     constructor(props){
         super(props);
-        
+        data_detector = [];
         this.state= {
             selected: data[0],
             data_detector: data_detector,
             textSoDo: '',
-            textSoLanQuay: '30'
+            textSoLanQuay: '30',
+            soDoTraCuu: '',
         }
         item_ = data[0];
 
@@ -56,9 +57,9 @@ export default class NumberDetectorScreen extends Component {
         return(
             <View style = {{flex: 1}}>
                 <View style = {style.header_style}>
-                    <Text style = {style.text_style}>Xổ số 98 - Dò số</Text>
+                    <Text style = {style.text_style}>Xổ số đặc biệt - Dò số</Text>
                 </View>
-                <View style = {{padding: 10}}>
+                <View style = {{padding: 10, marginBottom: 5}}>
                     <Text style={{fontSize: 15, fontWeight: 'bold', color: 'black'}}>Chọn tỉnh/thành phố:</Text>
                     <Picker 
                         selectedValue = {this.state.selected}
@@ -67,11 +68,6 @@ export default class NumberDetectorScreen extends Component {
                                 this.setState({
                                     selected: itemValue
                                 })
-                                // alert(JSON.stringify(itemIndex))
-                                // alert(JSON.stringify(data[itemIndex].name))
-                                // alert(JSON.stringify(data[itemIndex]))
-                                // console.log('GIA TRI ITEMVALUE: ' + JSON.stringify(itemValue))
-                                // console.log('GIA TRI ITEM THEO ITEMINDEX: ' + JSON.stringify(data[itemIndex]))
                                 item_ = data[itemIndex];
                             }
                             }
@@ -98,22 +94,26 @@ export default class NumberDetectorScreen extends Component {
                         value = {this.state.textSoDo}
                     />
                     <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center',borderRadius: 2, backgroundColor: '#CCCCCC', height: 50,padding: 5}}
-                                    onPress = {()=>this.numberDetector(item_, this.state.textSoDo, this.state.textSoLanQuay)}
+                                    onPress = {()=>this.state.textSoDo.length == 2?this.numberDetector(item_, this.state.textSoDo, this.state.textSoLanQuay) : 
+                                        this.state.textSoDo.length == 0? alert('Vui lòng nhập số cần dò') : alert('Số dò phải gồm 2 số!')}
                     >
                          <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>TRA CỨU LÔ TÔ, DÒ SỐ</Text>   
                          <Image
                            source={require('../images/right_arrow31.png')}
                          />
                     </TouchableOpacity>
-                    <View style = {{marginTop: 5}}>
-                         <Text style ={{color: Color.blue}}>Số {this.state.textSoDo} xuất hiện {data_detector.length} lần</Text> 
+                    
+                    </View>
+
+                    <View style={{paddingHorizontal:5}}>
+                         <Text style ={{color: Color.blue}}>{this.setTitleResultTraCuu()}</Text> 
                          <View style = {{backgroundColor: 'red', flexDirection: 'row'}}>
                             <Text style= {{flex: 2, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Số</Text>
                             <Text style= {{flex: 2, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Giải</Text>
                             <Text style= {{flex: 3, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Ngày</Text>
                          </View>
                     </View>
-                    <FlatList 
+                    <FlatList   style={{paddingHorizontal:5}}
                                 data = {data_detector}
                                 renderItem = {({item, index})=>{
                                     return(
@@ -124,7 +124,6 @@ export default class NumberDetectorScreen extends Component {
                                 }}
                                 keyExtractor={ (item, index) => index.toString() }> 
                     </FlatList>
-                </View>
 
                 <FloatButtonCompomentExit
                      onButtonFloatPress={this.clickExit.bind(this)}
@@ -134,11 +133,25 @@ export default class NumberDetectorScreen extends Component {
         );
     }
 
+    //set title ket qua tra cuu
+    setTitleResultTraCuu(){
+        var titlte = '';
+        if(this.state.soDoTraCuu != ''){
+            titlte =  'Số ' + this.state.soDoTraCuu + ' xuất hiện ' + data_detector.length + ' lần';
+        }else {
+            titlte =  'Kết quả tra cứu';
+        }
+        return titlte;
+    }
+
     clickExit(){
         this.props.navigation.goBack();
     }
 
     numberDetector(_item, soDo, soLanQuay){
+        this.setState({
+            soDoTraCuu: soDo +"",
+        })
         var arrLotteryOfProvinces = {};
         arrLotteryOfProvinces = dataResultLottery[_item.code];
         console.log('Data dua vao: ' + JSON.stringify(arrLotteryOfProvinces) + " -----" + arrLotteryOfProvinces.length)

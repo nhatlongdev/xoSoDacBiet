@@ -100,7 +100,7 @@ export default class HomeScreen extends Component {
         console.log('BBBBB===>>>' + JSON.stringify(dataWithProvinces))
         
         //set ngày hiện tại theo giờ
-        dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 15:15'); //.format('YYYY/MM/DD HH:mm:ss')
+        dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 14:12'); //.format('YYYY/MM/DD HH:mm:ss')
         dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
        
         setInterval(()=>{
@@ -169,12 +169,12 @@ export default class HomeScreen extends Component {
                             source = {require('../images/menu.png')}
                         />
                     </TouchableOpacity>
-                    <Text style = {style.text_title}>Xổ số 98 - Trực tiếp</Text>
-                    <TouchableOpacity onPress = {()=>{this.clickBaChamGocPhai()}}>
+                    <Text style = {style.text_title}>Xổ số đặc biệt - Trực tiếp</Text>
+                   {/*<TouchableOpacity onPress = {()=>{this.clickBaChamGocPhai()}}>
                         <Image
                             source = {require('../images/dots_vertical.png')}
                         />
-                    </TouchableOpacity>
+                     </TouchableOpacity>*/}
                 </View>
 
                 <View style = {style.container_option}>
@@ -365,7 +365,7 @@ export default class HomeScreen extends Component {
                 load:false,
             })
         }
-        
+        console.log('DS NGAY: ' + JSON.stringify(listDay))
         return listDay;
     }  
 
@@ -463,7 +463,14 @@ function pushPropsInItem(member_){
                 var kq_ = (dataSwitchKey[key].s1?dataSwitchKey[key].s1: "");
                     kq_ = kq_ + (dataSwitchKey[key].s2?dataSwitchKey[key].s2: "");
                     status_kq = dataSwitchKey[key].s;
-                    mang_kq.push(kq_);
+                    if(kq_ != ''){
+                        mang_kq.push(kq_);    
+                    }else {
+
+                    }
+
+            }else{
+                mang_kq.push('0');
             }
         }
         member_[i].status_kq = status_kq;

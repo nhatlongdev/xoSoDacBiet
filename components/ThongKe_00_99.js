@@ -41,7 +41,42 @@ function thongKe_00_99(data, soLanQuay){
         _obj.phanTramLoTo = phanTramLoTo;
         mangData.push(_obj);
     }
-    return mangData;
+
+    // set min count db, loto
+    var _ = require('underscore');
+    var mangDataAZDB = _.sortBy(mangData, 'countDB');
+    console.log('DB' + JSON.stringify(mangDataAZDB));
+    for(var i=0; i<mangDataAZDB.length; i++){
+        if(i == 0){
+            mangDataAZDB[i].minDB = true;
+            mangDataAZDB[i].maxDB = false;
+        }else if(i === mangDataAZDB.length -1){
+            mangDataAZDB[i].minDB = false;
+            mangDataAZDB[i].maxDB = true;
+        }else {
+            mangDataAZDB[i].minDB = false;
+            mangDataAZDB[i].maxDB = false; 
+        }
+    }
+
+    var mangDataAZLoTo = _.sortBy(mangData, 'countLoTo');
+    console.log('LOTO' + JSON.stringify(mangDataAZLoTo));
+    for(var i=0; i<mangDataAZLoTo.length; i++){
+        if(i == 0){
+            mangDataAZLoTo[i].minLoTo = true;
+            mangDataAZLoTo[i].maxLoTo = false;
+        }else if(i === mangDataAZDB.length -1){
+            mangDataAZLoTo[i].minLoTo = false;
+            mangDataAZLoTo[i].maxLoTo = true;
+        }else {
+            mangDataAZLoTo[i].minLoTo = false;
+            mangDataAZLoTo[i].maxLoTo = false; 
+        }
+    }
+    
+    var mangDataExport = _.sortBy(mangDataAZLoTo, 'name');
+
+    return mangDataExport;
 };
 
 export {thongKe_00_99};

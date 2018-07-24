@@ -87,12 +87,12 @@ export default class HomeScreen extends Component {
 
         // console.log("pppppppppppppppppCHECK KET QUA TU PLAST SANG"+ JSON.stringify(dataLoadingToServer));
         this.state = {
-            dataTam: this.getListDay_(),
+            dataTam: this.getListDay_(false),
             load: false,
             showProgress_: true,
             showSetting: false,
         }
-
+        ;
         // Tao mảng danh sách ngày cho listView
        
         // Tao mảng phuc vu viec thong ke, tra cuu
@@ -236,12 +236,12 @@ export default class HomeScreen extends Component {
                         renderRow={this._renderRow}
                         headerOnPress = {this._headerOnClick}
                         renderSectionHeaderX={this._renderSection}
-                        openOptions={[]}
                         isOpen = {false}
                         keyExtractor={ (item, index) => index.toString() }
                     />
                 </View>
 
+                {/* {this.state.load && this.loading_view(style.load_more)} */}
                 {this.state.load && this.loading_view(style.load_more)}
 
                 <FloatButtonCompoment
@@ -271,25 +271,34 @@ export default class HomeScreen extends Component {
 
     _headerOnClick = (sectionId)=> {
         this.state.dataTam[sectionId].header.status = !this.state.dataTam[sectionId].header.status;
+
     }
 
-    //refresh ds 
+    //show indicator refresh ds 
     loading_view(style) {
-        <View style={style}>
-            <ActivityIndicator size="small" color="#00ff00" />
-        </View>
-      }
+        return  <View style={style}>
+                <ActivityIndicator size="small" color="#00ff00" />
+            </View>
+    }
 
     // click refresh bottom right
     clickRefreshDsDay(){
+
         this.setState({
-            dataTam: this.state.dataTam,
+            load: true,
         })
+        let that = this;
+        setTimeout(
+            function(){
+                that.getListDay_(true);
+        }, 2000);
     }
 
     
     // Tạo ds ngày
-    getListDay_(){
+    getListDay_(value){
+        date_ = new Date()
+        listDay = [];
         for (var i = 0 ; i <= 30; i++){
             var title = '';
             var title_screen_result = '';
@@ -350,6 +359,13 @@ export default class HomeScreen extends Component {
             // set date
             date_.setDate(date_.getDate() - 1);
         }
+        if(value == true){
+            this.setState({
+                dataTam: listDay,
+                load:false,
+            })
+        }
+        
         return listDay;
     }  
 
@@ -481,7 +497,7 @@ function getDayOfWeek(value){
 
 var style = StyleSheet.create({
     header_style: {
-        width: widthScreen,
+        width: '100%',
         flex: heightScreen*0.7/100,
         backgroundColor: '#3F51B5',
         flexDirection: 'row',

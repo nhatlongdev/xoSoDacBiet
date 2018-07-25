@@ -40,6 +40,7 @@ export default class Splash extends Component {
             //  ghi de style
             <View style ={[style.container,{ backgroundColor: 'green' }]}>
                 <Image
+                    style={{width: 80, height: 80}}
                     source = {require('../images/ic_launcher.png')}
                 />
                 <Text>Đang tải ...</Text>

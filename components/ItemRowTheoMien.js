@@ -10,7 +10,7 @@ export default class ItemRowTheoMien extends Component {
     render(){
         return(
             <View style={styles.container}>
-                <Text style={styles.style_text}>{this.props.item.title}</Text>
+                <Text style={[styles.style_text,{fontWeight:'bold'}]}>{this.props.item.title}</Text>
                 <Text style={styles.style_text}>{this.showText()}</Text>
             </View>
         );
@@ -36,12 +36,12 @@ export default class ItemRowTheoMien extends Component {
             } else if( this.props.item.area_id == 2){
                 if(this.props.item.status_kq != ''){
                     if(arr_kq[i] != ''){
-                        text != '' ? text = text + " - " + arr[i] + " (" + arr_kq[i] + ")" : text = text + 'Miền Trung: ' + arr[i] + " (" + arr_kq[i] + ")";
+                        text != '' ? text = text + " - " + arr[i] + " (" + arr_kq[i] + ")" : text = text + arr[i] + " (" + arr_kq[i] + ")";
                     }else {
-                        text != '' ? text = text + " - " + arr[i] + " (Đang quay)" : text = text + 'Miền Trung: ' + arr[i] + " (Đang quay)";
+                        text != '' ? text = text + " - " + arr[i] + " (Đang quay)" : text = text + arr[i] + " (Đang quay)";
                     }
                 } else {
-                    text != '' ? text = text + " - " + arr[i] : text = text + 'Miền Trung: ' + arr[i] ;
+                    text != '' ? text = text + " - " + arr[i] : text = text + arr[i] ;
                     if(i == arr.length -1){
                         text = text + " (quay lúc 17h 15')";
                     }
@@ -49,12 +49,12 @@ export default class ItemRowTheoMien extends Component {
             } else{
                 if(this.props.item.status_kq != ''){
                     if(arr_kq[i] != ''){
-                        text != '' ? text = text + " - " + arr[i] + " (" + arr_kq[i] + ")" : text = text + 'Miền Nam: ' + arr[i] + " (" + arr_kq[i] + ")" ;
+                        text != '' ? text = text + " - " + arr[i] + " (" + arr_kq[i] + ")" : text = text + arr[i] + " (" + arr_kq[i] + ")" ;
                     }else{
-                        text != '' ? text = text + " - " + arr[i] + " (Đang quay)" : text = text + 'Miền Nam: ' + arr[i] + " Đang quay)" ;    
+                        text != '' ? text = text + " - " + arr[i] + " (Đang quay)" : text = text + arr[i] + " Đang quay)" ;    
                     }    
                 } else {
-                    text != '' ? text = text + " - " + arr[i] : text = text + 'Miền Nam: ' + arr[i];
+                    text != '' ? text = text + " - " + arr[i] : text = text + arr[i];
                     if(i == arr.length -1){
                         text = text + " (quay lúc 16h 15')";
                     }

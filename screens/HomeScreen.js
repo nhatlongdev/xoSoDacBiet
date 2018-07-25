@@ -181,18 +181,12 @@ export default class HomeScreen extends Component {
     listenChangeRegions(value){
         regionSelected = value;
         if(regionSelected == 0){
-            this.setState({
-                load: true,
-            })
             let that = this;
             setTimeout(
                 function(){
                     that.getListDay_(true);
             }, 2000);
         }else {
-            this.setState({
-                load: true,
-            })
             dataListDayTheoMien = this.getListDay_VungMien(regionSelected);
         }
         this.setState({
@@ -224,7 +218,7 @@ export default class HomeScreen extends Component {
                             source = {require('../images/menu.png')}
                         />
                     </TouchableOpacity>
-                    <Text style = {style.text_title}>{regionSelected}Xổ số đặc biệt - Trực tiếp</Text>
+                    <Text style = {style.text_title}>Xổ số đặc biệt - Trực tiếp</Text>
                    {/*<TouchableOpacity onPress = {()=>{this.clickBaChamGocPhai()}}>
                         <Image
                             source = {require('../images/dots_vertical.png')}
@@ -274,7 +268,7 @@ export default class HomeScreen extends Component {
                    </ScrollView>
                 </View>
 
-                <Text style = {style.text_title_1}>{_string.msg_danh_sach_ket_qua_moi_nhat}</Text>
+                <Text style = {style.text_title_1}>{this.setTitleDsKetquaMoiNhat(regionSelected)}</Text>
 
                 <View style = {style.content}>
                     {
@@ -700,6 +694,7 @@ var style = StyleSheet.create({
         textAlign: 'center'
     },
     text_title_1:{
+        paddingHorizontal: 10,
         width: widthScreen, 
         textAlign: 'center', 
         color: '#0174DF',

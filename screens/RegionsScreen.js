@@ -4,7 +4,8 @@ import {
     Text,
     Dimensions,
     StyleSheet,
-    Image
+    Image,
+    TouchableOpacity
 } from 'react-native';
 import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';
 
@@ -28,24 +29,40 @@ export default class RegionsScreen extends Component {
                 </Text>
                 <View style = {{flex:1, marginHorizontal: 5}}>
                     <View style = {{flexDirection: 'row', marginBottom: 20}}>
-                        <Image
-                            style = {{flex:1, height: 200}}
-                            source = {require('../images/mien_bac.png')}
-                        />
-                        <Image
-                            style = {{flex:1, height: 200}}
-                            source = {require('../images/mien_trung.png')}
-                        />
+                        <TouchableOpacity style={{flex:1,height: 200, width: 180 }}
+                            onPress={()=>{this.clickExit(true,1)}}
+                        >
+                            <Image
+                                style = {{flex:1, height: 200, width: 180}}
+                                source = {require('../images/mien_bac.png')}
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{flex:1, height: 200, width: 180}}
+                                onPress={()=>{this.clickExit(true,2)}}
+                        >
+                            <Image
+                                style = {{flex:1, height: 200, width: 180}}
+                                source = {require('../images/mien_trung.png')}
+                            />
+                        </TouchableOpacity>
                     </View>
                     <View style = {{flexDirection: 'row'}}>
-                        <Image
-                            style = {{flex:1, height: 200}}
-                            source = {require('../images/mien_nam.png')}
-                        />
-                        <Image
-                            style = {{flex:1, height: 200}}
-                            source = {require('../images/toan_quoc.png')}
-                        />
+                        <TouchableOpacity style={{flex:1, height: 200, width: 180}}
+                                onPress={()=>{this.clickExit(true,3)}}
+                        >
+                            <Image
+                                style = {{flex:1, height: 200, width: 180}}
+                                source = {require('../images/mien_nam.png')}
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{flex:1, height: 200, width: 180}}
+                                onPress={()=>{this.clickExit(true,0)}}
+                        >    
+                            <Image
+                                style = {{flex:1, height: 200, width: 180}}
+                                source = {require('../images/toan_quoc.png')}
+                            />
+                        </TouchableOpacity>
                     </View>
                 </View>
 
@@ -57,8 +74,10 @@ export default class RegionsScreen extends Component {
         );
     }
 
-    clickExit(){
-        this.props.navigation.state.params.listenRegions(3);
+    clickExit(check, value){
+        if(check == true){
+            this.props.navigation.state.params.listenRegions(value);
+        }
         this.props.navigation.goBack();
     }
 }

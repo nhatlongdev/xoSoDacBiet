@@ -426,28 +426,28 @@ export default class ResultLottery2 extends Component {
                             </View>
 
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>G.8</Text>
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey', alignItems:'center', justifyContent:'space-between'}}>
-                                    <Text style = {{flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_1?this.margeArrToString(objResult_1.g8.arr_kq8)+" ":" "}
                                     </Text>
                                 </View>    
                                 
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_2?this.margeArrToString(objResult_2.g8.arr_kq8)+" ":" "}
                                     </Text>
                                 </View>
                                 
                                 <View style={{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0,borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {rowItem.code.length >= 3?  objResult_3?this.margeArrToString(objResult_3.g8.arr_kq8)+" ":" " : ''}
                                     </Text>
                                 </View>                
 
                                 <View style={{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0,borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                    <Text style = {{ flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{ flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {rowItem.code.length == 4?  objResult_4?this.margeArrToString(objResult_4.g8.arr_kq8)+" ":" " : ''}
                                     </Text>
                                 </View>  
@@ -455,28 +455,28 @@ export default class ResultLottery2 extends Component {
                             </View> 
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>G.7</Text>
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_1?this.margeArrToString(objResult_1.g7.arr_kq7)+" ": " "}
                                     </Text>
                                 </View>    
                                 
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_2?this.margeArrToString(objResult_2.g7.arr_kq7)+" ":" "}
                                     </Text>
                                 </View>
                                 
                                 <View style={{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0,borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {rowItem.code.length >= 3? objResult_3? this.margeArrToString(objResult_3.g7.arr_kq7)+" ":" " : ''}
                                     </Text>
                                 </View>                
 
                                 <View style={{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0,borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {rowItem.code.length == 4? objResult_4? this.margeArrToString(objResult_4.g7.arr_kq7)+" ":" " : ''}
                                     </Text>
                                 </View>  
@@ -484,175 +484,175 @@ export default class ResultLottery2 extends Component {
                             </View> 
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>G.6</Text>
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_1?this.margeArrToString(objResult_1.g6.arr_kq6)+" ":" "}
                                     </Text>
                                 </View>    
                                 
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_2?this.margeArrToString(objResult_2.g6.arr_kq6)+" ":" "}
                                     </Text>
                                 </View>
                                 
                                 <View style={{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0,borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {rowItem.code.length >= 3? objResult_3? this.margeArrToString(objResult_3.g6.arr_kq6)+" ":" " : ''}
                                     </Text>
                                 </View>                
 
                                 <View style={{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0,borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                    <Text style = {{ flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{ flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {rowItem.code.length == 4? objResult_4? this.margeArrToString(objResult_4.g6.arr_kq6)+" ":" " : ''}
                                     </Text>
                                 </View>     
                             </View> 
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>G.5</Text>
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_1?this.margeArrToString(objResult_1.g5.arr_kq5)+" ":" "}
                                     </Text>
                                 </View>    
                                 
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_2?this.margeArrToString(objResult_2.g5.arr_kq5)+" ":" "}
                                     </Text>
                                 </View>
                                 
                                 <View style={{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0,borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {rowItem.code.length >= 3? objResult_3? this.margeArrToString(objResult_3.g5.arr_kq5)+" ":" ": ''}
                                     </Text>
                                 </View>                
 
                                 <View style={{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0,borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {rowItem.code.length == 4? objResult_4? this.margeArrToString(objResult_4.g5.arr_kq5)+" ":" " : ''}
                                     </Text>
                                 </View>     
                             </View> 
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>G.4</Text>
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_1?this.margeArrToString(objResult_1.g4.arr_kq4)+" ":" "}
                                     </Text>
                                 </View>    
                                 
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_2?this.margeArrToString(objResult_2.g4.arr_kq4)+" ":" "}
                                     </Text>
                                 </View>
                                 
                                 <View style={{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0,borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {rowItem.code.length >= 3? objResult_3? this.margeArrToString(objResult_3.g4.arr_kq4)+" ":" " : ''}
                                     </Text>
                                 </View>                
 
                                 <View style={{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0,borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {rowItem.code.length == 4? objResult_4? this.margeArrToString(objResult_4.g4.arr_kq4)+" ":" " : ''}
                                     </Text>
                                 </View>     
                             </View> 
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>G.3</Text>
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_1?this.margeArrToString(objResult_1.g3.arr_kq3)+" ":" "}
                                     </Text>
                                 </View>    
                                 
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_2?this.margeArrToString(objResult_2.g3.arr_kq3)+" ":" "}
                                     </Text>
                                 </View>
                                 
                                 <View style={{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0,borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                    <Text style = {{ flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{ flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {rowItem.code.length >= 3? objResult_3? this.margeArrToString(objResult_3.g3.arr_kq3)+" ":" " : ''}
                                     </Text>
                                 </View>                
 
                                 <View style={{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0,borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {rowItem.code.length == 4? objResult_4? this.margeArrToString(objResult_4.g3.arr_kq3)+" ":" " : ''}
                                     </Text>
                                 </View>     
                             </View> 
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>G.2</Text>
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_1?this.margeArrToString(objResult_1.g2.arr_kq2)+" ":" "}
                                     </Text>
                                 </View>    
                                 
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_2?this.margeArrToString(objResult_2.g2.arr_kq2)+" ":" "}
                                     </Text>
                                 </View>
                                 
                                 <View style={{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0,borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {rowItem.code.length >= 3? objResult_3? this.margeArrToString(objResult_3.g2.arr_kq2)+" ":" " : ''}
                                     </Text>
                                 </View>                
 
                                 <View style={{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0,borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {rowItem.code.length == 4? objResult_4? this.margeArrToString(objResult_4.g2.arr_kq2)+" ":" " : ''}
                                     </Text>
                                 </View>     
                             </View> 
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>G.1</Text>
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_1?this.margeArrToString(objResult_1.g1.arr_kq1)+" ":" "}
                                     </Text>
                                 </View>    
                                 
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_2?this.margeArrToString(objResult_2.g1.arr_kq1)+" ":" "}
                                     </Text>
                                 </View>
                                 
                                 <View style={{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0,borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
-                                    <Text style = {{flex :1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{flex :1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {rowItem.code.length >= 3? objResult_3? this.margeArrToString(objResult_3.g1.arr_kq1)+" ":" " : ''}
                                     </Text>
                                 </View>                
 
                                 <View style={{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0,borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
-                                    <Text style = {{ flex :1,textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16}}>
+                                    <Text style = {{ flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {rowItem.code.length == 4? objResult_4? this.margeArrToString(objResult_4.g1.arr_kq1)+" ":" " : ''}
                                     </Text>
                                 </View>     
                             </View> 
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>ĐB</Text>
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     <Text style = {{flex :1,textAlign: 'center', color: 'red', fontWeight: 'bold', fontSize: 16}}>
@@ -689,201 +689,201 @@ export default class ResultLottery2 extends Component {
                             </View>
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>0</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,0) + " ":" "}   
                                 </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_2?this.filterNumber(objResult_2.mang_loto7,0) + " ":" "} 
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
                                     , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length >= 3? objResult_3?this.filterNumber(objResult_3.mang_loto7,0) + " ":" " : ''}
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length == 4? objResult_4? this.filterNumber(objResult_4.mang_loto7,0) + " ":" " : ''}
                                 </Text>
                             </View>
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>1</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,1) + " ":" "}   
                                 </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_2?this.filterNumber(objResult_2.mang_loto7,1) + " ":" "} 
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
                                     , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length >= 3? objResult_3?this.filterNumber(objResult_3.mang_loto7,1) + " ":" " : ''}
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length == 4? objResult_4? this.filterNumber(objResult_4.mang_loto7,1) + " ":" " : ''}
                                 </Text>
                             </View>
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>2</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,2) + " ":" "}   
                                 </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_2?this.filterNumber(objResult_2.mang_loto7,2) + " ":" "} 
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
                                     , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length >= 3? objResult_3?this.filterNumber(objResult_3.mang_loto7,2) + " ":" " : ''}
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length == 4? objResult_4? this.filterNumber(objResult_4.mang_loto7,2) + " ":" " : ''}
                                 </Text>
                             </View>
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>3</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,3) + " ":" "}   
                                 </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_2?this.filterNumber(objResult_2.mang_loto7,3) + " ":" "} 
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
                                     , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length >= 3? objResult_3?this.filterNumber(objResult_3.mang_loto7,3) + " ":" " : ''}
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length == 4? objResult_4? this.filterNumber(objResult_4.mang_loto7,3) + " ":" " : ''}
                                 </Text>
                             </View>
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>4</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,4) + " ":" "}   
                                 </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_2?this.filterNumber(objResult_2.mang_loto7,4) + " ":" "} 
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
                                     , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length >= 3? objResult_3?this.filterNumber(objResult_3.mang_loto7,4) + " ":" " : ''}
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length == 4? objResult_4? this.filterNumber(objResult_4.mang_loto7,4) + " ":" " : ''}
                                 </Text>
                             </View>
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>5</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,5) + " ":" "}   
                                 </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_2?this.filterNumber(objResult_2.mang_loto7,5) + " ":" "} 
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
                                     , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length >= 3? objResult_3?this.filterNumber(objResult_3.mang_loto7,5) + " ":" " : ''}
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length == 4? objResult_4? this.filterNumber(objResult_4.mang_loto7,5) + " ":" " : ''}
                                 </Text>
                             </View>
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>6</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,6) + " ":" "}   
                                 </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_2?this.filterNumber(objResult_2.mang_loto7,6) + " ":" "} 
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
                                     , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length >= 3? objResult_3?this.filterNumber(objResult_3.mang_loto7,6) + " ":" " : ''}
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length == 4? objResult_4? this.filterNumber(objResult_4.mang_loto7,6) + " ":" " : ''}
                                 </Text>
                             </View>
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>7</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,7) + " ":" "}   
                                 </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_2?this.filterNumber(objResult_2.mang_loto7,7) + " ":" "} 
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
                                     , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length >= 3? objResult_3?this.filterNumber(objResult_3.mang_loto7,7) + " ":" " : ''}
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length == 4? objResult_4? this.filterNumber(objResult_4.mang_loto7,7) + " ":" " : ''}
                                 </Text>
                             </View>
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>8</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,8) + " ":" "}   
                                 </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_2?this.filterNumber(objResult_2.mang_loto7,8) + " ":" "} 
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
                                     , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length >= 3? objResult_3?this.filterNumber(objResult_3.mang_loto7,8) + " ":" " : ''}
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length == 4? objResult_4? this.filterNumber(objResult_4.mang_loto7,8) + " ":" " : ''}
                                 </Text>
                             </View>
     
                             <View style = {style.row_result}>
-                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'white', 
+                                <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
                                     fontWeight: 'bold',fontSize: 16, marginRight: 1}}>9</Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,9) + " ":" "}   
                                 </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_2?this.filterNumber(objResult_2.mang_loto7,9) + " ":" "} 
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: rowItem.code.length == 4? 1 : 0
                                     , borderLeftWidth: rowItem.code.length >= 3? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length >= 3? objResult_3?this.filterNumber(objResult_3.mang_loto7,9) + " ":" " : ''}
                                 </Text>
                                 <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
+                                    color: 'black', fontWeight: 'bold', fontSize: 16, borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
                                     {rowItem.code.length == 4? objResult_4? this.filterNumber(objResult_4.mang_loto7,9) + " ":" " : ''}
                                 </Text>
                             </View>
@@ -937,7 +937,7 @@ var style = StyleSheet.create({
     },
     row_result:{
         flexDirection: 'row',
-        backgroundColor: '#CC9900',
+        backgroundColor: '#ffffff',
         alignItems: 'center',
         borderWidth: 0.5,
         borderColor: 'grey',

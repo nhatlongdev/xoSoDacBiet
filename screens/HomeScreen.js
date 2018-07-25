@@ -521,6 +521,7 @@ var style = StyleSheet.create({
         flex: heightScreen*7/100,
     },
     text_title:{
+        flex:1,
         fontWeight: 'bold',
         fontSize: 20,
         color: 'white',

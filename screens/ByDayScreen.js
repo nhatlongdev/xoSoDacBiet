@@ -22,7 +22,7 @@ var day_current;
 var dataFromServer, dataFromServerWithKey;
 
 // ma code tinh duoc chon
-var codeTinh = 'MB';
+var codeTinh;
 export default class ByDayScreen extends Component {
 
     constructor(props){
@@ -32,6 +32,7 @@ export default class ByDayScreen extends Component {
         this.state= {
             selected: data[0]
         }
+        codeTinh='MB';
         item_ = data[0];
         var date_current = new Date();
         day_current = moment(date_current).format('YYYY-MM-DD');

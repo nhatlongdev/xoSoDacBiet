@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Icon } from 'native-base';
 
 export default class FloatButtonCompomentExit extends Component {
@@ -9,7 +9,10 @@ export default class FloatButtonCompomentExit extends Component {
             <TouchableOpacity 
                 onPress={this.props.onButtonFloatPress}
                 style={container}>
-                   <Text style = {{fontSize: 20, fontWeight: 'bold', color: 'white'}}>X</Text>
+                <Image
+                    style ={{width: 15, height: 15}}
+                    source = {require('../images/exit.png')}
+                />
             </TouchableOpacity>
         );
     }

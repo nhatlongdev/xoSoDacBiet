@@ -11,11 +11,17 @@ import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
 export default class RegionsScreen extends Component {
+
+    constructor(props){
+        super(props);
+
+    }
+
     render(){
         return(
             <View style = {style.container}>
                 <View style = {style.header_style}>
-                    <Text style = {style.text_style}>Xổ số 98 - Trực tiếp</Text>
+                    <Text style = {style.text_style}>Xổ số đặc biệt - Trực tiếp</Text>
                 </View>
                 <Text style = {{fontSize: 18, marginHorizontal: 10, marginTop: 15, marginBottom: 20}}>
                     Để trải nghiệm tốt hơn, quý khách vui lòng lựa chọn khu vực muốn xem kết quả xổ số
@@ -52,6 +58,7 @@ export default class RegionsScreen extends Component {
     }
 
     clickExit(){
+        this.props.navigation.state.params.listenRegions(3);
         this.props.navigation.goBack();
     }
 }

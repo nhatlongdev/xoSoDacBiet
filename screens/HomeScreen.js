@@ -11,13 +11,14 @@ import {
     TouchableOpacity,
     ScrollView,
     ActivityIndicator,
-    AsyncStorage
+    AsyncStorage,
 } from 'react-native';
 import OptionsHome from '../components/OptionsHome';
 import listOptionHome from '../components/ListOptionHome';
 import dataListDay from '../components/DataListDay';
 import ItemSection from '../components/ItemSection';
 import ItemRow from '../components/ItemRow';
+import ItemRowTheoMien from '../components/ItemRowTheoMien';
 import ExpanableList from 'react-native-expandable-section-flatlist';
 import {Icon} from 'native-base';
 import CircleOption from '../components/CircleOption';
@@ -60,6 +61,12 @@ var dateTimeDungQuay;
 
 var kq_mb_hom_nay = {};
 const key = 0;
+
+//biến lưu tạm thời giá trị vùng miền được chọn
+var regionSelected = 0;
+
+//data list ngay theo mien
+var dataListDayTheoMien;
 export default class HomeScreen extends Component {
 
     // Contructor
@@ -80,6 +87,9 @@ export default class HomeScreen extends Component {
             this.saveKey(JSON.stringify(dataLoadingToServer));
         }
 
+        // lay ds ngay theo mien
+        dataListDayTheoMien = this.getListDay_VungMien(regionSelected);
+
         // Chuyển đổi kết quả về dạng key - value (key moi item la--> mã tỉnh_ngày)
         // goi ham chuyen doi key
         dataSwitchKey =  createKeyItem(dataLoadingToServer);
@@ -91,8 +101,8 @@ export default class HomeScreen extends Component {
             load: false,
             showProgress_: true,
             showSetting: false,
-        }
-        ;
+            changeRegions:0,
+        };
         // Tao mảng danh sách ngày cho listView
        
         // Tao mảng phuc vu viec thong ke, tra cuu
@@ -102,7 +112,7 @@ export default class HomeScreen extends Component {
         //set ngày hiện tại theo giờ
         dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 14:12'); //.format('YYYY/MM/DD HH:mm:ss')
         dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
-       
+
         setInterval(()=>{
             console.log("INTERVAL HOME=====>>>");
             var timeCurrent = moment();
@@ -111,6 +121,13 @@ export default class HomeScreen extends Component {
                 this.refreshFromServer10s();
             }  
         },10000)
+
+        //phương án tạm thời chạy một cái interval để cập nhật trạng thái khi người dùng chọn vùng miền
+        setInterval(()=>{
+
+        },2000)
+
+        var d = this.getListDay_VungMien(0);
 
     }
 
@@ -127,7 +144,7 @@ export default class HomeScreen extends Component {
     
     async saveKey(value) {
         try {
-          await AsyncStorage.setItem('key_data', value);
+          await AsyncStorage.setItem('key_data',value);
         } catch (error) {
           console.log("Error saving data" + error);
         }
@@ -153,11 +170,49 @@ export default class HomeScreen extends Component {
     }
 
     componentWillUpdate(){
-        
+        console.log('GIA TRI DATATAM MOI: ' + JSON.stringify(dataListDayTheoMien))
     }
 
     componentDidUpdate(){
 
+    }
+
+    //hàm set state changeRegions
+    listenChangeRegions(value){
+        regionSelected = value;
+        if(regionSelected == 0){
+            this.setState({
+                load: true,
+            })
+            let that = this;
+            setTimeout(
+                function(){
+                    that.getListDay_(true);
+            }, 2000);
+        }else {
+            this.setState({
+                load: true,
+            })
+            dataListDayTheoMien = this.getListDay_VungMien(regionSelected);
+        }
+        this.setState({
+            changeRegions:value,
+        })
+    }
+
+    // hàm set title cho danh sach ket qua mới nhât
+    setTitleDsKetquaMoiNhat(value){
+        var title='';
+        if(value === 0){
+            title = 'Danh sách kết quả xổ số mới nhất';
+        }else if(value === 1){
+            title = 'Danh sách kết quả xổ số Miền Bắc mới nhất';
+        }else if(value === 2){
+            title = 'Danh sách kết quả xổ số Miền Trung mới nhất';
+        }else if(value === 3){
+            title = 'Danh sách kết quả xổ số Miền Nam mới nhất';
+        }
+        return title;
     }
 
     render(){
@@ -169,7 +224,7 @@ export default class HomeScreen extends Component {
                             source = {require('../images/menu.png')}
                         />
                     </TouchableOpacity>
-                    <Text style = {style.text_title}>Xổ số đặc biệt - Trực tiếp</Text>
+                    <Text style = {style.text_title}>{regionSelected}Xổ số đặc biệt - Trực tiếp</Text>
                    {/*<TouchableOpacity onPress = {()=>{this.clickBaChamGocPhai()}}>
                         <Image
                             source = {require('../images/dots_vertical.png')}
@@ -209,7 +264,7 @@ export default class HomeScreen extends Component {
                             <Text style= {{color: 'black'}}>Cộng đồng</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Regions_Screen')}}>
+                        <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Regions_Screen', {listenRegions:this.listenChangeRegions.bind(this)})}}>
                             <View style = {{width: 50, height: 50, borderRadius:  50/2, backgroundColor: 'green',justifyContent: 'center', alignItems: 'center'}}>
                                 <Icon name={'md-compass'} style = {{fontSize: 40, color: 'white'}}/>
                             </View>
@@ -222,23 +277,42 @@ export default class HomeScreen extends Component {
                 <Text style = {style.text_title_1}>{_string.msg_danh_sach_ket_qua_moi_nhat}</Text>
 
                 <View style = {style.content}>
-                    <ExpanableList
-                        refreshing = {false}
-                        onRefresh = {()=>{this.refresh()}}
+                    {
+                        regionSelected === 0?
+                        <ExpanableList
+                            refreshing = {false}
+                            onRefresh = {()=>{this.refresh()}}
 
-                        onEndReachedThreshold = {0}
-                        onEndReached = {()=>{
-                            alert('Cham day roi')
-                        }}
-                        dataSource={this.state.dataTam}
-                        headerKey="header"
-                        memberKey="member"
-                        renderRow={this._renderRow}
-                        headerOnPress = {this._headerOnClick}
-                        renderSectionHeaderX={this._renderSection}
-                        isOpen = {false}
-                        keyExtractor={ (item, index) => index.toString() }
-                    />
+                            onEndReachedThreshold = {0}
+                            onEndReached = {()=>{
+                                alert('Cham day roi')
+                            }}
+                            dataSource={this.state.dataTam}
+                            headerKey="header"
+                            memberKey="member"
+                            renderRow={this._renderRow}
+                            headerOnPress = {this._headerOnClick}
+                            renderSectionHeaderX={this._renderSection}
+                            isOpen = {false}
+                            keyExtractor={ (item, index) => index.toString() }
+                        />:
+                        <FlatList   
+                                style={{paddingHorizontal:5}}
+                                data = {dataListDayTheoMien}
+                                renderItem = {({item, index})=>{
+                                    return(
+                                        <TouchableOpacity onPress={()=>{
+                                            this.clickItemTheoMien(item);
+                                        }}>
+                                            <ItemRowTheoMien
+                                                item = {item} index = {index}
+                                            />
+                                        </TouchableOpacity>
+                                    );
+                                }}
+                                keyExtractor={ (item, index) => index.toString() }> 
+                        </FlatList>
+                    } 
                 </View>
 
                 {/* {this.state.load && this.loading_view(style.load_more)} */}
@@ -283,7 +357,6 @@ export default class HomeScreen extends Component {
 
     // click refresh bottom right
     clickRefreshDsDay(){
-
         this.setState({
             load: true,
         })
@@ -292,6 +365,69 @@ export default class HomeScreen extends Component {
             function(){
                 that.getListDay_(true);
         }, 2000);
+    }
+
+    //Tạo ds ngày theo vùng miền riêng
+    getListDay_VungMien(value){
+        var listDayTAM = [];
+        if(value != 0){
+            var date_vung_mien = new Date()
+        var tmp_lottery_provinces = JSON.parse(JSON.stringify(lottery_provinces));
+        console.log('NGAY DAU TIEN: ' + moment(date_vung_mien).format('YYYY-MM-DD'))
+        console.log('Gia TRỊ tmp_lottery_provinces: ' + JSON.stringify(tmp_lottery_provinces))
+        for (var i = 0 ; i <= 30; i++){
+            var test_date= moment(date_vung_mien).format('YYYY-MM-DD');
+            var title = '';
+            var title_screen_result = '';
+            if(i == 0){
+                title = 'Hôm nay';
+            } else if (i == 1){
+                title = 'Hôm qua';
+            }
+            var indexDay = date_vung_mien.getDay();
+            title = title != '' ? title + ", " + getDayOfWeek(indexDay) + ", " + moment(date_vung_mien).format('DD/MM')
+                : getDayOfWeek(indexDay) + ", " + moment(date_vung_mien).format('DD/MM');
+            title_screen_result =  getDayOfWeek(indexDay) + ", " + moment(date_vung_mien).format('DD/MM/YYYY');
+            var test_date= moment(date_vung_mien).format('YYYY-MM-DD');
+            var check = false;
+            console.log('Chay toi day roiii')
+            for(var j=0;j< tmp_lottery_provinces.length;j++){
+                console.log('Chay toi day roiii-----' + regionSelected)
+                if(indexDay == 0 && tmp_lottery_provinces[j].weekdays.indexOf(',1,') != -1 && tmp_lottery_provinces[j].area_id === value){
+                    check = true;
+                }else if(indexDay == 1 && tmp_lottery_provinces[j].weekdays.indexOf(',2,') != -1 && tmp_lottery_provinces[j].area_id === value){
+                    check = true;
+                }else if(indexDay == 2 && tmp_lottery_provinces[j].weekdays.indexOf(',3,') != -1 && tmp_lottery_provinces[j].area_id === value){
+                    check = true;
+                }else if(indexDay == 3 && tmp_lottery_provinces[j].weekdays.indexOf(',4,') != -1 && tmp_lottery_provinces[j].area_id === value){
+                    check = true;
+                }else if(indexDay == 4 && tmp_lottery_provinces[j].weekdays.indexOf(',5,') != -1 && tmp_lottery_provinces[j].area_id === value){
+                    check = true;
+                }else if(indexDay == 5 && tmp_lottery_provinces[j].weekdays.indexOf(',6,') != -1 && tmp_lottery_provinces[j].area_id === value){
+                    check = true;
+                }else if(indexDay == 6 && tmp_lottery_provinces[j].weekdays.indexOf(',7,') != -1 && tmp_lottery_provinces[j].area_id === value){
+                    check = true;
+                } 
+                if(check == true){
+                    console.log('Chay toi day roiii-----uu')
+                    check = false;
+                    var obj = JSON.parse(JSON.stringify(tmp_lottery_provinces[j]));
+                    obj.rd = test_date;
+                    obj.title = title;
+                    obj.title_screen_result = title_screen_result;
+                    obj.status = false;
+                    obj = pushPropsInItemOneRegion(obj);
+
+                    listDayTAM.push(obj);
+                }        
+            }
+            
+            // set date trừ một ngày
+            date_vung_mien.setDate(date_vung_mien.getDate() - 1);
+        }
+        }
+        console.log('DS NGAY THEO MIEN: ' + JSON.stringify(listDayTAM) + "   ==== " + listDayTAM.length)
+        return listDayTAM;
     }
 
     
@@ -310,7 +446,6 @@ export default class HomeScreen extends Component {
            
             var item = {};
             var to_day = {};
-            
             var indexDay = date_.getDay();
             title = title != '' ? title + ", " + getDayOfWeek(indexDay) + ", " + moment(date_).format('DD/MM')
                 : getDayOfWeek(indexDay) + ", " + moment(date_).format('DD/MM');
@@ -366,6 +501,7 @@ export default class HomeScreen extends Component {
             })
         }
         console.log('DS NGAY: ' + JSON.stringify(listDay))
+        console.log('DS NGAY1111: ' + JSON.stringify(tmp_lottery_provinces))
         return listDay;
     }  
 
@@ -429,7 +565,7 @@ export default class HomeScreen extends Component {
         })
     }
     
-    // hàm click item 
+    // hàm click item khi la ba mien
     clickItem(rowItem, sectionId){
         if(rowItem.code.length == 1){
             this.props.navigation.navigate('ResultLottery', {title: rowItem.name + " " + this.state.dataTam[sectionId].header.title_screen_result , 
@@ -437,6 +573,17 @@ export default class HomeScreen extends Component {
         }else {
             this.props.navigation.navigate('ResultLottery2', {title: rowItem.name + " " + this.state.dataTam[sectionId].header.title_screen_result , 
             data_lottery: dataSwitchKey, row: rowItem})
+        }
+    }
+
+    // hàm click item khi dang chon mot mien nao do
+    clickItemTheoMien(item){
+        if(item.code.length == 1){
+            this.props.navigation.navigate('ResultLottery', {title: item.name + " " + item.title_screen_result , 
+            data_lottery: dataSwitchKey, row: item})
+        }else {
+            this.props.navigation.navigate('ResultLottery2', {title: item.name + " " + item.title_screen_result , 
+            data_lottery: dataSwitchKey, row: item})
         }
     }
 }
@@ -450,6 +597,31 @@ function createKeyItem(data){
         dataNew[key] = data[i];
     } 
     return dataNew;
+}
+
+//hàm push giải đặc biệt vào item trong trường hợp một miền nào đó được chọn
+function pushPropsInItemOneRegion(obj){
+        var mang_kq = [];
+        var status_kq = '';
+        for(var k=0; k< obj.code.length; k++){
+            var key = obj.code[k] + "_" + moment(obj.rd).format('YYYYMMDD');
+            if(dataSwitchKey[key]!=null){
+                var kq_ = (dataSwitchKey[key].s1?dataSwitchKey[key].s1: "");
+                    kq_ = kq_ + (dataSwitchKey[key].s2?dataSwitchKey[key].s2: "");
+                    status_kq = dataSwitchKey[key].s;
+                    if(kq_ != ''){
+                        mang_kq.push(kq_);    
+                    }else {
+                        mang_kq.push('');
+                    }
+
+            }else{
+                mang_kq.push('');
+            }
+        }
+        obj.status_kq = status_kq;
+        obj.mang_kq = mang_kq;
+    return obj;
 }
 
 // ham push giai dac biet vao item
@@ -466,11 +638,11 @@ function pushPropsInItem(member_){
                     if(kq_ != ''){
                         mang_kq.push(kq_);    
                     }else {
-
+                        mang_kq.push('');   
                     }
 
             }else{
-                mang_kq.push('0');
+                mang_kq.push('');
             }
         }
         member_[i].status_kq = status_kq;

@@ -79,7 +79,8 @@ export default class StatisticalScreen extends Component {
                     />
                     
                     <TouchableOpacity style={style.style_button}
-                                    onPress = {()=>this.thongKeDauDuoi(item_, this.state.textSoLanQuay)}
+                                    onPress = {()=>this.state.textSoLanQuay.length>0 && this.state.textSoLanQuay!='0'?this.thongKeDauDuoi(item_, this.state.textSoLanQuay): 
+                                    alert('Vui lòng nhập số lần quay')}
                     >
                          <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ ĐẦU, ĐUÔI LÔ TÔ</Text>   
                          <Image
@@ -88,7 +89,8 @@ export default class StatisticalScreen extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={style.style_button}
-                        onPress = {()=>this.thongKeHaiSoCuoi(item_, this.state.textSoLanQuay)}
+                        onPress = {()=>this.state.textSoLanQuay.length>0 && this.state.textSoLanQuay!='0'?this.thongKeHaiSoCuoi(item_, this.state.textSoLanQuay): 
+                        alert('Vui lòng nhập số lần quay')}
                     >
                         <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ TỔNG 2 SỐ CUỐI</Text>   
                         <Image
@@ -97,7 +99,8 @@ export default class StatisticalScreen extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={style.style_button}
-                        onPress = {()=>this.thongKe0099(item_, this.state.textSoLanQuay)}
+                        onPress = {()=>this.state.textSoLanQuay.length>0 && this.state.textSoLanQuay!='0'?this.thongKe0099(item_, this.state.textSoLanQuay): 
+                        alert('Vui lòng nhập số lần quay')}
                     >
                         <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ 00-99</Text>   
                         <Image
@@ -106,7 +109,8 @@ export default class StatisticalScreen extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={style.style_button}
-                        onPress = {()=>this.thongKeCacSoVeNhieu(item_, this.state.textSoLanQuay)}
+                        onPress = {()=>this.state.textSoLanQuay.length>0 && this.state.textSoLanQuay!='0'?this.thongKeCacSoVeNhieu(item_, this.state.textSoLanQuay): 
+                        alert('Vui lòng nhập số lần quay')}
                     >
                         <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ CÁC SỐ VỀ NHIỀU</Text>   
                         <Image
@@ -115,7 +119,8 @@ export default class StatisticalScreen extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={style.style_button}
-                        onPress = {()=>this.thongKeCacSoLauRa(item_, this.state.textSoLanQuay)}
+                        onPress = {()=>this.state.textSoLanQuay.length>0 && this.state.textSoLanQuay!='0'?this.thongKeCacSoLauRa(item_, this.state.textSoLanQuay): 
+                        alert('Vui lòng nhập số lần quay')}
                     >
                         <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ CÁC SỐ LÂU RA</Text>   
                         <Image

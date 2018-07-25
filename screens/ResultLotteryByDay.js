@@ -111,6 +111,20 @@ export default class ResultLotteryByDay extends Component {
         return textShow;
     }
 
+    // hàm for mảng kết quả tìm đầu đuôi lô tô 1
+    filterNumber1(arr, number){
+        var textShow = '';
+        for(var i= 0; i< arr.length ; i++){
+            var sub = arr[i].substring(arr[i].length -1);
+            var sub_final = arr[i].substr(arr[i].length -2,1);
+            if(sub == number){
+                textShow == ''? (textShow = textShow + sub_final) : (textShow = textShow + ","+ sub_final);
+            }
+        }
+        return textShow;
+    }
+    
+
     setTitle(rowItem, _date){
         // alert(JSON.stringify(rowItem) + " ------" + _date)
         var indexDay = _date.getDay();
@@ -215,45 +229,61 @@ export default class ResultLotteryByDay extends Component {
                         {checkRowItemIsCurrent == true? this.setTitleToday(1) : ''}
                     </Text>
                     <Text style = {{textAlign: 'center', width: widthScreen, color: 'black', padding: 10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
-                    <View style = {{flex: 1, backgroundColor: 'grey', marginHorizontal: 2}}>
+                    <View style = {{flex: 1, backgroundColor: 'grey', marginHorizontal: 2, borderTopWidth:1, borderTopColor:'grey'}}>
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.db.title}</Text>
-                           <Text style = {[style.row_text_content_result,{color: 'red'}]}>{objResult.db.arr_kqdb}</Text>
+                           <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
+                                <Text style = {[style.row_text_content_result,{color:'red'}]}>{objResult.db.arr_kqdb + " "}</Text>
+                           </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g1.title}</Text>
-                           <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g1.arr_kq1)}</Text>
+                           <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g1.arr_kq1)+" "}</Text>
+                           </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g2.title}</Text>
-                           <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g2.arr_kq2)}</Text>
+                           <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g2.arr_kq2)+" "}</Text>
+                           </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g3.title}</Text>
-                           <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g3.arr_kq3)}</Text>
+                           <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g3.arr_kq3)+" "}</Text>
+                           </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g4.title}</Text>
-                           <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g4.arr_kq4)}</Text>
+                           <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g4.arr_kq4)+" "}</Text>
+                           </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g5.title}</Text>
-                           <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g5.arr_kq5)}</Text>
+                           <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g5.arr_kq5)+" "}</Text>
+                           </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g6.title}</Text>
-                           <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g6.arr_kq6)}</Text>
+                           <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g6.arr_kq6)+" "}</Text>
+                           </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g7.title}</Text>
-                           <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g7.arr_kq7)}</Text>
+                           <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g7.arr_kq7)+" "}</Text>
+                           </View>
                         </View>
 
                         <View style = {{flexDirection: 'row', height: 20, backgroundColor: 'yellow', alignItems: 'center', marginBottom: 2}}>
@@ -261,58 +291,168 @@ export default class ResultLotteryByDay extends Component {
                         </View>
 
                         <View style = {style.row_loto}>
-                           <Text style = {style.row_text_title_loto}>Đầu</Text>
-                           <Text style = {style.row_text_content_loto}>Đuôi</Text>
+                            <View style={{flex:1,paddingVertical:5}}>
+                                <Text style = {style.row_text_title_loto}>Đầu</Text>
+                            </View>
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_loto}>Đuôi</Text>
+                           </View >
+                           <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_loto}>Đầu</Text>
+                           </View>
+                           <View style={{flex:1,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_title_loto}>Đuôi</Text>
+                           </View>                          
                         </View>
 
                         <View style = {style.row_loto}>
-                           <Text style = {style.row_text_title_loto}>0</Text>
-                           <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,0)}</Text>
+                            <View style={{flex:1,paddingVertical:5}}>
+                                    <Text style = {style.row_text_title_loto}>0</Text>
+                            </View>
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                    <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,0)}</Text>
+                            </View >
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_loto}>{this.filterNumber1(objResult.mang_loto7,0)}</Text>
+                            </View>
+                            <View style={{flex:1,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_title_loto}>0</Text>
+                            </View>  
+                        </View>
+
+                       <View style = {style.row_loto}>
+                            <View style={{flex:1,paddingVertical:5}}>
+                                    <Text style = {style.row_text_title_loto}>1</Text>
+                            </View>
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                    <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,1)}</Text>
+                            </View >
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_loto}>{this.filterNumber1(objResult.mang_loto7,1)}</Text>
+                            </View>
+                            <View style={{flex:1,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_title_loto}>1</Text>
+                            </View>  
                         </View>
 
                         <View style = {style.row_loto}>
-                           <Text style = {style.row_text_title_loto}>1</Text>
-                           <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,1)}</Text>
+                            <View style={{flex:1,paddingVertical:5}}>
+                                    <Text style = {style.row_text_title_loto}>2</Text>
+                            </View>
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                    <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,2)}</Text>
+                            </View >
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_loto}>{this.filterNumber1(objResult.mang_loto7,2)}</Text>
+                            </View>
+                            <View style={{flex:1,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_title_loto}>2</Text>
+                            </View>  
                         </View>
 
                         <View style = {style.row_loto}>
-                           <Text style = {style.row_text_title_loto}>2</Text>
-                           <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,2)}</Text>
+                            <View style={{flex:1,paddingVertical:5}}>
+                                    <Text style = {style.row_text_title_loto}>3</Text>
+                            </View>
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                    <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,3)}</Text>
+                            </View >
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_loto}>{this.filterNumber1(objResult.mang_loto7,3)}</Text>
+                            </View>
+                            <View style={{flex:1,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_title_loto}>3</Text>
+                            </View>  
                         </View>
 
                         <View style = {style.row_loto}>
-                           <Text style = {style.row_text_title_loto}>3</Text>
-                           <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,3)}</Text>
+                            <View style={{flex:1,paddingVertical:5}}>
+                                    <Text style = {style.row_text_title_loto}>4</Text>
+                            </View>
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                    <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,4)}</Text>
+                            </View >
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_loto}>{this.filterNumber1(objResult.mang_loto7,4)}</Text>
+                            </View>
+                            <View style={{flex:1,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_title_loto}>4</Text>
+                            </View>  
                         </View>
 
                         <View style = {style.row_loto}>
-                           <Text style = {style.row_text_title_loto}>4</Text>
-                           <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,4)}</Text>
+                            <View style={{flex:1,paddingVertical:5}}>
+                                    <Text style = {style.row_text_title_loto}>5</Text>
+                            </View>
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                    <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,5)}</Text>
+                            </View >
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_loto}>{this.filterNumber1(objResult.mang_loto7,5)}</Text>
+                            </View>
+                            <View style={{flex:1,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_title_loto}>5</Text>
+                            </View>  
                         </View>
 
                         <View style = {style.row_loto}>
-                           <Text style = {style.row_text_title_loto}>5</Text>
-                           <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,5)}</Text>
+                            <View style={{flex:1,paddingVertical:5}}>
+                                    <Text style = {style.row_text_title_loto}>6</Text>
+                            </View>
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                    <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,6)}</Text>
+                            </View >
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_loto}>{this.filterNumber1(objResult.mang_loto7,6)}</Text>
+                            </View>
+                            <View style={{flex:1,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_title_loto}>6</Text>
+                            </View>  
                         </View>
 
                         <View style = {style.row_loto}>
-                           <Text style = {style.row_text_title_loto}>6</Text>
-                           <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,6)}</Text>
+                            <View style={{flex:1,paddingVertical:5}}>
+                                    <Text style = {style.row_text_title_loto}>7</Text>
+                            </View>
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                    <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,7)}</Text>
+                            </View >
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_loto}>{this.filterNumber1(objResult.mang_loto7,7)}</Text>
+                            </View>
+                            <View style={{flex:1,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_title_loto}>7</Text>
+                            </View>  
                         </View>
 
                         <View style = {style.row_loto}>
-                           <Text style = {style.row_text_title_loto}>7</Text>
-                           <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,7)}</Text>
+                            <View style={{flex:1,paddingVertical:5}}>
+                                    <Text style = {style.row_text_title_loto}>8</Text>
+                            </View>
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                    <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,8)}</Text>
+                            </View >
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_loto}>{this.filterNumber1(objResult.mang_loto7,8)}</Text>
+                            </View>
+                            <View style={{flex:1,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_title_loto}>8</Text>
+                            </View>  
                         </View>
 
                         <View style = {style.row_loto}>
-                           <Text style = {style.row_text_title_loto}>8</Text>
-                           <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,8)}</Text>
-                        </View>
-
-                        <View style = {style.row_loto}>
-                           <Text style = {style.row_text_title_loto}>9</Text>
-                           <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,9)}</Text>
+                            <View style={{flex:1,paddingVertical:5}}>
+                                    <Text style = {style.row_text_title_loto}>9</Text>
+                            </View>
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                    <Text style = {style.row_text_content_loto}>{this.filterNumber(objResult.mang_loto7,9)}</Text>
+                            </View >
+                            <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_content_loto}>{this.filterNumber1(objResult.mang_loto7,9)}</Text>
+                            </View>
+                            <View style={{flex:1,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                                <Text style = {style.row_text_title_loto}>9</Text>
+                            </View>  
                         </View>
                     </View>
                     </View>
@@ -334,6 +474,8 @@ export default class ResultLotteryByDay extends Component {
     clickRefresh(){
         alert('doing....')
     }
+
+
 }
 
 
@@ -357,45 +499,49 @@ var style = StyleSheet.create({
         textAlign: 'center'
     },
     row_result:{
+        borderLeftWidth:1,
+        borderLeftColor:'grey',
+        borderBottomWidth: 1,
+        borderBottomColor: 'grey',
+        borderRightWidth: 1,
+        borderRightColor: 'grey',
         flexDirection: 'row',
-        backgroundColor: '#CC9900',
+        backgroundColor: '#ffffff',
         alignItems: 'center',
-        marginBottom: 1,
-        borderColor: 'grey',
-        
+        marginBottom: 1,   
     },
     row_loto: {
-        flexDirection: 'row', 
-        paddingVertical: 5, 
-        paddingLeft: 5,
-        backgroundColor: '#F6CECE', 
+        borderRightWidth:1,
+        borderRightColor:'grey',
+        borderLeftWidth:1,
+        borderLeftColor:'grey',
+        flexDirection: 'row',  
+        backgroundColor: '#ffffff', 
         alignItems: 'center', 
         marginBottom: 2
     },
     row_text_title_result: {
-        flex:1.5,
+        flex: 0.15,
         textAlign: 'center', 
-        color: 'white', 
+        color: 'black', 
         fontWeight: 'bold',
         marginRight: 10,
         paddingHorizontal: 5,
     },
-    row_text_content_result: {
-        flex: 20, 
+    row_text_content_result: { 
         fontSize: 16,
         textAlign: 'center', 
         color: 'black', 
         fontWeight: 'bold',
-        borderLeftWidth: 1, 
-        borderLeftColor: 'grey'
     },
     row_text_title_loto: {
+        flex:1,
         textAlign: 'center', 
         color: 'black', 
         fontWeight: 'bold'
     },
     row_text_content_loto: {
-        flex: 1, 
+        flex: 3, 
         textAlign: 'center', 
         color: 'black', 
         fontWeight: 'bold'

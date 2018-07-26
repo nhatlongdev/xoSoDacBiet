@@ -4,12 +4,18 @@ import {
     Text,
     Dimensions,
     StyleSheet,
-    ScrollView
+    ScrollView,
+    ActivityIndicator
 } from 'react-native';
 import FloatButtonCompomentScreenResult from '../components/FloatButtonCompomentScreenResult';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import moment from 'moment';
 import {getDayOfWeek} from '../components/GetDayOfWeek';
+import Color from '../src/color';
+
+import {
+    UIActivityIndicator,
+  } from 'react-native-indicators';
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
@@ -236,7 +242,6 @@ export default class ResultLottery extends Component {
                         rowItem.rd = moment().format('YYYY-MM-DD');
                         //nếu kq ngày hiện tại đã có (trực tiếp)
                         if(this.checkObjData(rowItem, dataLottery) == true){
-                            alert("CO ket quả trực tiếp ngày hôm nay");
                             checkRowItemIsCurrent = false;
                             this.formatLottery(rowItem, dataLottery);
                             showResult = true;
@@ -394,49 +399,75 @@ export default class ResultLottery extends Component {
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g1.title}</Text>
                            <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
-                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g1.arr_kq1)+" "}</Text>
+                                {
+                                    this.margeArrToString(objResult.g1.arr_kq1) != ''?
+                                    <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g1.arr_kq1)+" "}</Text>
+                                    :<UIActivityIndicator size={15} color='black' />     
+                                }
                            </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g2.title}</Text>
                            <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
-                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g2.arr_kq2)+" "}</Text>
+                                {
+                                    this.margeArrToString(objResult.g2.arr_kq2)!=''?<Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g2.arr_kq2)+" "}</Text>:
+                                    <UIActivityIndicator style={{flex:1}} size={15} color='black' />  
+                                }
                            </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g3.title}</Text>
                            <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
-                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g3.arr_kq3)+" "}</Text>
+                                {
+                                    this.margeArrToString(objResult.g3.arr_kq3)!=''?<Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g3.arr_kq3)+" "}</Text>:
+                                    <UIActivityIndicator style={{flex:1}} size={15} color='black' />  
+                                }
                            </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g4.title}</Text>
                            <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
-                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g4.arr_kq4)+" "}</Text>
+                                {
+                                    this.margeArrToString(objResult.g4.arr_kq4)!=''?<Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g4.arr_kq4)+" "}</Text>:
+                                    <UIActivityIndicator style={{flex:1}} size={15} color='black' />  
+                                }
+                                
                            </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g5.title}</Text>
                            <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
-                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g5.arr_kq5)+" "}</Text>
+                                {
+                                    this.margeArrToString(objResult.g5.arr_kq5)!=''?<Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g5.arr_kq5)+" "}</Text>:
+                                    <UIActivityIndicator style={{flex:1}} size={15} color='black' />  
+                                }
+                                
                            </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g6.title}</Text>
                            <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
-                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g6.arr_kq6)+" "}</Text>
+                                {
+                                    this.margeArrToString(objResult.g6.arr_kq6)!=''?<Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g6.arr_kq6)+" "}</Text>:
+                                    <UIActivityIndicator style={{flex:1}} size={15} color='black' /> 
+                                }
+                    
                            </View>
                         </View>
 
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.g7.title}</Text>
                            <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
-                                <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g7.arr_kq7)+" "}</Text>
+                                {
+                                    this.margeArrToString(objResult.g7.arr_kq7)!=''?<Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g7.arr_kq7)+" "}</Text>:
+                                    <UIActivityIndicator style={{flex:1}} size={15} color='black' />
+                                }
+                                
                            </View>
                         </View>
 

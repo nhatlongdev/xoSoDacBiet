@@ -124,14 +124,6 @@ export default class HomeScreen extends Component {
                 this.refreshFromServer10s();
             }  
         },10000)
-
-        //phương án tạm thời chạy một cái interval để cập nhật trạng thái khi người dùng chọn vùng miền
-        setInterval(()=>{
-
-        },2000)
-
-        var d = this.getListDay_VungMien(0);
-
     }
 
     //save cache
@@ -354,6 +346,7 @@ export default class HomeScreen extends Component {
 
     // click refresh bottom right
     clickRefreshDsDay(){
+        
         this.setState({
             load: true,
         })
@@ -379,7 +372,7 @@ export default class HomeScreen extends Component {
         var tmp_lottery_provinces = JSON.parse(JSON.stringify(lottery_provinces));
         console.log('NGAY DAU TIEN: ' + moment(date_vung_mien).format('YYYY-MM-DD'))
         console.log('Gia TRỊ tmp_lottery_provinces: ' + JSON.stringify(tmp_lottery_provinces))
-        for (var i = 0 ; i <= 30; i++){
+        for (var i = 0 ; i < 20; i++){
             var test_date= moment(date_vung_mien).format('YYYY-MM-DD');
             var title = '';
             var title_screen_result = '';
@@ -440,7 +433,7 @@ export default class HomeScreen extends Component {
     getListDay_(value){
         date_ = new Date()
         listDay = [];
-        for (var i = 0 ; i <= 30; i++){
+        for (var i = 0 ; i < 20; i++){
             var title = '';
             var title_screen_result = '';
             if(i == 0){

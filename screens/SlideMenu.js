@@ -5,7 +5,8 @@ import {
     StyleSheet,
     Image,
     Dimensions,
-    TouchableOpacity
+    TouchableOpacity,
+    Share
 } from 'react-native';
 import {Icon} from 'native-base';
 
@@ -59,18 +60,25 @@ export default class SlideMenu extends Component {
 
                 <View style ={{height: 1, backgroundColor: '#848484', marginBottom: 10,}}></View>
 
-                <TouchableOpacity style = {style.item_option} onPress = {()=>alert('doing....')}>
+                <TouchableOpacity style = {style.item_option} onPress = {()=>{this.shareLink()}}>
                     <Icon name = {'md-share'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
                     <Text>Share</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style = {style.item_option} onPress = {()=>alert('doing....')}>
+                <TouchableOpacity style = {style.item_option}>
                     <Icon name = {'md-send'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
                     <Text>Send</Text>
                 </TouchableOpacity>
 
             </View>
         );
+    }
+
+    // share
+    shareLink(){
+        Share.share({
+            message:'http://dacbiet.vn'
+        })
     }
 }
 

@@ -11,7 +11,9 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import moment from 'moment';
 import {getDayOfWeek} from '../components/GetDayOfWeek';
 import {setItemRowDrag} from '../components/SetItemRowDrag';
-
+import {
+    UIActivityIndicator,
+  } from 'react-native-indicators';
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
@@ -118,7 +120,9 @@ export default class ResultLottery2 extends Component {
     margeArrToString(arr){
         var str = '';
         for(var i=0; i< arr.length; i++){
-            str == '' ? (str = str + arr[i]) : (str = str + " - " + arr[i]);
+            if(arr[i] != ''){
+                str == '' ? (str = str + arr[i]) : (str = str + " - " + arr[i]);
+            } 
         }
         return str;
     }
@@ -147,6 +151,27 @@ export default class ResultLottery2 extends Component {
             console.log("OBJ: ===>>>" + JSON.stringify(dataLottery[keyItem]));
             console.log("data: ===>>>" + JSON.stringify(dataLottery));
             if(dataLottery[keyItem] != null){
+                check = true;
+            }
+        }
+        if(check == false){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+     // ham kiem tra xem tat car cac giai da duoc quay xong chua
+     checkObjDataComplete(rowItem, dataLottery){
+        var date_quay = moment(rowItem.rd).format('YYYYMMDD');
+        var check = false;
+        console.log("ROW ITEMjjj: ===>>>" + JSON.stringify(rowItem));
+        for(var i=0; i< rowItem.code.length; i++){
+            var keyItem = rowItem.code[i] + '_'+date_quay;
+            console.log("KEY: ===>>>" + keyItem);
+            console.log("OBJ: ===>>>" + JSON.stringify(dataLottery[keyItem]));
+            console.log("data: ===>>>" + JSON.stringify(dataLottery));
+            if(dataLottery[keyItem] != null && dataLottery[keyItem].s != '0'){
                 check = true;
             }
         }
@@ -372,10 +397,12 @@ export default class ResultLottery2 extends Component {
         var objResult_4 = {};
         if (rowItem.code.length >= 3){
             objResult_3  = mang_kq_tong[rowItem.code[2]];
+            console.log('KIEM TRA DAU VAO:' + JSON.stringify(objResult_3))
         }
         if (rowItem.code.length == 4){
             objResult_4  = mang_kq_tong[rowItem.code[3]];
         }
+        
         return(
             <GestureRecognizer
                 onSwipe={(direction, state) => this.onSwipe(direction, state)}
@@ -402,27 +429,76 @@ export default class ResultLottery2 extends Component {
                     {
                         showResult?
                         <View style={{flex:1}}>
-                        <Text style = {{textAlign: 'center', width: widthScreen, color: 'black', padding: 10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
+                        <Text style = {{textAlign: 'center', width: widthScreen, color: 'black', paddingHorizontal: 10, paddingTop:10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
+                        {
+                            this.checkObjDataComplete(rowItem, dataLottery)==true?
+                            <Text style={{flex: 1, color:'red', textAlign:'center', marginBottom:10}}>Đang quay</Text>
+                            :null
+                        }
                         <View style = {{flex: 1, backgroundColor: 'grey', marginHorizontal: 2}}>
     
                             <View style = {style.row_result_title}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5 ,
                                     textAlign: 'center', color: 'white', fontWeight: 'bold',fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>Giải</Text>
+                                {
+                                    this.checkObjDataComplete(rowItem, dataLottery)==true?
+                                    <View style={{flex: 1, alignItems:'center'}}>
+                                        <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
+                                            {rowItem.name[0]}
+                                        </Text>
+                                        <UIActivityIndicator style={{flex:1, paddingBottom: 1,}} size={15} color='blue' />
+                                    </View>:
+                                    <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
+                                            {rowItem.name[0]}
+                                    </Text>
+                                }    
                                 
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
-                                    {rowItem.name[0]}
-                                </Text>
-                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
-                                    {rowItem.name[1]}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: rowItem.code.length == 4? 1 : 0,}}>
-                                    {rowItem.code.length >= 3? rowItem.name[2] : ''}
-                                </Text>
-                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                    color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red'}}>
-                                    {rowItem.code.length == 4? rowItem.name[3] : ''}
-                                </Text>
+                                {
+                                    this.checkObjDataComplete(rowItem, dataLottery)==true?
+                                    <View style={{flex: 1, alignItems:'center'}}>
+                                        <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
+                                            {rowItem.name[1]}
+                                        </Text>
+                                        <UIActivityIndicator style={{flex:1, paddingBottom: 1,}} size={15} color='blue' />
+                                    </View>:
+                                    <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
+                                            {rowItem.name[1]}
+                                    </Text>
+                                } 
+
+                                {
+                                    rowItem.code.length >= 3?
+                                    this.checkObjDataComplete(rowItem, dataLottery)==true?
+                                    <View style={{flex: 1, alignItems:'center'}}>
+                                        <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                            color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: rowItem.code.length == 4? 1 : 0,}}>
+                                            {rowItem.code.length >= 3? rowItem.name[2] : ''}
+                                        </Text>
+                                        <UIActivityIndicator style={{flex:1, paddingBottom: 1,}} size={15} color='blue' />
+                                    </View>:
+                                    <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                            color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: rowItem.code.length == 4? 1 : 0,}}>
+                                            {rowItem.code.length >= 3? rowItem.name[2] : ''}
+                                    </Text>
+                                    :null
+                                }
+                                
+                                {
+                                    rowItem.code.length >= 4?
+                                    this.checkObjDataComplete(rowItem, dataLottery)==true?
+                                    <View style={{flex: 1, alignItems:'center'}}>
+                                        <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                            color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red'}}>
+                                            {rowItem.code.length == 4? rowItem.name[3] : ''}
+                                        </Text>
+                                        <UIActivityIndicator style={{flex:1, paddingBottom: 1,}} size={15} color='blue' />
+                                    </View>:
+                                    <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                        color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red'}}>
+                                        {rowItem.code.length == 4? rowItem.name[3] : ''}
+                                    </Text>
+                                    :null
+                                }
                             </View>
 
                             <View style = {style.row_result}>
@@ -449,7 +525,7 @@ export default class ResultLottery2 extends Component {
                                 <View style={{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0,borderLeftWidth: rowItem.code.length == 4? 1 : 0, borderLeftColor: 'grey'}}>
                                     <Text style = {{ flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {rowItem.code.length == 4?  objResult_4?this.margeArrToString(objResult_4.g8.arr_kq8)+" ":" " : ''}
-                                    </Text>
+                                    </Text>                             
                                 </View>  
                                 
                             </View> 
@@ -460,7 +536,7 @@ export default class ResultLottery2 extends Component {
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_1?this.margeArrToString(objResult_1.g7.arr_kq7)+" ": " "}
-                                    </Text>
+                                    </Text>                                
                                 </View>    
                                 
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>

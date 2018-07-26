@@ -67,6 +67,8 @@ var regionSelected = 0;
 
 //data list ngay theo mien
 var dataListDayTheoMien;
+//msg notification
+var contentNotifi='aloalo';
 export default class HomeScreen extends Component {
 
     // Contructor
@@ -110,11 +112,12 @@ export default class HomeScreen extends Component {
         console.log('BBBBB===>>>' + JSON.stringify(dataWithProvinces))
         
         //set ngày hiện tại theo giờ
-        dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 14:12'); //.format('YYYY/MM/DD HH:mm:ss')
+        dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 06:19'); //.format('YYYY/MM/DD HH:mm:ss')
         dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
 
         setInterval(()=>{
             console.log("INTERVAL HOME=====>>>");
+            // this.alarmNotifi();
             var timeCurrent = moment();
             if(timeCurrent>= dateTimeBatDauQuay && timeCurrent< dateTimeDungQuay){
                 // đến khung giờ quay trực tiếp thì 10s request server một lần lấy kết quả
@@ -357,7 +360,14 @@ export default class HomeScreen extends Component {
         let that = this;
         setTimeout(
             function(){
-                that.getListDay_(true);
+                if(regionSelected === 0){
+                    that.getListDay_(true);
+                }else{
+                    that.getListDay_VungMien(regionSelected)
+                    that.setState({
+                        load: false,
+                    })
+                }
         }, 2000);
     }
 
@@ -421,6 +431,7 @@ export default class HomeScreen extends Component {
         }
         }
         console.log('DS NGAY THEO MIEN: ' + JSON.stringify(listDayTAM) + "   ==== " + listDayTAM.length)
+    
         return listDayTAM;
     }
 
@@ -541,14 +552,15 @@ export default class HomeScreen extends Component {
     }
 
     //click setting
-    onClickSetting(){
-        this.setState({
-            showSetting: false,
-        })
+    alarmNotifi(){
+        PushNotification.cancelAllLocalNotifications()
         PushNotification.localNotification({
+            largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
+            smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
+            ongoing: false, // (optional) set whether this is an "ongoing" notification
             message: "My Notification Message", // (required)
             bigText: "My big text that will be shown when notification is expanded", // (optional) default: "message" prop
-            subText: "This is a subText", // (optional) default: none
+            subText: contentNotifi, // (optional) default: none
         })
     }
 

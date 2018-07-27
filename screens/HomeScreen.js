@@ -164,6 +164,7 @@ export default class HomeScreen extends Component {
 
     componentWillMount() {
         this.getKey();
+        this.alarmNotifi();
     }
 
     componentDidMount(){
@@ -557,14 +558,21 @@ export default class HomeScreen extends Component {
     //click setting
     alarmNotifi(){
         PushNotification.cancelAllLocalNotifications()
-        PushNotification.localNotification({
-            largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
-            smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
-            ongoing: false, // (optional) set whether this is an "ongoing" notification
-            message: "My Notification Message", // (required)
-            bigText: "My big text that will be shown when notification is expanded", // (optional) default: "message" prop
-            subText: contentNotifi, // (optional) default: none
-        })
+        PushNotification.localNotificationSchedule({
+            message: "Hãy ghi lại nhật kí của bạn với  Diary ", 
+            date: new Date(Date.now() + (60 * 1000)),
+            repeatType:'day',
+            repeatInterval:'minute',
+          });
+        // PushNotification.localNotification({
+        //     foreground: true,
+        //     largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
+        //     smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
+        //     ongoing: false, // (optional) set whether this is an "ongoing" notification
+        //     message: "My Notification Message", // (required)
+        //     bigText: "My big text that will be shown when notification is expanded", // (optional) default: "message" prop
+        //     subText: contentNotifi, // (optional) default: none
+        // })
     }
 
     //click ba cham goc phai
@@ -686,7 +694,7 @@ function getDayOfWeek(value){
 var style = StyleSheet.create({
     header_style: {
         width: '100%',
-        flex: heightScreen*0.7/100,
+        height: 50,
         backgroundColor: '#3F51B5',
         flexDirection: 'row',
         alignItems: 'center',
@@ -694,12 +702,12 @@ var style = StyleSheet.create({
         paddingHorizontal: 5,
     },
     container_option:{
-        flex: heightScreen*1.5/100,
+        height: 80,
         justifyContent: 'center',
         alignItems: 'center',
     },
     content: {
-        flex: heightScreen*7/100,
+        flex: 1,
     },
     text_title:{
         flex:1,

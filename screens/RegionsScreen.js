@@ -5,7 +5,8 @@ import {
     Dimensions,
     StyleSheet,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    ScrollView
 } from 'react-native';
 import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';
 
@@ -24,48 +25,50 @@ export default class RegionsScreen extends Component {
                 <View style = {style.header_style}>
                     <Text style = {style.text_style}>Xổ số đặc biệt - Trực tiếp</Text>
                 </View>
-                <Text style = {{fontSize: 18, marginHorizontal: 10, marginTop: 15, marginBottom: 20}}>
+                <Text style = {{fontSize: 18, marginHorizontal: 10, marginTop: 15, marginBottom: 20, textAlign:'center'}}>
                     Để trải nghiệm tốt hơn, quý khách vui lòng lựa chọn khu vực muốn xem kết quả xổ số
                 </Text>
-                <View style = {{flex:1, marginHorizontal: 5}}>
-                    <View style = {{flexDirection: 'row', marginBottom: 20}}>
-                        <TouchableOpacity style={{flex:1,height: 200, width: 180 }}
-                            onPress={()=>{this.clickExit(true,1)}}
-                        >
-                            <Image
-                                style = {{flex:1, height: 200, width: 180}}
-                                source = {require('../images/mien_bac.png')}
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{flex:1, height: 200, width: 180}}
-                                onPress={()=>{this.clickExit(true,2)}}
-                        >
-                            <Image
-                                style = {{flex:1, height: 200, width: 180}}
-                                source = {require('../images/mien_trung.png')}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                    <View style = {{flexDirection: 'row'}}>
-                        <TouchableOpacity style={{flex:1, height: 200, width: 180}}
-                                onPress={()=>{this.clickExit(true,3)}}
-                        >
-                            <Image
-                                style = {{flex:1, height: 200, width: 180}}
-                                source = {require('../images/mien_nam.png')}
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{flex:1, height: 200, width: 180}}
-                                onPress={()=>{this.clickExit(true,0)}}
-                        >    
-                            <Image
-                                style = {{flex:1, height: 200, width: 180}}
-                                source = {require('../images/toan_quoc.png')}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                </View>
 
+                <ScrollView style={{flex:1}}>
+                    <View style = {{flex:1, marginHorizontal: 5}}>
+                        <View style = {{flexDirection: 'row', marginBottom: 20, width:'100%'}}>
+                            <TouchableOpacity style={{flex:1,height: 200, width: 180, alignItems:'center'}}
+                                onPress={()=>{this.clickExit(true,1)}}
+                            >
+                                <Image
+                                    style = {{flex:1, height: 200, width: 180}}
+                                    source = {require('../images/mien_bac.png')}
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{flex:1, height: 200, width: 180, alignItems:'center'}}
+                                    onPress={()=>{this.clickExit(true,2)}}
+                            >
+                                <Image
+                                    style = {{flex:1, height: 200, width: 180}}
+                                    source = {require('../images/mien_trung.png')}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                        <View style = {{flexDirection: 'row', marginBottom: 20, width:'100%'}}>
+                            <TouchableOpacity style={{flex:1, height: 200, width: 180, alignItems:'center'}}
+                                    onPress={()=>{this.clickExit(true,3)}}
+                            >
+                                <Image
+                                    style = {{flex:1, height: 200, width: 180}}
+                                    source = {require('../images/mien_nam.png')}
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{flex:1, height: 200, width: 180, alignItems:'center'}}
+                                    onPress={()=>{this.clickExit(true,0)}}
+                            >    
+                                <Image
+                                    style = {{flex:1, height: 200, width: 180}}
+                                    source = {require('../images/toan_quoc.png')}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </ScrollView>
                 <FloatButtonCompomentExit
                      onButtonFloatPress={this.clickExit.bind(this)}
                 />
@@ -87,7 +90,7 @@ var style = StyleSheet.create({
         flex:1
     },
     header_style:{
-        width: widthScreen,
+        width: '100%',
         height: 50,
         backgroundColor: '#3F51B5',
         alignItems: 'center',

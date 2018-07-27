@@ -177,7 +177,7 @@ export default class ResultLottery extends Component {
         if(value == 1){
             str = 'Miền Bắc - Hôm nay, ';
         }
-        str = str + getDayOfWeek(indexDay) +  ", " + moment(date_current).format('DD/MM/YYYY') + "(quay lúc 18h 15')";
+        str = str + getDayOfWeek(indexDay) +  ", " + moment(date_current).format('DD/MM/YYYY') + " (quay lúc 18h 15')";
         return str;
     }
 
@@ -477,7 +477,7 @@ export default class ResultLottery extends Component {
 
                         <View style = {style.row_loto}>
                             <View style={{flex:1,paddingVertical:5}}>
-                                <Text style = {style.row_text_title_loto}>Đầu</Text>
+                                <Text style = {[style.row_text_title_loto,{fontWeight:'bold'}]}>Đầu</Text>
                             </View>
                             <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
                                 <Text style = {style.row_text_content_loto}>Đuôi</Text>
@@ -625,7 +625,7 @@ export default class ResultLottery extends Component {
                             </View>  
                         </View>
 
-                        <View style = {style.row_loto}>
+                        <View style = {[style.row_loto,{marginBottom:10}]}>
                             <View style={{flex:1,paddingVertical:5}}>
                                     <Text style = {style.row_text_title_loto}>9</Text>
                             </View>
@@ -635,11 +635,11 @@ export default class ResultLottery extends Component {
                             <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
                                 <Text style = {style.row_text_content_loto}>{this.filterNumber1(objResult.mang_loto7,9)}</Text>
                             </View>
-                            <View style={{flex:1,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'
-                            ,borderBottomColor:'grey', borderBottomWidth:1}}>
+                            <View style={{flex:1,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
                                 <Text style = {style.row_text_title_loto}>9</Text>
                             </View>  
                         </View>
+
                     </View>
                     </View>
                     :null}
@@ -713,7 +713,6 @@ var style = StyleSheet.create({
         flex: 0.15,
         textAlign: 'center', 
         color: 'black', 
-        fontWeight: 'bold',
         marginRight: 10,
         paddingHorizontal: 5,
     },
@@ -727,7 +726,6 @@ var style = StyleSheet.create({
         flex:1,
         textAlign: 'center', 
         color: 'black', 
-        fontWeight: 'bold'
     },
     row_text_content_loto: {
         flex: 3, 

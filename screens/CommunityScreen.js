@@ -34,7 +34,7 @@ var style = StyleSheet.create({
         flex:1
     },
     header_style:{
-        width: widthScreen,
+        width: '100%',
         height: 50,
         backgroundColor: '#3F51B5',
         alignItems: 'center',

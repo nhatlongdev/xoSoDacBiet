@@ -5,7 +5,8 @@ import {
     StyleSheet,
     Dimensions,
     Picker, 
-    Item
+    Item,
+    ScrollView
 } from 'react-native';
 // modules
 import {
@@ -71,7 +72,8 @@ export default class ByDayScreen extends Component {
                 <View style = {style.header_style}>
                     <Text style = {style.text_style}>Xem kết quả theo ngày</Text>
                 </View>
-                <Calendar
+                <ScrollView style={{flex:1}}>
+                    <Calendar
                     // Specify style for calendar container element. Default = {}
                     style={{
                         borderWidth: 1,
@@ -119,11 +121,11 @@ export default class ByDayScreen extends Component {
                                 codeTinh = item_.code;
                             }
                             }
-                       mode={'dropdown'}
-                       > 
+                    mode={'dropdown'}
+                    > 
                         {this.renderItem()}
                     </Picker>
-
+                </ScrollView>
                     <FloatButtonCompomentExit
                      onButtonFloatPress={this.clickExit.bind(this)}
                     />
@@ -168,7 +170,7 @@ var style = StyleSheet.create({
         flex:1
     },
     header_style:{
-        width: widthScreen,
+        width: '100%',
         height: 50,
         backgroundColor: '#3F51B5',
         alignItems: 'center',

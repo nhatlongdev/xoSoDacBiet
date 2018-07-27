@@ -21,6 +21,7 @@ export default class Splash extends Component {
     }
 
     componentWillMount(){
+        
         NetInfo.addEventListener('connectionChange', this.handler.bind(this));
     }
 
@@ -31,7 +32,7 @@ export default class Splash extends Component {
             this.refreshFromServer();
         }else {
             // Nếu không có mạng thì lấy dữ liệu cache
-            this.getKey();
+            this.getKey(false);
         }
     }
 
@@ -51,9 +52,10 @@ export default class Splash extends Component {
     refreshFromServer = ()=>{
         getDataFromServer().then((data_)=>{
             dataLotteProvinces = data_;
+            console.log("FORMAT DATA: " + JSON.stringify(data_));
             dataLottery_detector_statistic.data = createArrPushInItem(data_);
             console.log("API TRA VE KET QUA dataLottery_detector_statistic: " + JSON.stringify(dataLottery_detector_statistic));
-            this.props.navigation.replace('Home_Screen', {data_lottery: dataLotteProvinces, net: true});
+            this.getKey(true);
             
         }).catch((error) =>{
             
@@ -61,14 +63,23 @@ export default class Splash extends Component {
     }
 
     //save cache
-    async getKey() {
+    async getKey(net) {
         try {
           const value = await AsyncStorage.getItem('key_data');
-          alert('Vui lòng kiểm tra kết nối mạng!')
           if(value != null){ //Có dữ liệu cache
-            dataLotteProvinces = value;
-            dataLottery_detector_statistic.data = createArrPushInItem(value);
+            if(net == false){
+                alert('Vui lòng kiểm tra kết nối mạng!\nỨng dụng vẫn hoạt động bình thường nhưng để xem kết quả mới nhất vui lòng kết nối mạng')
+                dataLotteProvinces = value;
+                console.log("FORMAT DATA1: " + JSON.stringify(value));
+                dataLottery_detector_statistic.data = createArrPushInItem(JSON.parse(value));
+            }
             this.props.navigation.replace('Home_Screen', {data_lottery: dataLotteProvinces, net: false});
+          }else{
+              if(net == false){
+                alert('Vui lòng kiểm tra kết nối mạng!')  
+              }else {
+                this.props.navigation.replace('Regions_Screen');
+              }
           }
         } catch (error) {
           console.log("Error retrieving data" + error);

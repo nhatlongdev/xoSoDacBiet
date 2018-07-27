@@ -380,14 +380,14 @@ export default class ResultLottery extends Component {
                     </View>
                     <ScrollView>
                     <View style = {{flex: 1}}>
-                    <Text style = {{textAlign: 'center', width: widthScreen, color: '#0000FF', padding: checkRowItemIsCurrent == true? 10 : 0, fontSize: 16}}>
+                    <Text style = {{textAlign: 'center', width: '100%', color: '#0000FF', padding: checkRowItemIsCurrent == true? 10 : 0, fontSize: 16}}>
                         {checkRowItemIsCurrent == true? this.setTitleToday(1) : ''}
                     </Text>
 
                     {/* if else neu chua co ket qua va chuan bi den gio quay truc tiep */}
                     {showResult ? 
                     <View style = {{flex: 1}}>
-                    <Text style = {{textAlign: 'center', width: widthScreen, color: 'black', padding: 10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
+                    <Text style = {{textAlign: 'center', width: '100%', color: 'black', padding: 10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
                     <View style = {{flex: 1, backgroundColor: 'grey', marginHorizontal: 2, borderTopWidth:1, borderTopColor:'grey'}}>
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.db.title}</Text>
@@ -635,7 +635,8 @@ export default class ResultLottery extends Component {
                             <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
                                 <Text style = {style.row_text_content_loto}>{this.filterNumber1(objResult.mang_loto7,9)}</Text>
                             </View>
-                            <View style={{flex:1,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
+                            <View style={{flex:1,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'
+                            ,borderBottomColor:'grey', borderBottomWidth:1}}>
                                 <Text style = {style.row_text_title_loto}>9</Text>
                             </View>  
                         </View>
@@ -674,7 +675,7 @@ var style = StyleSheet.create({
         backgroundColor: 'white'
     },
     header_style:{
-        width: widthScreen,
+        width: '100%',
         height: 50,
         backgroundColor: '#3F51B5',
         alignItems: 'center',

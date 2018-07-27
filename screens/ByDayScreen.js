@@ -7,6 +7,11 @@ import {
     Picker, 
     Item
 } from 'react-native';
+// modules
+import {
+    handleAndroidBackButton,
+    removeAndroidBackButtonHandler
+  } from '../components/BackHandlerXoSo';
 import {Calendar} from 'react-native-calendars';
 import data from '../components/TinhThanh';
 import moment from 'moment';
@@ -36,7 +41,20 @@ export default class ByDayScreen extends Component {
         item_ = data[0];
         var date_current = new Date();
         day_current = moment(date_current).format('YYYY-MM-DD');
-    }   
+    }  
+    
+    componentWillMount(){
+        removeAndroidBackButtonHandler();
+    }
+
+    componentDidMount(){
+        handleAndroidBackButton(this.handleBackButtonClick.bind(this));
+    }
+
+    handleBackButtonClick() {
+        this.props.navigation.goBack(null);
+        return true;
+    }
 
     renderItem(){
         items = [];

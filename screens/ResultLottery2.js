@@ -422,14 +422,14 @@ export default class ResultLottery2 extends Component {
                     </View>
                     <ScrollView>
                     <View style = {{flex: 1}}>
-                    <Text style = {{textAlign: 'center', width: widthScreen, color: '#0000FF', padding: checkRowItemIsCurrent == true? 10 : 0, fontSize: 16}}>
+                    <Text style = {{textAlign: 'center', width: '100%', color: '#0000FF', padding: checkRowItemIsCurrent == true? 10 : 0, fontSize: 16}}>
                         {checkRowItemIsCurrent == true? this.setTitleToday(rowItem.area_id == 2?2:3) : ''}
                     </Text>
 
                     {
                         showResult?
                         <View style={{flex:1}}>
-                        <Text style = {{textAlign: 'center', width: widthScreen, color: 'black', paddingHorizontal: 10, paddingTop:10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
+                        <Text style = {{textAlign: 'center', width: '100%', color: 'black', paddingHorizontal: 10, paddingTop:10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
                         {
                             this.checkObjDataComplete(rowItem, dataLottery)==true?
                             <Text style={{flex: 1, color:'red', textAlign:'center', marginBottom:10}}>Đang quay</Text>
@@ -999,7 +999,7 @@ var style = StyleSheet.create({
         backgroundColor: 'white'
     },
     header_style:{
-        width: widthScreen,
+        width: '100%',
         height: 50,
         backgroundColor: '#3F51B5',
         alignItems: 'center',

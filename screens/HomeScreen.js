@@ -13,6 +13,12 @@ import {
     ActivityIndicator,
     AsyncStorage,
 } from 'react-native';
+// modules
+import {
+    handleAndroidBackButton,
+    removeAndroidBackButtonHandler
+  } from '../components/BackHandlerXoSo';
+import {exitAlert} from '../components/AlertXoSo';
 import OptionsHome from '../components/OptionsHome';
 import listOptionHome from '../components/ListOptionHome';
 import dataListDay from '../components/DataListDay';
@@ -158,6 +164,10 @@ export default class HomeScreen extends Component {
 
     componentWillMount() {
         this.getKey();
+    }
+
+    componentDidMount(){
+        handleAndroidBackButton(exitAlert);
     }
 
     shouldComponentUpdate(){
@@ -700,7 +710,7 @@ var style = StyleSheet.create({
     },
     text_title_1:{
         paddingHorizontal: 10,
-        width: widthScreen, 
+        width: '100%', 
         textAlign: 'center', 
         color: '#0174DF',
         fontWeight: 'bold',

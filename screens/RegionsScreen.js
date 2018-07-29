@@ -9,6 +9,7 @@ import {
     ScrollView
 } from 'react-native';
 import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';
+import GlobalValue from '../components/GlobalValue';
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
@@ -16,7 +17,7 @@ export default class RegionsScreen extends Component {
 
     constructor(props){
         super(props);
-
+        // alert(region_global_selected)
     }
 
     render(){
@@ -78,10 +79,18 @@ export default class RegionsScreen extends Component {
     }
 
     clickExit(check, value){
-        if(check == true){
-            this.props.navigation.state.params.listenRegions(value);
+        if(value != null){
+            GlobalValue.region_value = value;
         }
-        this.props.navigation.goBack();
+        if(GlobalValue.first_login == true){
+            GlobalValue.first_login = false;
+            this.props.navigation.replace('Home_Screen');
+        }else {
+            if(check == true && GlobalValue.click_menuLeft == false){
+                this.props.navigation.state.params.listenRegions();
+            }
+            this.props.navigation.goBack();
+        }
     }
 }
 

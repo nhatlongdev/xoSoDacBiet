@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {Icon, Col} from 'native-base';
 import Color from '../src/color';
+import GloblaValue from '../components/GlobalValue';
 
 var dataWithProvinces = {};
 var heightScreen = Dimensions.get('window').height;
@@ -62,7 +63,7 @@ export default class SlideMenu extends Component {
                         <Text>Cộng đồng dự đoán</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Regions_Screen')}}>
+                    <TouchableOpacity style = {style.item_option} onPress = {()=>{this.clickMenuLeftToRegion()}}>
                         <Icon name = {'md-compass'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
                         <Text>Chọn vùng miền</Text>
                     </TouchableOpacity>
@@ -77,6 +78,12 @@ export default class SlideMenu extends Component {
                 
             </View>
         );
+    }
+
+    //click to region
+    clickMenuLeftToRegion(){
+        GloblaValue.click_menuLeft = true;
+        this.props.navigation.navigate('Regions_Screen');
     }
 
     //click to web

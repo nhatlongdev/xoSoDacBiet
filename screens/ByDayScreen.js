@@ -27,13 +27,16 @@ var item_;
 var day_current;
 var dataFromServer, dataFromServerWithKey;
 
+//import data lottery
+import GloblaValue from '../components/GlobalValue';
+
 // ma code tinh duoc chon
 var codeTinh;
 export default class ByDayScreen extends Component {
 
     constructor(props){
         super(props);
-        dataFromServer = dataLoadingServer_global.data;
+        dataFromServer = GloblaValue.data_lottery;
         dataFromServerWithKey = dataSwitchKey_global.data;
         this.state= {
             selected: data[0]

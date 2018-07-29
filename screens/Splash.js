@@ -9,6 +9,7 @@ import {
 import { getDataFromServer } from '../networking/Server';
 import dataLottery_detector_statistic from '../components/DataLottery';
 import {createArrPushInItem} from '../components/CreateArrPushInItem';
+import GloblaValue from '../components/GlobalValue';
 
 var dataLotteProvinces;
 export default class Splash extends Component {
@@ -21,7 +22,6 @@ export default class Splash extends Component {
     }
 
     componentWillMount(){
-        
         NetInfo.addEventListener('connectionChange', this.handler.bind(this));
     }
 
@@ -30,13 +30,16 @@ export default class Splash extends Component {
         if(isConnected.type === 'wifi' || isConnected.type === 'WIFI'){
             //lay du lieu tu server
             this.refreshFromServer();
+            GloblaValue.status_net = true;
         }else {
             // Nếu không có mạng thì lấy dữ liệu cache
-            this.getKey(false);
+            this.getKey(false); 
+            GloblaValue.status_net = false;
         }
     }
 
     render(){
+        
         return(
             //  ghi de style
             <View style ={[style.container,{ backgroundColor: 'green' }]}>
@@ -51,10 +54,9 @@ export default class Splash extends Component {
 
     refreshFromServer = ()=>{
         getDataFromServer().then((data_)=>{
-            dataLotteProvinces = data_;
-            console.log("FORMAT DATA: " + JSON.stringify(data_));
+            GloblaValue.data_lottery = data_;
             dataLottery_detector_statistic.data = createArrPushInItem(data_);
-            console.log("API TRA VE KET QUA dataLottery_detector_statistic: " + JSON.stringify(dataLottery_detector_statistic));
+            status_net = true;
             this.getKey(true);
             
         }).catch((error) =>{
@@ -69,15 +71,15 @@ export default class Splash extends Component {
           if(value != null){ //Có dữ liệu cache
             if(net == false){
                 alert('Vui lòng kiểm tra kết nối mạng!\nỨng dụng vẫn hoạt động bình thường nhưng để xem kết quả mới nhất vui lòng kết nối mạng')
-                dataLotteProvinces = value;
-                console.log("FORMAT DATA1: " + JSON.stringify(value));
+                GloblaValue.data_lottery = JSON.parse(value);
                 dataLottery_detector_statistic.data = createArrPushInItem(JSON.parse(value));
             }
-            this.props.navigation.replace('Home_Screen', {data_lottery: dataLotteProvinces, net: false});
+            this.props.navigation.replace('Home_Screen', {data_lottery: GloblaValue.data_lottery, net: GloblaValue.status_net});
           }else{
               if(net == false){
                 alert('Vui lòng kiểm tra kết nối mạng!')  
               }else {
+                GloblaValue.first_login = true;  
                 this.props.navigation.replace('Regions_Screen');
               }
           }
@@ -96,14 +98,6 @@ export default class Splash extends Component {
 
 }
 
-// function handleFirstConnectivityChange(isConnected) {
-//     alert('Then, is ' + (isConnected ? 'online' : 'offline'));
-//     NetInfo.isConnected.removeEventListener(
-//       'change',
-//       handleFirstConnectivityChange
-//     );
-//   }
- 
 var style = ({
     container: {
         flex: 1,

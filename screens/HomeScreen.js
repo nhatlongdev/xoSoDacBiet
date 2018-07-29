@@ -42,6 +42,9 @@ import dataSwitchKey_global from '../components/DataLotterySwitchKey_Global';
 import dataLoadingServer_global from '../components/DataLottery_loading_server';
 import Thongke from '../components/Thongke';
 
+//import data lottery
+import GloblaValue from '../components/GlobalValue';
+
 //import color, string
 import Color from '../src/color';
 import _string from '../src/string';
@@ -68,35 +71,31 @@ var dateTimeDungQuay;
 var kq_mb_hom_nay = {};
 const key = 0;
 
-//biến lưu tạm thời giá trị vùng miền được chọn
-var regionSelected = 0;
-
 //data list ngay theo mien
 var dataListDayTheoMien;
 //msg notification
 var contentNotifi='aloalo';
+
+//Gia tri vung mien duoc chon luu tam de so sanh xem co thay doi ko
+var region_save_tam = 0;
 export default class HomeScreen extends Component {
 
     // Contructor
     constructor(props){
         super(props);
+        //Gia tri vung mien duoc chon luu tam de so sanh xem co thay doi ko
+        region_save_tam = GloblaValue.region_value;
+
         // lấy ds kết quả chuyển từ màn splash sang
-        if(this.props.navigation.state.params.net == true){
-            dataLoadingToServer = this.props.navigation.state.params.data_lottery;
-            dataLoadingServer_global.data = this.props.navigation.state.params.data_lottery;
-        }else {
-            console.log('MANG LAY TU SPLASH TRUYEN SANG===>>>' + JSON.parse(this.props.navigation.state.params.data_lottery))
-            dataLoadingToServer = JSON.parse(this.props.navigation.state.params.data_lottery);
-            dataLoadingServer_global.data = JSON.parse(this.props.navigation.state.params.data_lottery);
-        }
+        dataLoadingToServer = GloblaValue.data_lottery;
         
         //save cache
-        if(this.props.navigation.state.params.net == true){
+        if(GloblaValue.status_net == true){
             this.saveKey(JSON.stringify(dataLoadingToServer));
         }
 
         // lay ds ngay theo mien
-        dataListDayTheoMien = this.getListDay_VungMien(regionSelected);
+        dataListDayTheoMien = this.getListDay_VungMien(GloblaValue.region_value);
 
         // Chuyển đổi kết quả về dạng key - value (key moi item la--> mã tỉnh_ngày)
         // goi ham chuyen doi key
@@ -130,6 +129,27 @@ export default class HomeScreen extends Component {
                 this.refreshFromServer10s();
             }  
         },10000)
+
+        // tam thoi chua nghi ra giai phap nen dung interval
+        setInterval(()=>{
+             if(region_save_tam != GloblaValue.region_value && GloblaValue.click_menuLeft == true){
+                 GloblaValue.click_menuLeft = false;
+                 region_save_tam = GloblaValue.region_value;
+                 if(GloblaValue.region_value == 0){
+                    let that = this;
+                    setTimeout(
+                        function(){
+                            that.getListDay_(true);
+                    }, 2000);
+                }else {
+                    dataListDayTheoMien = this.getListDay_VungMien(GloblaValue.region_value);
+                }
+                this.setState({
+                    changeRegions:GloblaValue.region_value,
+                 })
+                 
+             }
+        },1000)
     }
 
     //save cache
@@ -177,6 +197,7 @@ export default class HomeScreen extends Component {
 
     componentWillUpdate(){
         console.log('GIA TRI DATATAM MOI: ' + JSON.stringify(dataListDayTheoMien))
+        console.log('GIA TRI DATATAM GLoBal.region_value: ' + GloblaValue.region_value)
     }
 
     componentDidUpdate(){
@@ -184,24 +205,25 @@ export default class HomeScreen extends Component {
     }
 
     //hàm set state changeRegions
-    listenChangeRegions(value){
-        regionSelected = value;
-        if(regionSelected == 0){
+    listenChangeRegions(){
+        if(GloblaValue.region_value == 0){
             let that = this;
             setTimeout(
                 function(){
                     that.getListDay_(true);
             }, 2000);
         }else {
-            dataListDayTheoMien = this.getListDay_VungMien(regionSelected);
+            dataListDayTheoMien = this.getListDay_VungMien(GloblaValue.region_value);
         }
+        region_save_tam = GloblaValue.region_value;
         this.setState({
-            changeRegions:value,
+            changeRegions:GloblaValue.region_value,
         })
     }
 
     // hàm set title cho danh sach ket qua mới nhât
     setTitleDsKetquaMoiNhat(value){
+        console.log('KO KIEU:' + value)
         var title='';
         if(value === 0){
             title = 'Danh sách kết quả xổ số mới nhất';
@@ -274,11 +296,11 @@ export default class HomeScreen extends Component {
                    </ScrollView>
                 </View>
 
-                <Text style = {style.text_title_1}>{this.setTitleDsKetquaMoiNhat(regionSelected)}</Text>
+                <Text style = {style.text_title_1}>{this.setTitleDsKetquaMoiNhat(GloblaValue.region_value)}</Text>
 
                 <View style = {style.content}>
                     {
-                        regionSelected === 0?
+                        GloblaValue.region_value === 0?
                         <ExpanableList
                             refreshing = {false}
                             onRefresh = {()=>{this.refresh()}}
@@ -364,10 +386,10 @@ export default class HomeScreen extends Component {
         let that = this;
         setTimeout(
             function(){
-                if(regionSelected === 0){
+                if(GloblaValue.region_value === 0){
                     that.getListDay_(true);
                 }else{
-                    that.getListDay_VungMien(regionSelected)
+                    that.getListDay_VungMien(GloblaValue.region_value)
                     that.setState({
                         load: false,
                     })
@@ -398,9 +420,7 @@ export default class HomeScreen extends Component {
             title_screen_result =  getDayOfWeek(indexDay) + ", " + moment(date_vung_mien).format('DD/MM/YYYY');
             var test_date= moment(date_vung_mien).format('YYYY-MM-DD');
             var check = false;
-            console.log('Chay toi day roiii')
             for(var j=0;j< tmp_lottery_provinces.length;j++){
-                console.log('Chay toi day roiii-----' + regionSelected)
                 if(indexDay == 0 && tmp_lottery_provinces[j].weekdays.indexOf(',1,') != -1 && tmp_lottery_provinces[j].area_id === value){
                     check = true;
                 }else if(indexDay == 1 && tmp_lottery_provinces[j].weekdays.indexOf(',2,') != -1 && tmp_lottery_provinces[j].area_id === value){
@@ -417,7 +437,6 @@ export default class HomeScreen extends Component {
                     check = true;
                 } 
                 if(check == true){
-                    console.log('Chay toi day roiii-----uu')
                     check = false;
                     var obj = JSON.parse(JSON.stringify(tmp_lottery_provinces[j]));
                     obj.rd = test_date;

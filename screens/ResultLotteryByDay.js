@@ -11,6 +11,7 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import moment from 'moment';
 import {getDayOfWeek} from '../components/GetDayOfWeek';
 
+
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
 var dataLottery;

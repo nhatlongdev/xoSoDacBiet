@@ -12,6 +12,8 @@ import {
     ScrollView,
     ActivityIndicator,
     AsyncStorage,
+    BackHandler,
+    ToastAndroid,
 } from 'react-native';
 import OptionsHome from '../components/OptionsHome';
 import listOptionHome from '../components/ListOptionHome';
@@ -159,6 +161,9 @@ export default class HomeScreen extends Component {
     componentWillMount() {
         this.getKey();
     }
+
+    
+
 
     shouldComponentUpdate(){
         return true;

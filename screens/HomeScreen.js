@@ -12,6 +12,7 @@ import {
     ScrollView,
     ActivityIndicator,
     AsyncStorage,
+    AppState
 } from 'react-native';
 // modules
 import {
@@ -109,6 +110,7 @@ export default class HomeScreen extends Component {
             showProgress_: true,
             showSetting: false,
             changeRegions:0,
+            appState: AppState.currentState
         };
         // Tao mảng danh sách ngày cho listView
        
@@ -184,11 +186,22 @@ export default class HomeScreen extends Component {
 
     componentWillMount() {
         this.getKey();
-        this.alarmNotifi();
+        AppState.removeEventListener('change', this._handleAppStateChange);
+        // this.alarmNotifi();
     }
 
     componentDidMount(){
         handleAndroidBackButton(exitAlert);
+        AppState.addEventListener('change', this._handleAppStateChange);
+    }
+
+    _handleAppStateChange = (nextAppState) => {
+        if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+          console.log('App has come to the foreground!')
+        }else {
+            console.log('App has come to the Background!')
+        }
+        this.setState({appState: nextAppState});
     }
 
     shouldComponentUpdate(){
@@ -379,7 +392,6 @@ export default class HomeScreen extends Component {
 
     // click refresh bottom right
     clickRefreshDsDay(){
-        
         this.setState({
             load: true,
         })
@@ -389,7 +401,7 @@ export default class HomeScreen extends Component {
                 if(GloblaValue.region_value === 0){
                     that.getListDay_(true);
                 }else{
-                    that.getListDay_VungMien(GloblaValue.region_value)
+                    dataListDayTheoMien = that.getListDay_VungMien(GloblaValue.region_value)
                     that.setState({
                         load: false,
                     })
@@ -561,16 +573,20 @@ export default class HomeScreen extends Component {
             var key = data[i].pc + '_' + date_quay;
             dataSwitchKey[key] = data[i];
         } 
-
-    }
-
-    onButtonFloatPress() {
-        listDayTam = [];
-        this.setState({ load: true });
-        dateTam = new Date();
-        countLoadmore = 0;
-        setTimeout(() => {
-            this.getListDay_tam(dateTam, countLoadmore, 40);
+        this.setState({
+            load: true,
+        })
+        let that = this;
+        setTimeout(
+            function(){
+                if(GloblaValue.region_value === 0){
+                    that.getListDay_(true);
+                }else{
+                    dataListDayTheoMien = that.getListDay_VungMien(GloblaValue.region_value)
+                    that.setState({
+                        load: false,
+                    })
+                }
         }, 2000);
     }
 

@@ -122,7 +122,7 @@ export default class HomeScreen extends Component {
 
         setInterval(()=>{
             console.log("INTERVAL HOME=====>>>");
-            // this.alarmNotifi();
+            this.alarmNotifi();
             var timeCurrent = moment();
             if(timeCurrent>= dateTimeBatDauQuay && timeCurrent< dateTimeDungQuay){
                 // đến khung giờ quay trực tiếp thì 10s request server một lần lấy kết quả
@@ -576,22 +576,22 @@ export default class HomeScreen extends Component {
 
     //click setting
     alarmNotifi(){
-        PushNotification.cancelAllLocalNotifications()
-        PushNotification.localNotificationSchedule({
-            message: "Hãy ghi lại nhật kí của bạn với  Diary ", 
-            date: new Date(Date.now() + (60 * 1000)),
-            repeatType:'day',
-            repeatInterval:'minute',
-          });
-        // PushNotification.localNotification({
-        //     foreground: true,
-        //     largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
-        //     smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
-        //     ongoing: false, // (optional) set whether this is an "ongoing" notification
-        //     message: "My Notification Message", // (required)
-        //     bigText: "My big text that will be shown when notification is expanded", // (optional) default: "message" prop
-        //     subText: contentNotifi, // (optional) default: none
-        // })
+        // PushNotification.cancelAllLocalNotifications()
+        // PushNotification.localNotificationSchedule({
+        //     message: "Hãy ghi lại nhật kí của bạn với  Diary ", 
+        //     date: new Date(Date.now() + (60 * 1000)),
+        //     repeatType:'day',
+        //     repeatInterval:'minute',
+        //   });
+        PushNotification.localNotification({
+            foreground: true,
+            largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
+            smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
+            ongoing: false, // (optional) set whether this is an "ongoing" notification
+            message: "My Notification Message", // (required)
+            bigText: "My big text that will be shown when notification is expanded", // (optional) default: "message" prop
+            subText: contentNotifi, // (optional) default: none
+        })
     }
 
     //click ba cham goc phai

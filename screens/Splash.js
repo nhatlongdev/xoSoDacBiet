@@ -47,7 +47,7 @@ export default class Splash extends Component {
                     style={{width: 80, height: 80}}
                     source = {require('../images/ic_launcher.png')}
                 />
-                <Text>Đang tải ...</Text>
+                <Text style={{fontSize:20, color:'white', marginTop: 20}}>Đang tải ...</Text>
             </View>
         );
     }

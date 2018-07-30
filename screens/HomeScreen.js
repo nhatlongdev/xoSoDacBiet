@@ -12,6 +12,7 @@ import {
     ScrollView,
     ActivityIndicator,
     AsyncStorage,
+    AppState
 } from 'react-native';
 // modules
 import {
@@ -109,6 +110,7 @@ export default class HomeScreen extends Component {
             showProgress_: true,
             showSetting: false,
             changeRegions:0,
+            appState: AppState.currentState
         };
         // Tao mảng danh sách ngày cho listView
        
@@ -184,11 +186,22 @@ export default class HomeScreen extends Component {
 
     componentWillMount() {
         this.getKey();
-        this.alarmNotifi();
+        AppState.removeEventListener('change', this._handleAppStateChange);
+        // this.alarmNotifi();
     }
 
     componentDidMount(){
         handleAndroidBackButton(exitAlert);
+        AppState.addEventListener('change', this._handleAppStateChange);
+    }
+
+    _handleAppStateChange = (nextAppState) => {
+        if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+          console.log('App has come to the foreground!')
+        }else {
+            console.log('App has come to the Background!')
+        }
+        this.setState({appState: nextAppState});
     }
 
     shouldComponentUpdate(){
@@ -576,22 +589,16 @@ export default class HomeScreen extends Component {
 
     //click setting
     alarmNotifi(){
-        PushNotification.cancelAllLocalNotifications()
-        PushNotification.localNotificationSchedule({
-            message: "Hãy ghi lại nhật kí của bạn với  Diary ", 
-            date: new Date(Date.now() + (60 * 1000)),
-            repeatType:'day',
-            repeatInterval:'minute',
-          });
-        // PushNotification.localNotification({
-        //     foreground: true,
-        //     largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
-        //     smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
-        //     ongoing: false, // (optional) set whether this is an "ongoing" notification
-        //     message: "My Notification Message", // (required)
-        //     bigText: "My big text that will be shown when notification is expanded", // (optional) default: "message" prop
-        //     subText: contentNotifi, // (optional) default: none
-        // })
+        PushNotification.localNotification({
+            id:'123',
+            foreground: true,
+            largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
+            smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
+            ongoing: false, // (optional) set whether this is an "ongoing" notification
+            message: "My Notification Message", // (required)
+            bigText: "My big text that will be shown when notification is expanded", // (optional) default: "message" prop
+            subText: contentNotifi, // (optional) default: none
+        })
     }
 
     //click ba cham goc phai

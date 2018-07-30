@@ -11,6 +11,7 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import moment from 'moment';
 import {getDayOfWeek} from '../components/GetDayOfWeek';
 
+
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
 var dataLottery;
@@ -440,7 +441,7 @@ export default class ResultLotteryByDay extends Component {
                             </View>  
                         </View>
 
-                        <View style = {style.row_loto}>
+                        <View style = {[style.row_loto,{marginBottom:10}]}>
                             <View style={{flex:1,paddingVertical:5}}>
                                     <Text style = {style.row_text_title_loto}>9</Text>
                             </View>

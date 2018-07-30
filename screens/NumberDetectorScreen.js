@@ -59,7 +59,8 @@ export default class NumberDetectorScreen extends Component {
                 <View style = {style.header_style}>
                     <Text style = {style.text_style}>Xổ số đặc biệt - Dò số</Text>
                 </View>
-                <View style = {{padding: 10, marginBottom: 5}}>
+                <ScrollView style={{flex:1}}>
+                    <View style = {{padding: 10, marginBottom: 5}}>
                     <Text style={{fontSize: 15, fontWeight: 'bold', color: 'black'}}>Chọn tỉnh/thành phố:</Text>
                     <Picker 
                         selectedValue = {this.state.selected}
@@ -71,7 +72,7 @@ export default class NumberDetectorScreen extends Component {
                                 item_ = data[itemIndex];
                             }
                             }
-                       mode={'dropdown'}
+                    mode={'dropdown'}
                     > 
                         {this.renderItem()}
                     </Picker>
@@ -97,21 +98,21 @@ export default class NumberDetectorScreen extends Component {
                                     onPress = {()=>this.state.textSoDo.length == 2?this.numberDetector(item_, this.state.textSoDo, this.state.textSoLanQuay) : 
                                         this.state.textSoDo.length == 0? alert('Vui lòng nhập số cần dò') : alert('Số dò phải gồm 2 số!')}
                     >
-                         <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>TRA CỨU LÔ TÔ, DÒ SỐ</Text>   
-                         <Image
-                           source={require('../images/right_arrow31.png')}
-                         />
+                        <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>TRA CỨU LÔ TÔ, DÒ SỐ</Text>   
+                        <Image
+                        source={require('../images/right_arrow31.png')}
+                        />
                     </TouchableOpacity>
                     
                     </View>
 
                     <View style={{paddingHorizontal:5}}>
-                         <Text style ={{color: Color.blue}}>{this.setTitleResultTraCuu()}</Text> 
-                         <View style = {{backgroundColor: 'red', flexDirection: 'row'}}>
+                        <Text style ={{color: Color.blue}}>{this.setTitleResultTraCuu()}</Text> 
+                        <View style = {{backgroundColor: 'red', flexDirection: 'row'}}>
                             <Text style= {{flex: 2, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Số</Text>
                             <Text style= {{flex: 2, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Giải</Text>
                             <Text style= {{flex: 3, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Ngày</Text>
-                         </View>
+                        </View>
                     </View>
                     <FlatList   style={{paddingHorizontal:5}}
                                 data = {data_detector}
@@ -124,7 +125,7 @@ export default class NumberDetectorScreen extends Component {
                                 }}
                                 keyExtractor={ (item, index) => index.toString() }> 
                     </FlatList>
-
+                </ScrollView>
                 <FloatButtonCompomentExit
                      onButtonFloatPress={this.clickExit.bind(this)}
                 />
@@ -170,7 +171,7 @@ var style = StyleSheet.create({
         backgroundColor: 'yellow'
     },
     header_style:{
-        width: widthScreen,
+        width: '100%',
         height: 50,
         backgroundColor: '#3F51B5',
         alignItems: 'center',

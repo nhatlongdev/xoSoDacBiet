@@ -51,7 +51,7 @@ export default class ItemRowTheoMien extends Component {
                     if(arr_kq[i] != ''){
                         text != '' ? text = text + " - " + arr[i] + " (" + arr_kq[i] + ")" : text = text + arr[i] + " (" + arr_kq[i] + ")" ;
                     }else{
-                        text != '' ? text = text + " - " + arr[i] + " (Đang quay)" : text = text + arr[i] + " Đang quay)" ;    
+                        text != '' ? text = text + " - " + arr[i] + " (Đang quay)" : text = text + arr[i] + " (Đang quay)" ;    
                     }    
                 } else {
                     text != '' ? text = text + " - " + arr[i] : text = text + arr[i];

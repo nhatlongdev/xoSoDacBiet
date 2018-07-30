@@ -204,10 +204,10 @@ export default class ResultLottery2 extends Component {
         var time = '';
         if(value == 2){
             str = 'Miền Trung - Hôm nay, ';
-            time = "(quay lúc 17h 15')";
+            time = " (quay lúc 17h 15')";
         }else if(value == 3){
             str = 'Miền Nam - Hôm nay, ';
-            time = "(quay lúc 16h 15')";
+            time = " (quay lúc 16h 15')";
         }
         
         str = str + getDayOfWeek(indexDay) +  ", " + moment(date_current).format('DD/MM/YYYY') + time;
@@ -422,17 +422,20 @@ export default class ResultLottery2 extends Component {
                     </View>
                     <ScrollView>
                     <View style = {{flex: 1}}>
-                    <Text style = {{textAlign: 'center', width: widthScreen, color: '#0000FF', padding: checkRowItemIsCurrent == true? 10 : 0, fontSize: 16}}>
+                    <Text style = {{textAlign: 'center', width: '100%', color: '#0000FF', padding: checkRowItemIsCurrent == true? 10 : 0, fontSize: 16}}>
                         {checkRowItemIsCurrent == true? this.setTitleToday(rowItem.area_id == 2?2:3) : ''}
                     </Text>
 
                     {
                         showResult?
                         <View style={{flex:1}}>
-                        <Text style = {{textAlign: 'center', width: widthScreen, color: 'black', paddingHorizontal: 10, paddingTop:10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
+                        <Text style = {{textAlign: 'center', width: '100%', color: 'black', paddingHorizontal: 10, paddingTop:10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
                         {
                             this.checkObjDataComplete(rowItem, dataLottery)==true?
-                            <Text style={{flex: 1, color:'red', textAlign:'center', marginBottom:10}}>Đang quay</Text>
+                            <View style={{alignContent:'center'}}>
+                                <Text style={{flex: 1, color:'red', textAlign:'center', marginBottom:10}}>Đang quay</Text>
+                                <UIActivityIndicator style={{flex:1, paddingBottom: 1,}} size={15} color='blue' />
+                            </View>
                             :null
                         }
                         <View style = {{flex: 1, backgroundColor: 'grey', marginHorizontal: 2}}>
@@ -440,70 +443,85 @@ export default class ResultLottery2 extends Component {
                             <View style = {style.row_result_title}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5 ,
                                     textAlign: 'center', color: 'white', fontWeight: 'bold',fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>Giải</Text>
-                                {
-                                    this.checkObjDataComplete(rowItem, dataLottery)==true?
-                                    <View style={{flex: 1, alignItems:'center'}}>
-                                        <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
-                                            {rowItem.name[0]}
-                                        </Text>
-                                        <UIActivityIndicator style={{flex:1, paddingBottom: 1,}} size={15} color='blue' />
-                                    </View>:
-                                    <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
-                                            {rowItem.name[0]}
-                                    </Text>
-                                }    
+                                {/*{
+                                //     this.checkObjDataComplete(rowItem, dataLottery)==true?
+                                //     <View style={{flex: 1, alignItems:'center'}}>
+                                //         <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
+                                //             {rowItem.name[0]}
+                                //         </Text>
+                                //         <UIActivityIndicator style={{flex:1, paddingBottom: 1,}} size={15} color='blue' />
+                                //     </View>:
+                                //     <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
+                                //             {rowItem.name[0]}
+                                //     </Text>
+                                // }    
                                 
-                                {
-                                    this.checkObjDataComplete(rowItem, dataLottery)==true?
-                                    <View style={{flex: 1, alignItems:'center'}}>
-                                        <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
-                                            {rowItem.name[1]}
-                                        </Text>
-                                        <UIActivityIndicator style={{flex:1, paddingBottom: 1,}} size={15} color='blue' />
-                                    </View>:
-                                    <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
-                                            {rowItem.name[1]}
-                                    </Text>
-                                } 
+                                // {
+                                //     this.checkObjDataComplete(rowItem, dataLottery)==true?
+                                //     <View style={{flex: 1, alignItems:'center'}}>
+                                //         <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
+                                //             {rowItem.name[1]}
+                                //         </Text>
+                                //         <UIActivityIndicator style={{flex:1, paddingBottom: 1,}} size={15} color='blue' />
+                                //     </View>:
+                                //     <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
+                                //             {rowItem.name[1]}
+                                //     </Text>
+                                // } 
 
-                                {
-                                    rowItem.code.length >= 3?
-                                    this.checkObjDataComplete(rowItem, dataLottery)==true?
-                                    <View style={{flex: 1, alignItems:'center'}}>
-                                        <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                            color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: rowItem.code.length == 4? 1 : 0,}}>
-                                            {rowItem.code.length >= 3? rowItem.name[2] : ''}
-                                        </Text>
-                                        <UIActivityIndicator style={{flex:1, paddingBottom: 1,}} size={15} color='blue' />
-                                    </View>:
-                                    <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
-                                            color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: rowItem.code.length == 4? 1 : 0,}}>
-                                            {rowItem.code.length >= 3? rowItem.name[2] : ''}
-                                    </Text>
-                                    :null
-                                }
+                                // {
+                                //     rowItem.code.length >= 3?
+                                //     this.checkObjDataComplete(rowItem, dataLottery)==true?
+                                //     <View style={{flex: 1, alignItems:'center'}}>
+                                //         <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                //             color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: rowItem.code.length == 4? 1 : 0,}}>
+                                //             {rowItem.code.length >= 3? rowItem.name[2] : ''}
+                                //         </Text>
+                                //         <UIActivityIndicator style={{flex:1, paddingBottom: 1,}} size={15} color='blue' />
+                                //     </View>:
+                                //     <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                //             color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: rowItem.code.length == 4? 1 : 0,}}>
+                                //             {rowItem.code.length >= 3? rowItem.name[2] : ''}
+                                //     </Text>
+                                //     :null
+                                // }
                                 
-                                {
-                                    rowItem.code.length >= 4?
-                                    this.checkObjDataComplete(rowItem, dataLottery)==true?
-                                    <View style={{flex: 1, alignItems:'center'}}>
-                                        <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                // {
+                                //     rowItem.code.length >= 4?
+                                //     this.checkObjDataComplete(rowItem, dataLottery)==true?
+                                //     <View style={{flex: 1, alignItems:'center'}}>
+                                //         <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                //             color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red'}}>
+                                //             {rowItem.code.length == 4? rowItem.name[3] : ''}
+                                //         </Text>
+                                //         <UIActivityIndicator style={{flex:1, paddingBottom: 1,}} size={15} color='blue' />
+                                //     </View>:
+                                //     <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
+                                //         color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red'}}>
+                                //         {rowItem.code.length == 4? rowItem.name[3] : ''}
+                                //     </Text>
+                                //     :null
+                                // }*/}
+
+                                <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
+                                            {rowItem.name[0]}
+                                        </Text>
+                                        <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: 1,}}>
+                                        {rowItem.name[1]}
+                                    </Text>
+                                <Text style = {{padding: rowItem.code.length >= 3? 5 : 0, flex: rowItem.code.length >= 3? 1 : 0, textAlign: 'center', 
+                                    color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red', marginRight: rowItem.code.length == 4? 1 : 0,}}>
+                                    {rowItem.code.length >= 3? rowItem.name[2] : ''}
+                                </Text>
+                                <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
                                             color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red'}}>
                                             {rowItem.code.length == 4? rowItem.name[3] : ''}
-                                        </Text>
-                                        <UIActivityIndicator style={{flex:1, paddingBottom: 1,}} size={15} color='blue' />
-                                    </View>:
-                                    <Text style = {{padding: rowItem.code.length == 4? 5 : 0, flex: rowItem.code.length == 4? 1 : 0, textAlign: 'center', 
-                                        color: 'white', fontWeight: 'bold', fontSize: 16, backgroundColor: 'red'}}>
-                                        {rowItem.code.length == 4? rowItem.name[3] : ''}
-                                    </Text>
-                                    :null
-                                }
+                                </Text>
                             </View>
 
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>G.8</Text>
+                                    fontSize: 16, marginRight: 1}}>G.8</Text>
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey', alignItems:'center', justifyContent:'space-between'}}>
                                     <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_1?this.margeArrToString(objResult_1.g8.arr_kq8)+" ":" "}
@@ -532,7 +550,7 @@ export default class ResultLottery2 extends Component {
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>G.7</Text>
+                                    fontSize: 16, marginRight: 1}}>G.7</Text>
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_1?this.margeArrToString(objResult_1.g7.arr_kq7)+" ": " "}
@@ -561,7 +579,7 @@ export default class ResultLottery2 extends Component {
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>G.6</Text>
+                                    fontSize: 16, marginRight: 1}}>G.6</Text>
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_1?this.margeArrToString(objResult_1.g6.arr_kq6)+" ":" "}
@@ -589,7 +607,7 @@ export default class ResultLottery2 extends Component {
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>G.5</Text>
+                                    fontSize: 16, marginRight: 1}}>G.5</Text>
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_1?this.margeArrToString(objResult_1.g5.arr_kq5)+" ":" "}
@@ -617,7 +635,7 @@ export default class ResultLottery2 extends Component {
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>G.4</Text>
+                                    fontSize: 16, marginRight: 1}}>G.4</Text>
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     <Text style = {{flex :1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_1?this.margeArrToString(objResult_1.g4.arr_kq4)+" ":" "}
@@ -645,7 +663,7 @@ export default class ResultLottery2 extends Component {
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>G.3</Text>
+                                    fontSize: 16, marginRight: 1}}>G.3</Text>
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_1?this.margeArrToString(objResult_1.g3.arr_kq3)+" ":" "}
@@ -673,7 +691,7 @@ export default class ResultLottery2 extends Component {
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>G.2</Text>
+                                    fontSize: 16, marginRight: 1}}>G.2</Text>
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_1?this.margeArrToString(objResult_1.g2.arr_kq2)+" ":" "}
@@ -701,7 +719,7 @@ export default class ResultLottery2 extends Component {
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>G.1</Text>
+                                    fontSize: 16, marginRight: 1}}>G.1</Text>
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     <Text style = {{flex :1,textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_1?this.margeArrToString(objResult_1.g1.arr_kq1)+" ":" "}
@@ -729,7 +747,7 @@ export default class ResultLottery2 extends Component {
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5, textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>ĐB</Text>
+                                    fontSize: 16, marginRight: 1}}>ĐB</Text>
                                 <View style={{padding: 5, flex: 1,borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     <Text style = {{flex :1,textAlign: 'center', color: 'red', fontWeight: 'bold', fontSize: 16}}>
                                         {objResult_1?this.margeArrToString(objResult_1.db.arr_kqdb)+" ":" "}
@@ -766,7 +784,7 @@ export default class ResultLottery2 extends Component {
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>0</Text>
+                                    fontSize: 16, marginRight: 1}}>0</Text>
                                 <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,0) + " ":" "}   
                                 </Text>
@@ -786,7 +804,7 @@ export default class ResultLottery2 extends Component {
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>1</Text>
+                                    fontSize: 16, marginRight: 1}}>1</Text>
                                 <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,1) + " ":" "}   
                                 </Text>
@@ -806,7 +824,7 @@ export default class ResultLottery2 extends Component {
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>2</Text>
+                                    fontSize: 16, marginRight: 1}}>2</Text>
                                 <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,2) + " ":" "}   
                                 </Text>
@@ -826,7 +844,7 @@ export default class ResultLottery2 extends Component {
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>3</Text>
+                                    fontSize: 16, marginRight: 1}}>3</Text>
                                 <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,3) + " ":" "}   
                                 </Text>
@@ -846,7 +864,7 @@ export default class ResultLottery2 extends Component {
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>4</Text>
+                                    fontSize: 16, marginRight: 1}}>4</Text>
                                 <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,4) + " ":" "}   
                                 </Text>
@@ -866,7 +884,7 @@ export default class ResultLottery2 extends Component {
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>5</Text>
+                                    fontSize: 16, marginRight: 1}}>5</Text>
                                 <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,5) + " ":" "}   
                                 </Text>
@@ -886,7 +904,7 @@ export default class ResultLottery2 extends Component {
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>6</Text>
+                                    fontSize: 16, marginRight: 1}}>6</Text>
                                 <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,6) + " ":" "}   
                                 </Text>
@@ -906,7 +924,7 @@ export default class ResultLottery2 extends Component {
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>7</Text>
+                                    fontSize: 16, marginRight: 1}}>7</Text>
                                 <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,7) + " ":" "}   
                                 </Text>
@@ -926,7 +944,7 @@ export default class ResultLottery2 extends Component {
     
                             <View style = {style.row_result}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>8</Text>
+                                    fontSize: 16, marginRight: 1}}>8</Text>
                                 <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,8) + " ":" "}   
                                 </Text>
@@ -944,9 +962,9 @@ export default class ResultLottery2 extends Component {
                                 </Text>
                             </View>
     
-                            <View style = {style.row_result}>
+                            <View style = {[style.row_result,{marginBottom:10}]}>
                                 <Text style = {{flex: rowItem.code.length >= 3? 0.4 : 0.3, paddingHorizontal: 2, paddingVertical: 5,textAlign: 'center', color: 'black', 
-                                    fontWeight: 'bold',fontSize: 16, marginRight: 1}}>9</Text>
+                                    fontSize: 16, marginRight: 1}}>9</Text>
                                 <Text style = {{padding: 5, flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold', fontSize: 16, marginRight: 1, borderLeftWidth: 1, borderLeftColor: 'grey'}}>
                                     {objResult_1?this.filterNumber(objResult_1.mang_loto7,9) + " ":" "}   
                                 </Text>
@@ -999,7 +1017,7 @@ var style = StyleSheet.create({
         backgroundColor: 'white'
     },
     header_style:{
-        width: widthScreen,
+        width: '100%',
         height: 50,
         backgroundColor: '#3F51B5',
         alignItems: 'center',

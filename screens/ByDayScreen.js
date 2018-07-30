@@ -5,8 +5,14 @@ import {
     StyleSheet,
     Dimensions,
     Picker, 
-    Item
+    Item,
+    ScrollView
 } from 'react-native';
+// modules
+import {
+    handleAndroidBackButton,
+    removeAndroidBackButtonHandler
+  } from '../components/BackHandlerXoSo';
 import {Calendar} from 'react-native-calendars';
 import data from '../components/TinhThanh';
 import moment from 'moment';
@@ -21,13 +27,16 @@ var item_;
 var day_current;
 var dataFromServer, dataFromServerWithKey;
 
+//import data lottery
+import GloblaValue from '../components/GlobalValue';
+
 // ma code tinh duoc chon
 var codeTinh;
 export default class ByDayScreen extends Component {
 
     constructor(props){
         super(props);
-        dataFromServer = dataLoadingServer_global.data;
+        dataFromServer = GloblaValue.data_lottery;
         dataFromServerWithKey = dataSwitchKey_global.data;
         this.state= {
             selected: data[0]
@@ -36,7 +45,20 @@ export default class ByDayScreen extends Component {
         item_ = data[0];
         var date_current = new Date();
         day_current = moment(date_current).format('YYYY-MM-DD');
-    }   
+    }  
+    
+    componentWillMount(){
+        removeAndroidBackButtonHandler();
+    }
+
+    componentDidMount(){
+        handleAndroidBackButton(this.handleBackButtonClick.bind(this));
+    }
+
+    handleBackButtonClick() {
+        this.props.navigation.goBack(null);
+        return true;
+    }
 
     renderItem(){
         items = [];
@@ -53,7 +75,8 @@ export default class ByDayScreen extends Component {
                 <View style = {style.header_style}>
                     <Text style = {style.text_style}>Xem kết quả theo ngày</Text>
                 </View>
-                <Calendar
+                <ScrollView style={{flex:1}}>
+                    <Calendar
                     // Specify style for calendar container element. Default = {}
                     style={{
                         borderWidth: 1,
@@ -101,11 +124,11 @@ export default class ByDayScreen extends Component {
                                 codeTinh = item_.code;
                             }
                             }
-                       mode={'dropdown'}
-                       > 
+                    mode={'dropdown'}
+                    > 
                         {this.renderItem()}
                     </Picker>
-
+                </ScrollView>
                     <FloatButtonCompomentExit
                      onButtonFloatPress={this.clickExit.bind(this)}
                     />
@@ -150,7 +173,7 @@ var style = StyleSheet.create({
         flex:1
     },
     header_style:{
-        width: widthScreen,
+        width: '100%',
         height: 50,
         backgroundColor: '#3F51B5',
         alignItems: 'center',

@@ -177,7 +177,7 @@ export default class ResultLottery extends Component {
         if(value == 1){
             str = 'Miền Bắc - Hôm nay, ';
         }
-        str = str + getDayOfWeek(indexDay) +  ", " + moment(date_current).format('DD/MM/YYYY') + "(quay lúc 18h 15')";
+        str = str + getDayOfWeek(indexDay) +  ", " + moment(date_current).format('DD/MM/YYYY') + " (quay lúc 18h 15')";
         return str;
     }
 
@@ -380,14 +380,14 @@ export default class ResultLottery extends Component {
                     </View>
                     <ScrollView>
                     <View style = {{flex: 1}}>
-                    <Text style = {{textAlign: 'center', width: widthScreen, color: '#0000FF', padding: checkRowItemIsCurrent == true? 10 : 0, fontSize: 16}}>
+                    <Text style = {{textAlign: 'center', width: '100%', color: '#0000FF', padding: checkRowItemIsCurrent == true? 10 : 0, fontSize: 16}}>
                         {checkRowItemIsCurrent == true? this.setTitleToday(1) : ''}
                     </Text>
 
                     {/* if else neu chua co ket qua va chuan bi den gio quay truc tiep */}
                     {showResult ? 
                     <View style = {{flex: 1}}>
-                    <Text style = {{textAlign: 'center', width: widthScreen, color: 'black', padding: 10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
+                    <Text style = {{textAlign: 'center', width: '100%', color: 'black', padding: 10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
                     <View style = {{flex: 1, backgroundColor: 'grey', marginHorizontal: 2, borderTopWidth:1, borderTopColor:'grey'}}>
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.db.title}</Text>
@@ -477,7 +477,7 @@ export default class ResultLottery extends Component {
 
                         <View style = {style.row_loto}>
                             <View style={{flex:1,paddingVertical:5}}>
-                                <Text style = {style.row_text_title_loto}>Đầu</Text>
+                                <Text style = {[style.row_text_title_loto,{fontWeight:'bold'}]}>Đầu</Text>
                             </View>
                             <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
                                 <Text style = {style.row_text_content_loto}>Đuôi</Text>
@@ -625,7 +625,7 @@ export default class ResultLottery extends Component {
                             </View>  
                         </View>
 
-                        <View style = {style.row_loto}>
+                        <View style = {[style.row_loto,{marginBottom:10}]}>
                             <View style={{flex:1,paddingVertical:5}}>
                                     <Text style = {style.row_text_title_loto}>9</Text>
                             </View>
@@ -639,6 +639,7 @@ export default class ResultLottery extends Component {
                                 <Text style = {style.row_text_title_loto}>9</Text>
                             </View>  
                         </View>
+
                     </View>
                     </View>
                     :null}
@@ -674,7 +675,7 @@ var style = StyleSheet.create({
         backgroundColor: 'white'
     },
     header_style:{
-        width: widthScreen,
+        width: '100%',
         height: 50,
         backgroundColor: '#3F51B5',
         alignItems: 'center',
@@ -712,7 +713,6 @@ var style = StyleSheet.create({
         flex: 0.15,
         textAlign: 'center', 
         color: 'black', 
-        fontWeight: 'bold',
         marginRight: 10,
         paddingHorizontal: 5,
     },
@@ -726,7 +726,6 @@ var style = StyleSheet.create({
         flex:1,
         textAlign: 'center', 
         color: 'black', 
-        fontWeight: 'bold'
     },
     row_text_content_loto: {
         flex: 3, 

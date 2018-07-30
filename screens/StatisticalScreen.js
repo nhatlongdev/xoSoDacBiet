@@ -8,7 +8,8 @@ import {
     Item,
     TextInput,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    ScrollView
 } from 'react-native';
 var item_;
 import data from '../components/TinhThanh';
@@ -33,6 +34,8 @@ export default class StatisticalScreen extends Component {
         }
         item_ = data[0];
         dataResultLottery = dataLottery_detector_statistic.data;
+        console.log('GIA TRI ITEM THONG KE: ' + JSON.stringify(item_))
+        console.log('GIA TRI ITEM THONG dataLottery_detector_statistic: ' + JSON.stringify(dataLottery_detector_statistic.data))
     }
 
     renderItem(){
@@ -49,86 +52,88 @@ export default class StatisticalScreen extends Component {
                 <View style = {style.header_style}>
                     <Text style = {style.text_style}>Thống kê xổ số</Text>
                 </View>
-                <View style = {{padding: 10}}>
-                    <Text style={{fontSize: 15, fontWeight: 'bold', color: 'black'}}>Chọn tỉnh/thành phố:</Text>
-                    <Picker 
-                        selectedValue = {this.state.selected}
-                        onValueChange={
-                            (itemValue, itemIndex, item) => {
-                                this.setState({
-                                    selected: itemValue
-                                })
-                                item_ = data[itemIndex];
-                                // console.log('CHECKCKCK: ' + JSON.stringify(item_))
-                            }
-                            }
-                       mode={'dropdown'}
-                    > 
-                        {this.renderItem()}
-                    </Picker>
-                    <Text style={{fontSize: 15, fontWeight: 'bold', color: 'black'}}>Chọn số lần quay:</Text>
-                    <TextInput
-                        placeholder={'Số lần quay'}
-                        placeholderTextColor={'grey'}
-                        keyboardType='numeric'
-                        maxLength={2}
-                        onChangeText={(text)=>this.setState({
-                            textSoLanQuay: text
-                        })}
-                        value={this.state.textSoLanQuay}
-                    />
-                    
-                    <TouchableOpacity style={style.style_button}
-                                    onPress = {()=>this.state.textSoLanQuay.length>0 && this.state.textSoLanQuay!='0'?this.thongKeDauDuoi(item_, this.state.textSoLanQuay): 
-                                    alert('Vui lòng nhập số lần quay')}
-                    >
-                         <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ ĐẦU, ĐUÔI LÔ TÔ</Text>   
-                         <Image
-                           source={require('../images/right_arrow31.png')}
-                         />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={style.style_button}
-                        onPress = {()=>this.state.textSoLanQuay.length>0 && this.state.textSoLanQuay!='0'?this.thongKeHaiSoCuoi(item_, this.state.textSoLanQuay): 
-                        alert('Vui lòng nhập số lần quay')}
-                    >
-                        <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ TỔNG 2 SỐ CUỐI</Text>   
-                        <Image
-                        source={require('../images/right_arrow31.png')}
+                <ScrollView style={{flex:1}}>
+                        <View style = {{padding: 10}}>
+                        <Text style={{fontSize: 15, fontWeight: 'bold', color: 'black'}}>Chọn tỉnh/thành phố:</Text>
+                        <Picker 
+                            selectedValue = {this.state.selected}
+                            onValueChange={
+                                (itemValue, itemIndex, item) => {
+                                    this.setState({
+                                        selected: itemValue
+                                    })
+                                    item_ = data[itemIndex];
+                                    // console.log('CHECKCKCK: ' + JSON.stringify(item_))
+                                }
+                                }
+                        mode={'dropdown'}
+                        > 
+                            {this.renderItem()}
+                        </Picker>
+                        <Text style={{fontSize: 15, fontWeight: 'bold', color: 'black'}}>Chọn số lần quay:</Text>
+                        <TextInput
+                            placeholder={'Số lần quay'}
+                            placeholderTextColor={'grey'}
+                            keyboardType='numeric'
+                            maxLength={2}
+                            onChangeText={(text)=>this.setState({
+                                textSoLanQuay: text
+                            })}
+                            value={this.state.textSoLanQuay}
                         />
-                    </TouchableOpacity>
+                        
+                        <TouchableOpacity style={style.style_button}
+                                        onPress = {()=>this.state.textSoLanQuay.length>0 && this.state.textSoLanQuay!='0'?this.thongKeDauDuoi(item_, this.state.textSoLanQuay): 
+                                        alert('Vui lòng nhập số lần quay')}
+                        >
+                            <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ ĐẦU, ĐUÔI LÔ TÔ</Text>   
+                            <Image
+                            source={require('../images/right_arrow31.png')}
+                            />
+                        </TouchableOpacity>
 
-                    <TouchableOpacity style={style.style_button}
-                        onPress = {()=>this.state.textSoLanQuay.length>0 && this.state.textSoLanQuay!='0'?this.thongKe0099(item_, this.state.textSoLanQuay): 
-                        alert('Vui lòng nhập số lần quay')}
-                    >
-                        <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ 00-99</Text>   
-                        <Image
-                        source={require('../images/right_arrow31.png')}
-                        />
-                    </TouchableOpacity>
+                        <TouchableOpacity style={style.style_button}
+                            onPress = {()=>this.state.textSoLanQuay.length>0 && this.state.textSoLanQuay!='0'?this.thongKeHaiSoCuoi(item_, this.state.textSoLanQuay): 
+                            alert('Vui lòng nhập số lần quay')}
+                        >
+                            <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ TỔNG 2 SỐ CUỐI</Text>   
+                            <Image
+                            source={require('../images/right_arrow31.png')}
+                            />
+                        </TouchableOpacity>
 
-                    <TouchableOpacity style={style.style_button}
-                        onPress = {()=>this.state.textSoLanQuay.length>0 && this.state.textSoLanQuay!='0'?this.thongKeCacSoVeNhieu(item_, this.state.textSoLanQuay): 
-                        alert('Vui lòng nhập số lần quay')}
-                    >
-                        <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ CÁC SỐ VỀ NHIỀU</Text>   
-                        <Image
-                        source={require('../images/right_arrow31.png')}
-                        />
-                    </TouchableOpacity>
+                        <TouchableOpacity style={style.style_button}
+                            onPress = {()=>this.state.textSoLanQuay.length>0 && this.state.textSoLanQuay!='0'?this.thongKe0099(item_, this.state.textSoLanQuay): 
+                            alert('Vui lòng nhập số lần quay')}
+                        >
+                            <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ 00-99</Text>   
+                            <Image
+                            source={require('../images/right_arrow31.png')}
+                            />
+                        </TouchableOpacity>
 
-                    <TouchableOpacity style={style.style_button}
-                        onPress = {()=>this.state.textSoLanQuay.length>0 && this.state.textSoLanQuay!='0'?this.thongKeCacSoLauRa(item_, this.state.textSoLanQuay): 
-                        alert('Vui lòng nhập số lần quay')}
-                    >
-                        <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ CÁC SỐ LÂU RA</Text>   
-                        <Image
-                        source={require('../images/right_arrow31.png')}
-                        />
-                    </TouchableOpacity>
-                </View>
+                        <TouchableOpacity style={style.style_button}
+                            onPress = {()=>this.state.textSoLanQuay.length>0 && this.state.textSoLanQuay!='0'?this.thongKeCacSoVeNhieu(item_, this.state.textSoLanQuay): 
+                            alert('Vui lòng nhập số lần quay')}
+                        >
+                            <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ CÁC SỐ VỀ NHIỀU</Text>   
+                            <Image
+                            source={require('../images/right_arrow31.png')}
+                            />
+                        </TouchableOpacity>
 
+                        <TouchableOpacity style={style.style_button}
+                            onPress = {()=>this.state.textSoLanQuay.length>0 && this.state.textSoLanQuay!='0'?this.thongKeCacSoLauRa(item_, this.state.textSoLanQuay): 
+                            alert('Vui lòng nhập số lần quay')}
+                        >
+                            <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>THỐNG KÊ CÁC SỐ LÂU RA</Text>   
+                            <Image
+                            source={require('../images/right_arrow31.png')}
+                            />
+                        </TouchableOpacity>
+                        </View>
+                </ScrollView>
+            
                 <FloatButtonCompomentExit
                      onButtonFloatPress={this.clickExit.bind(this)}
                 />
@@ -190,7 +195,7 @@ var style = StyleSheet.create({
         flex:1
     },
     header_style:{
-        width: widthScreen,
+        width: '100%',
         height: 50,
         backgroundColor: '#3F51B5',
         alignItems: 'center',

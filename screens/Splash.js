@@ -9,6 +9,7 @@ import {
 import { getDataFromServer } from '../networking/Server';
 import dataLottery_detector_statistic from '../components/DataLottery';
 import {createArrPushInItem} from '../components/CreateArrPushInItem';
+import GloblaValue from '../components/GlobalValue';
 
 var dataLotteProvinces;
 export default class Splash extends Component {
@@ -29,13 +30,16 @@ export default class Splash extends Component {
         if(isConnected.type === 'wifi' || isConnected.type === 'WIFI'){
             //lay du lieu tu server
             this.refreshFromServer();
+            GloblaValue.status_net = true;
         }else {
             // Nếu không có mạng thì lấy dữ liệu cache
-            this.getKey();
+            this.getKey(false); 
+            GloblaValue.status_net = false;
         }
     }
 
     render(){
+        
         return(
             //  ghi de style
             <View style ={[style.container,{ backgroundColor: 'green' }]}>
@@ -43,17 +47,17 @@ export default class Splash extends Component {
                     style={{width: 80, height: 80}}
                     source = {require('../images/ic_launcher.png')}
                 />
-                <Text>Đang tải ...</Text>
+                <Text style={{fontSize:20, color:'white', marginTop: 20}}>Đang tải ...</Text>
             </View>
         );
     }
 
     refreshFromServer = ()=>{
         getDataFromServer().then((data_)=>{
-            dataLotteProvinces = data_;
+            GloblaValue.data_lottery = data_;
             dataLottery_detector_statistic.data = createArrPushInItem(data_);
-            console.log("API TRA VE KET QUA dataLottery_detector_statistic: " + JSON.stringify(dataLottery_detector_statistic));
-            this.props.navigation.replace('Home_Screen', {data_lottery: dataLotteProvinces, net: true});
+            status_net = true;
+            this.getKey(true);
             
         }).catch((error) =>{
             
@@ -61,14 +65,23 @@ export default class Splash extends Component {
     }
 
     //save cache
-    async getKey() {
+    async getKey(net) {
         try {
           const value = await AsyncStorage.getItem('key_data');
-          alert('Vui lòng kiểm tra kết nối mạng!')
           if(value != null){ //Có dữ liệu cache
-            dataLotteProvinces = value;
-            dataLottery_detector_statistic.data = createArrPushInItem(value);
-            this.props.navigation.replace('Home_Screen', {data_lottery: dataLotteProvinces, net: false});
+            if(net == false){
+                alert('Vui lòng kiểm tra kết nối mạng!\nỨng dụng vẫn hoạt động bình thường nhưng để xem kết quả mới nhất vui lòng kết nối mạng')
+                GloblaValue.data_lottery = JSON.parse(value);
+                dataLottery_detector_statistic.data = createArrPushInItem(JSON.parse(value));
+            }
+            this.props.navigation.replace('Home_Screen', {data_lottery: GloblaValue.data_lottery, net: GloblaValue.status_net});
+          }else{
+              if(net == false){
+                alert('Vui lòng kiểm tra kết nối mạng!')  
+              }else {
+                GloblaValue.first_login = true;  
+                this.props.navigation.replace('Regions_Screen');
+              }
           }
         } catch (error) {
           console.log("Error retrieving data" + error);
@@ -85,14 +98,6 @@ export default class Splash extends Component {
 
 }
 
-// function handleFirstConnectivityChange(isConnected) {
-//     alert('Then, is ' + (isConnected ? 'online' : 'offline'));
-//     NetInfo.isConnected.removeEventListener(
-//       'change',
-//       handleFirstConnectivityChange
-//     );
-//   }
- 
 var style = ({
     container: {
         flex: 1,

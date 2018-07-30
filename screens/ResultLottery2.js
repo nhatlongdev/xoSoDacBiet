@@ -432,7 +432,10 @@ export default class ResultLottery2 extends Component {
                         <Text style = {{textAlign: 'center', width: '100%', color: 'black', paddingHorizontal: 10, paddingTop:10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
                         {
                             this.checkObjDataComplete(rowItem, dataLottery)==true?
-                            <Text style={{flex: 1, color:'red', textAlign:'center', marginBottom:10}}>Đang quay</Text>
+                            <View style={{alignContent:'center'}}>
+                                <Text style={{flex: 1, color:'red', textAlign:'center', marginBottom:10}}>Đang quay</Text>
+                                <UIActivityIndicator style={{flex:1, paddingBottom: 1,}} size={15} color='blue' />
+                            </View>
                             :null
                         }
                         <View style = {{flex: 1, backgroundColor: 'grey', marginHorizontal: 2}}>

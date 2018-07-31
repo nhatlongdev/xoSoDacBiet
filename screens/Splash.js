@@ -22,12 +22,16 @@ export default class Splash extends Component {
     }
 
     componentWillMount(){
+        console.log('CHAY VAO WILLMOUNT')
         NetInfo.addEventListener('connectionChange', this.handler.bind(this));
+        console.log('CHAY VAO WILLMOUNT_1')
     }
 
     //check status networking
     handler(isConnected) {
+        console.log('CHAY VAO WILLMOUNT_3')
         if(isConnected.type === 'wifi' || isConnected.type === 'WIFI'){
+            console.log('CO WIFI')
             //lay du lieu tu server
             this.refreshFromServer();
             GloblaValue.status_net = true;
@@ -57,8 +61,8 @@ export default class Splash extends Component {
             GloblaValue.data_lottery = data_;
             dataLottery_detector_statistic.data = createArrPushInItem(data_);
             status_net = true;
-            this.getKey(true);
-            
+            this.getKey(true); 
+            console.log('CHAY TOI DAY: ' + JSON.stringify(GloblaValue.data_lottery))        
         }).catch((error) =>{
             
         });

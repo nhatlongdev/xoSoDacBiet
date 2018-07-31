@@ -573,21 +573,21 @@ export default class HomeScreen extends Component {
             var key = data[i].pc + '_' + date_quay;
             dataSwitchKey[key] = data[i];
         } 
-        this.setState({
-            load: true,
-        })
-        let that = this;
-        setTimeout(
-            function(){
-                if(GloblaValue.region_value === 0){
-                    that.getListDay_(true);
-                }else{
-                    dataListDayTheoMien = that.getListDay_VungMien(GloblaValue.region_value)
-                    that.setState({
-                        load: false,
-                    })
-                }
-        }, 2000);
+        // this.setState({
+        //     load: true,
+        // })
+        // let that = this;
+        // setTimeout(
+        //     function(){
+        //         if(GloblaValue.region_value === 0){
+        //             that.getListDay_(true);
+        //         }else{
+        //             dataListDayTheoMien = that.getListDay_VungMien(GloblaValue.region_value)
+        //             that.setState({
+        //                 load: false,
+        //             })
+        //         }
+        // }, 2000);
     }
 
     //click setting

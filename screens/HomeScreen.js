@@ -52,6 +52,8 @@ import GloblaValue from '../components/GlobalValue';
 import Color from '../src/color';
 import _string from '../src/string';
 
+import RNExitApp from 'react-native-exit-app';
+
 //PushNotification
 import PushNotification from 'react-native-push-notification';
 
@@ -114,7 +116,7 @@ PushNotification.configure({
 //=======================================================//
 
 export default class HomeScreen extends Component {
-
+    
     // Contructor
     constructor(props){
         super(props);
@@ -208,25 +210,28 @@ export default class HomeScreen extends Component {
             }
             var timeCurrent = moment();
             let msg = '';
-            var contentRow = this.getRowItemPushNotification(GloblaValue.region_value);
+            
             if(timeCurrent>= dateTimeBatDauQuayMienNam && timeCurrent< dateTimeDungQuayMienNam){
                 // đến khung giờ quay trực tiếp thì 10s request server một lần lấy kết quả
-                if(pushMienNam == false){
+                if(pushMienNam == false && (GloblaValue.region_value == 0 || GloblaValue.region_value == 3)){
                     pushMienNam = true;
+                    let contentRow = this.getRowItemPushNotification(2);
                     msg = 'Đang tường thuật trực tiếp xổ số Miền Nam'
                     this.alarmNotifi(msg, contentRow);
                 }
                 this.refreshFromServer10s();
             }else if(timeCurrent>= dateTimeBatDauQuayMienTrung && timeCurrent< dateTimeDungQuayMienTrung){
-                if(pushMienTrung == false){
+                if(pushMienTrung == false && (GloblaValue.region_value == 0 || GloblaValue.region_value == 2)){
                     pushMienTrung = true;
+                    let contentRow = this.getRowItemPushNotification(1);
                     msg = 'Đang tường thuật trực tiếp xổ số Miền Trung'
                     this.alarmNotifi(msg, contentRow);
                 }
                 this.refreshFromServer10s();
             }else if(timeCurrent>= dateTimeBatDauQuayMienBac && timeCurrent< dateTimeBatDauQuayMienBac){
-                if(pushMienBac == false){
+                if(pushMienBac == false && (GloblaValue.region_value == 0 || GloblaValue.region_value == 1)){
                     pushMienBac = true;
+                    let contentRow = this.getRowItemPushNotification(0);
                     msg = 'Đang tường thuật trực tiếp xổ số Miền Bắc'
                     this.alarmNotifi(msg, contentRow);
                 }
@@ -259,10 +264,11 @@ export default class HomeScreen extends Component {
     }
 
     componentWillUnmount() {
-        this.isCancelled = true;
+       
     }
 
     componentDidMount(){
+       
         handleAndroidBackButton(exitAlert);
         AppState.addEventListener('change', this._handleAppStateChange);
     }
@@ -303,13 +309,13 @@ export default class HomeScreen extends Component {
     }
 
     // hàm lay rowItem đưa vào push notifi
-    getRowItemPushNotification(region){
+    getRowItemPushNotification(value){
         let row={};
-        if(region == 0){
-            row = this.state.dataTam[0].member[0];
-            row.title = this.state.dataTam[0].header.title;
-            row.title_screen_result=this.state.dataTam[0].header.title;
-            row.state = this.state.dataTam[0].header.status;
+        if(GloblaValue.region_value == 0){
+                row = this.state.dataTam[0].member[value];
+                row.title = this.state.dataTam[0].header.title;
+                row.title_screen_result=this.state.dataTam[0].header.title_screen_result;
+                row.state = this.state.dataTam[0].header.status;
         }else {
             row = dataListDayTheoMien[0];
         }

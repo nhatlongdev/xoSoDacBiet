@@ -146,6 +146,7 @@ dependencies {
         force = true;
     }
     compile project(':react-native-background-job')
+    compile project(':react-native-exit-app')
 }
 
 // Run this once to be able to run the application with BUCK

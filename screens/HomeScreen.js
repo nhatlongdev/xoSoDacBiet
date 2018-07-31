@@ -14,6 +14,7 @@ import {
     AsyncStorage,
     BackHandler,
     ToastAndroid,
+    AppState
 } from 'react-native';
 // modules
 import {
@@ -122,37 +123,6 @@ export default class HomeScreen extends Component {
         //set ngày hiện tại theo giờ
         dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 06:19'); //.format('YYYY/MM/DD HH:mm:ss')
         dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
-
-        setInterval(()=>{
-            console.log("INTERVAL HOME=====>>>");
-            this.alarmNotifi();
-            var timeCurrent = moment();
-            if(timeCurrent>= dateTimeBatDauQuay && timeCurrent< dateTimeDungQuay){
-                // đến khung giờ quay trực tiếp thì 10s request server một lần lấy kết quả
-                this.refreshFromServer10s();
-            }  
-        },10000)
-
-        // tam thoi chua nghi ra giai phap nen dung interval
-        setInterval(()=>{
-             if(region_save_tam != GloblaValue.region_value && GloblaValue.click_menuLeft == true){
-                 GloblaValue.click_menuLeft = false;
-                 region_save_tam = GloblaValue.region_value;
-                 if(GloblaValue.region_value == 0){
-                    let that = this;
-                    setTimeout(
-                        function(){
-                            that.getListDay_(true);
-                    }, 2000);
-                }else {
-                    dataListDayTheoMien = this.getListDay_VungMien(GloblaValue.region_value);
-                }
-                this.setState({
-                    changeRegions:GloblaValue.region_value,
-                 })
-                 
-             }
-        },1000)
     }
 
     //save cache
@@ -186,9 +156,43 @@ export default class HomeScreen extends Component {
     }
 
     componentWillMount() {
+        setInterval(()=>{
+            console.log("INTERVAL HOME=====>>>222");
+            // this.alarmNotifi();
+            var timeCurrent = moment();
+            if(timeCurrent>= dateTimeBatDauQuay && timeCurrent< dateTimeDungQuay){
+                // đến khung giờ quay trực tiếp thì 10s request server một lần lấy kết quả
+                this.refreshFromServer10s();
+            }  
+        },10000)
+
+        // tam thoi chua nghi ra giai phap nen dung interval
+        setInterval(()=>{
+             if(region_save_tam != GloblaValue.region_value && GloblaValue.click_menuLeft == true){
+                 GloblaValue.click_menuLeft = false;
+                 region_save_tam = GloblaValue.region_value;
+                 if(GloblaValue.region_value == 0){
+                    let that = this;
+                    setTimeout(
+                        function(){
+                            that.getListDay_(true);
+                    }, 2000);
+                }else {
+                    dataListDayTheoMien = this.getListDay_VungMien(GloblaValue.region_value);
+                }
+                this.setState({
+                    changeRegions:GloblaValue.region_value,
+                 })
+                 
+             }
+        },1000)
         this.getKey();
         AppState.removeEventListener('change', this._handleAppStateChange);
         // this.alarmNotifi();
+    }
+
+    componentWillUnmount() {
+        this.isCancelled = true;
     }
 
     componentDidMount(){
@@ -596,13 +600,13 @@ export default class HomeScreen extends Component {
 
     //click setting
     alarmNotifi(){
-       5
         PushNotification.localNotification({
+            id:'123',
             foreground: true,
             largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
             smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
-            ongoing: false, // (optional) set whether this is an "ongoing" notification
-            message: "My Notification Message", // (required)
+            ongoing: true, // (optional) set whether this is an "ongoing" notification
+            message: "My Notification Message" + moment().format('HH:mm:ss'), // (required)
             bigText: "My big text that will be shown when notification is expanded", // (optional) default: "message" prop
             subText: contentNotifi, // (optional) default: none
         })

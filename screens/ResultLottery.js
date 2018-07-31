@@ -192,6 +192,7 @@ export default class ResultLottery extends Component {
         rowItem = JSON.parse(JSON.stringify(rowItem_source));
         date_row = new Date(rowItem.rd);
         console.log("DATA: ===>>>" + JSON.stringify(dataLottery));
+        console.log("DATA: ===>>>" + JSON.stringify(rowItem));
         
         //set ngày hiện tại theo giờ
         dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 18:10'); //.format('YYYY/MM/DD HH:mm:ss')

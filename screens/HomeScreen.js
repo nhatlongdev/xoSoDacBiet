@@ -55,6 +55,12 @@ import _string from '../src/string';
 //PushNotification
 import PushNotification from 'react-native-push-notification';
 
+//biến kiểm tra đã push notifi thông báo đang quay chưa
+var pushMienNam = false, pushMienTrung = false, pushMienBac = false;
+
+//biến lưu ngày push notifi gần nhất
+var datePushNotifiLatest;
+
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
 
@@ -68,19 +74,45 @@ var dataWithProvinces = {};
 var countLoadmore = 0;
 
 //thoi gian bat dau quay, thoi gian dung quay
-var dateTimeBatDauQuay;
-var dateTimeDungQuay;
+var dateTimeBatDauQuayMienNam, dateTimeDungQuayMienNam, dateTimeBatDauQuayMienTrung, dateTimeDungQuayMienTrung, dateTimeBatDauQuayMienBac, dateTimeDungQuayMienBac;
 
 var kq_mb_hom_nay = {};
 const key = 0;
+
+//Gia tri vung mien duoc chon luu tam de so sanh xem co thay doi ko
+var region_save_tam = 0;
 
 //data list ngay theo mien
 var dataListDayTheoMien;
 //msg notification
 var contentNotifi='aloalo';
 
-//Gia tri vung mien duoc chon luu tam de so sanh xem co thay doi ko
-var region_save_tam = 0;
+//rowitem lấy từ NOTIFILE
+var rowItemGetNotifi ={};
+
+import BackgroundJob from 'react-native-background-job';
+const foregroundJobKey = "foregroundJobKey";
+
+//KHAI BAO BACKGROUNDJOB=======================================//
+var checkIsNotifi = false;
+BackgroundJob.register({
+    jobKey: foregroundJobKey,
+    job: () => console.log(`Exact Job fired!. Key = ${foregroundJobKey}`)
+  });
+
+PushNotification.configure({
+    // (required) Called when a remote or local notification is opened or received
+    //lắng nghe sự kiện click notifi
+    onNotification: function(notification) {
+        console.log( 'NOTIFICATION:', notification );
+        // alert(JSON.stringify(notification));
+        var obj = notification;
+        rowItemGetNotifi = JSON.parse(obj.bigText) ;
+        checkIsNotifi = true;
+    }
+})
+//=======================================================//
+
 export default class HomeScreen extends Component {
 
     // Contructor
@@ -101,11 +133,10 @@ export default class HomeScreen extends Component {
         dataListDayTheoMien = this.getListDay_VungMien(GloblaValue.region_value);
 
         // Chuyển đổi kết quả về dạng key - value (key moi item la--> mã tỉnh_ngày)
-        // goi ham chuyen doi key
         dataSwitchKey =  createKeyItem(dataLoadingToServer);
         dataSwitchKey_global.data = createKeyItem(dataLoadingToServer);
 
-        // console.log("pppppppppppppppppCHECK KET QUA TU PLAST SANG"+ JSON.stringify(dataLoadingToServer));
+        console.log("Data SWItch key: "+ JSON.stringify(dataSwitchKey));
         this.state = {
             dataTam: this.getListDay_(false),
             load: false,
@@ -120,12 +151,20 @@ export default class HomeScreen extends Component {
         dataWithProvinces = createArrPushInItem(dataLoadingToServer);
         console.log('BBBBB===>>>' + JSON.stringify(dataWithProvinces))
         
-        //set ngày hiện tại theo giờ
-        dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 06:19'); //.format('YYYY/MM/DD HH:mm:ss')
-        dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
+        //set thời điểm bắt đầu và kết thúc quay xổ số ba miền
+        dateTimeBatDauQuayMienNam = moment(moment().format('YYYY-MM-DD') + ' 16:15'); //.format('YYYY/MM/DD HH:mm:ss')
+        dateTimeDungQuayMienNam = moment(moment().format('YYYY-MM-DD' + ' 16:40'));
+        dateTimeBatDauQuayMienTrung = moment(moment().format('YYYY-MM-DD') + ' 17:15'); //.format('YYYY/MM/DD HH:mm:ss')
+        dateTimeDungQuayMienTrung = moment(moment().format('YYYY-MM-DD' + ' 16:40'));
+        dateTimeBatDauQuayMienBac = moment(moment().format('YYYY-MM-DD') + ' 18:15'); //.format('YYYY/MM/DD HH:mm:ss')
+        dateTimeDungQuayMienBac = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
+
+        //khởi tạo biến lưu ngày push notifi gần nhất
+        datePushNotifiLatest = moment().format('YYYY/MM/DD');
     }
 
-    //save cache
+
+    //SAVE CACHE =======================================
     async getKey() {
         try {
           const value = await AsyncStorage.getItem('key_data');
@@ -154,19 +193,48 @@ export default class HomeScreen extends Component {
           console.log("Error resetting data" + error);
         }
     }
+    // =======================================
 
     componentWillMount() {
         setInterval(()=>{
             console.log("INTERVAL HOME=====>>>222");
-            // this.alarmNotifi();
+            //Kiểm tra ngày mới thì reset biến pushMienNam = false, pushMienTrung = false, pushMienBac = false;
+            let _dateCurrent = moment().format('YYYY/MM/DD');
+            if(datePushNotifiLatest != _dateCurrent){
+                pushMienNam = false;
+                pushMienTrung = false;
+                pushMienBac = false;
+                datePushNotifiLatest = _dateCurrent;
+            }
             var timeCurrent = moment();
-            if(timeCurrent>= dateTimeBatDauQuay && timeCurrent< dateTimeDungQuay){
+            let msg = '';
+            var contentRow = this.getRowItemPushNotification(GloblaValue.region_value);
+            if(timeCurrent>= dateTimeBatDauQuayMienNam && timeCurrent< dateTimeDungQuayMienNam){
                 // đến khung giờ quay trực tiếp thì 10s request server một lần lấy kết quả
+                if(pushMienNam == false){
+                    pushMienNam = true;
+                    msg = 'Đang tường thuật trực tiếp xổ số Miền Nam'
+                    this.alarmNotifi(msg, contentRow);
+                }
                 this.refreshFromServer10s();
-            }  
+            }else if(timeCurrent>= dateTimeBatDauQuayMienTrung && timeCurrent< dateTimeDungQuayMienTrung){
+                if(pushMienTrung == false){
+                    pushMienTrung = true;
+                    msg = 'Đang tường thuật trực tiếp xổ số Miền Trung'
+                    this.alarmNotifi(msg, contentRow);
+                }
+                this.refreshFromServer10s();
+            }else if(timeCurrent>= dateTimeBatDauQuayMienBac && timeCurrent< dateTimeBatDauQuayMienBac){
+                if(pushMienBac == false){
+                    pushMienBac = true;
+                    msg = 'Đang tường thuật trực tiếp xổ số Miền Bắc'
+                    this.alarmNotifi(msg, contentRow);
+                }
+                this.refreshFromServer10s();
+            }
         },10000)
 
-        // tam thoi chua nghi ra giai phap nen dung interval
+        // CHƯA LÀM ĐƯỢC REDUX NÊN DÙNG TẠM INTERVAL ĐỂ LẮNG NGHE SỰ THAY ĐỔI MIỀN ĐƯỢC CHỌN KHI CLICK TỪ MENULEFT TỚI COMPONENT VÙNG MIỀN
         setInterval(()=>{
              if(region_save_tam != GloblaValue.region_value && GloblaValue.click_menuLeft == true){
                  GloblaValue.click_menuLeft = false;
@@ -188,7 +256,6 @@ export default class HomeScreen extends Component {
         },1000)
         this.getKey();
         AppState.removeEventListener('change', this._handleAppStateChange);
-        // this.alarmNotifi();
     }
 
     componentWillUnmount() {
@@ -202,9 +269,19 @@ export default class HomeScreen extends Component {
 
     _handleAppStateChange = (nextAppState) => {
         if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+            // AppState.removeEventListener('change', nextAppState);  
           console.log('App has come to the foreground!')
+          if(checkIsNotifi == true){
+            this.clickItemTheoMien(rowItemGetNotifi);
+            checkIsNotifi = false;
+          }
         }else {
             console.log('App has come to the Background!')
+            BackgroundJob.schedule({
+                jobKey: foregroundJobKey,
+                period: 1000,
+                exact: true
+              });
         }
         this.setState({appState: nextAppState});
     }
@@ -223,6 +300,21 @@ export default class HomeScreen extends Component {
 
     componentDidUpdate(){
 
+    }
+
+    // hàm lay rowItem đưa vào push notifi
+    getRowItemPushNotification(region){
+        let row={};
+        if(region == 0){
+            row = this.state.dataTam[0].member[0];
+            row.title = this.state.dataTam[0].header.title;
+            row.title_screen_result=this.state.dataTam[0].header.title;
+            row.state = this.state.dataTam[0].header.status;
+        }else {
+            row = dataListDayTheoMien[0];
+        }
+        let rowString = JSON.stringify(row);
+        return rowString;
     }
 
     //hàm set state changeRegions
@@ -581,34 +673,21 @@ export default class HomeScreen extends Component {
             var key = data[i].pc + '_' + date_quay;
             dataSwitchKey[key] = data[i];
         } 
-        // this.setState({
-        //     load: true,
-        // })
-        // let that = this;
-        // setTimeout(
-        //     function(){
-        //         if(GloblaValue.region_value === 0){
-        //             that.getListDay_(true);
-        //         }else{
-        //             dataListDayTheoMien = that.getListDay_VungMien(GloblaValue.region_value)
-        //             that.setState({
-        //                 load: false,
-        //             })
-        //         }
-        // }, 2000);
+
     }
 
     //click setting
-    alarmNotifi(){
+    alarmNotifi(msg, contentRow){
         PushNotification.localNotification({
             id:'123',
+            onNotification: true,
             foreground: true,
             largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
             smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
             ongoing: true, // (optional) set whether this is an "ongoing" notification
-            message: "My Notification Message" + moment().format('HH:mm:ss'), // (required)
-            bigText: "My big text that will be shown when notification is expanded", // (optional) default: "message" prop
-            subText: contentNotifi, // (optional) default: none
+            message: msg + ' ' + moment().format('HH:mm:ss'), // (required)
+            bigText: contentRow, // (optional) default: "message" prop
+            subText: '', // (optional) default: none
         })
     }
 

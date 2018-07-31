@@ -229,7 +229,7 @@ export default class ResultLottery2 extends Component {
           console.log("DATA2: ===>>>" + JSON.stringify(dataLottery));
 
           //set ngày hiện tại theo giờ
-            dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 16:00'); //.format('YYYY/MM/DD HH:mm:ss')
+            dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 16:10'); //.format('YYYY/MM/DD HH:mm:ss')
             dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
       }
 

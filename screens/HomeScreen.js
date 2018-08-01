@@ -14,7 +14,8 @@ import {
     AsyncStorage,
     BackHandler,
     ToastAndroid,
-    AppState
+    AppState,
+    Platform
 } from 'react-native';
 // modules
 import {
@@ -387,7 +388,7 @@ export default class HomeScreen extends Component {
 
     render(){
         return(
-            <View style = {{flex: 1, backgroundColor: 'white'}}>
+            <View style = {{flex: 1, backgroundColor: 'white', marginTop: Platform.OS==='ios'?30:0}}>
                 <View style = {style.header_style}>
                     <TouchableOpacity onPress = {()=>{this.props.navigation.openDrawer()}}>
                         <Image

@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import {
     View,
     Text,
-    FlatList
+    FlatList,
+    SafeAreaView,
+    Platform
 } from 'react-native';
 import ItemStatistic3 from '../components/ItemStatistic3';
 import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';
@@ -19,7 +21,7 @@ export default class ResultStatistic3 extends Component{
 
     render(){
         return(
-            <View style = {{flex: 1, marginHorizontal: 2}}>
+            <SafeAreaView style = {{flex: 1, marginHorizontal: 2, marginTop:Platform.OS === 'ios'?30:0}}>
                 <Text style = {{fontSize: 14, fontWeight: 'bold', textAlign: 'center', color: 'black'}}>
                     Thống kê các số lâu ra trong {soLanQuay} lần quay xổ số {nameTinh}
                 </Text>
@@ -43,7 +45,7 @@ export default class ResultStatistic3 extends Component{
                 <FloatButtonCompomentExit
                      onButtonFloatPress={this.clickExit.bind(this)}
                 />
-            </View>
+            </SafeAreaView>
         );
     }
 

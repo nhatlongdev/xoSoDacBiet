@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {
     View,
     Text,
-    FlatList
+    FlatList,
+    Platform
 } from 'react-native';
 import ItemStatistic2 from '../components/ItemStatistic2';
 import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';
@@ -19,7 +20,7 @@ export default class ResultStatistic2 extends Component{
 
     render(){
         return(
-            <View style = {{flex: 1, marginHorizontal: 2}}>
+            <View style = {{flex: 1, marginHorizontal: 2, marginTop: Platform.OS==='ios'?30:0}}>
                 <Text style = {{fontSize: 14, fontWeight: 'bold', textAlign: 'center', color: 'black', paddingVertical: 2}}>
                     Số xuất hiện nhiều trong {soLanQuay} lần quay xổ số {nameTinh}
                 </Text>

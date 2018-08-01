@@ -10,7 +10,8 @@ import {
     Image,
     TouchableOpacity,
     ScrollView,
-    BackHandler
+    BackHandler,
+    Platform
 } from 'react-native';
 var item_;
 import data from '../components/TinhThanh';
@@ -63,7 +64,7 @@ export default class StatisticalScreen extends Component {
 
     render(){
         return(
-            <View style = {{flex: 1}}>
+            <View style = {{flex: 1, marginTop: Platform.OS==='ios'?30:0}}>
                 <View style = {style.header_style}>
                     <Text style = {style.text_style}>Thống kê xổ số</Text>
                 </View>

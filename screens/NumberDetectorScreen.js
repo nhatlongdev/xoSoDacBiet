@@ -11,7 +11,8 @@ import {
     TouchableOpacity,
     FlatList,
     ScrollView,
-    BackHandler
+    BackHandler,
+    Platform
 } from 'react-native';
 import data from '../components/TinhThanh';
 import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';
@@ -69,7 +70,7 @@ export default class NumberDetectorScreen extends Component {
 
     render(){
         return(
-            <View style = {{flex: 1}}>
+            <View style = {{flex: 1, marginTop: Platform.OS==='ios'?30:0}}>
                 <View style = {style.header_style}>
                     <Text style = {style.text_style}>Xổ số đặc biệt - Dò số</Text>
                 </View>

@@ -252,6 +252,7 @@ export default class HomeScreen extends Component {
                 this.refreshFromServer10s();
             }else if(timeCurrent>= dateTimeBatDauQuayMienTrung && timeCurrent< dateTimeDungQuayMienTrung){
                 if(pushMienTrung == false && this.state.appState != 'active' && (GloblaValue.region_value == 0 || GloblaValue.region_value == 2)){
+                    console.log("TMDK MIEN TRUNG");
                     pushMienTrung = true;
                     let contentRow = this.getRowItemPushNotification(1);
                     msg = 'Đang tường thuật trực tiếp xổ số Miền Trung'

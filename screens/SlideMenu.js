@@ -106,7 +106,7 @@ var style = ({
     },
     header_style:{
         height: heightScreen /4,
-        width: widthScreen*70/100,
+        width: '100%',
         paddingLeft: 10,
         backgroundColor: '#4CAF50',
         justifyContent: 'center',

@@ -68,6 +68,20 @@ export default class Splash extends Component {
         });
     }
 
+    //LAY CACHE VALUE REGION
+    async getRegion() {
+        try {
+          var value = await AsyncStorage.getItem('key_region');
+          if(value != null){
+            GloblaValue.region_value = parseInt(value);
+            this.props.navigation.replace('Home_Screen', {data_lottery: GloblaValue.data_lottery, net: GloblaValue.status_net});
+          }
+          return value;
+        } catch (error) {
+          console.log("Error retrieving data" + error);
+        }
+    }
+
     //save cache
     async getKey(net) {
         try {
@@ -78,7 +92,7 @@ export default class Splash extends Component {
                 GloblaValue.data_lottery = JSON.parse(value);
                 dataLottery_detector_statistic.data = createArrPushInItem(JSON.parse(value));
             }
-            this.props.navigation.replace('Home_Screen', {data_lottery: GloblaValue.data_lottery, net: GloblaValue.status_net});
+            this.getRegion();
           }else{
               if(net == false){
                 alert('Vui lòng kiểm tra kết nối mạng!')  

@@ -6,7 +6,8 @@ import {
     Dimensions,
     Picker, 
     Item,
-    ScrollView
+    ScrollView,
+    BackHandler
 } from 'react-native';
 // modules
 import {
@@ -45,16 +46,17 @@ export default class ByDayScreen extends Component {
         item_ = data[0];
         var date_current = new Date();
         day_current = moment(date_current).format('YYYY-MM-DD');
+        this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     }  
     
-    componentWillMount(){
-        removeAndroidBackButtonHandler();
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
     }
-
-    componentDidMount(){
-        handleAndroidBackButton(this.handleBackButtonClick.bind(this));
+    
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
     }
-
+    
     handleBackButtonClick() {
         this.props.navigation.goBack(null);
         return true;

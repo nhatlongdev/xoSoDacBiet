@@ -4,7 +4,8 @@ import {
     Text,
     Dimensions,
     StyleSheet,
-    ScrollView
+    ScrollView,
+    BackHandler
 } from 'react-native';
 import FloatButtonCompomentScreenResult from '../components/FloatButtonCompomentScreenResult';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
@@ -231,9 +232,20 @@ export default class ResultLottery2 extends Component {
           //set ngày hiện tại theo giờ
             dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 16:10'); //.format('YYYY/MM/DD HH:mm:ss')
             dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
+            this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
       }
 
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+    
+    handleBackButtonClick() {
+        this.props.navigation.goBack(null);
+        return true;
+    }
+
       componentWillMount(){
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);  
         if(this.checkObjData(rowItem, dataLottery) == false){ // nếu kết quả ngày hiện tại chưa có
             var timeCurrent = moment();
             // nếu trong khung giờ quay

@@ -3,13 +3,33 @@ import {
     View,
     Text,
     Dimensions,
-    StyleSheet
+    StyleSheet,
+    BackHandler
 } from 'react-native';
 import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit'; 
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
 export default class CommunityScreen extends Component {
+
+    constructor(props){
+        super(props);
+        this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+    }
+
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+    
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+    
+    handleBackButtonClick() {
+        this.props.navigation.goBack(null);
+        return true;
+    }
+
     render(){
         return(
             <View style = {style.container}>

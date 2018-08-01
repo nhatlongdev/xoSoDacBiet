@@ -5,7 +5,8 @@ import {
     Dimensions,
     StyleSheet,
     ScrollView,
-    ActivityIndicator
+    ActivityIndicator,
+    BackHandler
 } from 'react-native';
 import FloatButtonCompomentScreenResult from '../components/FloatButtonCompomentScreenResult';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
@@ -197,9 +198,20 @@ export default class ResultLottery extends Component {
         //set ngày hiện tại theo giờ
         dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 18:10'); //.format('YYYY/MM/DD HH:mm:ss')
         dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
+        this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
       }
 
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+    
+    handleBackButtonClick() {
+        this.props.navigation.goBack(null);
+        return true;
+    }
+
       componentWillMount(){
+            BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
             if(this.checkObjData(rowItem, dataLottery) == false){ // nếu kết quả ngày hiện tại chưa có
                 var timeCurrent = moment();
                 // nếu trong khung giờ quay
@@ -478,7 +490,7 @@ export default class ResultLottery extends Component {
 
                         <View style = {style.row_loto}>
                             <View style={{flex:1,paddingVertical:5}}>
-                                <Text style = {[style.row_text_title_loto,{fontWeight:'bold'}]}>Đầu</Text>
+                                <Text style = {style.row_text_content_loto}>Đầu</Text>
                             </View>
                             <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
                                 <Text style = {style.row_text_content_loto}>Đuôi</Text>
@@ -487,7 +499,7 @@ export default class ResultLottery extends Component {
                                 <Text style = {style.row_text_content_loto}>Đầu</Text>
                            </View>
                            <View style={{flex:1,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
-                                <Text style = {style.row_text_title_loto}>Đuôi</Text>
+                                <Text style = {style.row_text_content_loto}>Đuôi</Text>
                            </View>                          
                         </View>
 
@@ -711,25 +723,30 @@ var style = StyleSheet.create({
         marginBottom: 2
     },
     row_text_title_result: {
-        flex: 0.15,
+        flex: 0.2,
+        fontSize:16,
         textAlign: 'center', 
         color: 'black', 
         marginRight: 10,
         paddingHorizontal: 5,
     },
     row_text_content_result: { 
-        fontSize: 16,
+        flex:1,
+        paddingVertical: 3 ,
+        fontSize: 18,
         textAlign: 'center', 
         color: 'black', 
         fontWeight: 'bold',
     },
     row_text_title_loto: {
         flex:1,
+        fontSize:16,
         textAlign: 'center', 
         color: 'black', 
     },
     row_text_content_loto: {
         flex: 3, 
+        fontSize:18,
         textAlign: 'center', 
         color: 'black', 
         fontWeight: 'bold'

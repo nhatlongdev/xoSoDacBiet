@@ -9,7 +9,8 @@ import {
     TextInput,
     Image,
     TouchableOpacity,
-    ScrollView
+    ScrollView,
+    BackHandler
 } from 'react-native';
 var item_;
 import data from '../components/TinhThanh';
@@ -36,6 +37,20 @@ export default class StatisticalScreen extends Component {
         dataResultLottery = dataLottery_detector_statistic.data;
         console.log('GIA TRI ITEM THONG KE: ' + JSON.stringify(item_))
         console.log('GIA TRI ITEM THONG dataLottery_detector_statistic: ' + JSON.stringify(dataLottery_detector_statistic.data))
+        this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+    }
+
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+    
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+    
+    handleBackButtonClick() {
+        this.props.navigation.goBack(null);
+        return true;
     }
 
     renderItem(){

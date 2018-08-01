@@ -10,7 +10,8 @@ import {
     Image,
     TouchableOpacity,
     FlatList,
-    ScrollView
+    ScrollView,
+    BackHandler
 } from 'react-native';
 import data from '../components/TinhThanh';
 import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';
@@ -42,7 +43,20 @@ export default class NumberDetectorScreen extends Component {
 
         dataResultLottery = dataLottery_detector_statistic.data;
         // console.log('HHHHNEw=====>>>>' + JSON.stringify(dataResultLottery));
+        this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+    }
+
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
     
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+    
+    handleBackButtonClick() {
+        this.props.navigation.goBack(null);
+        return true;
     }
 
     renderItem(){

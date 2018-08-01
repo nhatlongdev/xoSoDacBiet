@@ -115,30 +115,37 @@ PushNotification.configure({
 })
 //=======================================================//
 
+
 export default class HomeScreen extends Component {
     
     // Contructor
     constructor(props){
         super(props);
+    
+        this.getRegion();
+
         //Gia tri vung mien duoc chon luu tam de so sanh xem co thay doi ko
         region_save_tam = GloblaValue.region_value;
 
         // lấy ds kết quả chuyển từ màn splash sang
         dataLoadingToServer = GloblaValue.data_lottery;
+        console.log('CHECK O DAY===>>>' + JSON.stringify(dataLoadingToServer))
         
         //save cache
         if(GloblaValue.status_net == true){
             this.saveKey(JSON.stringify(dataLoadingToServer));
         }
 
-        // lay ds ngay theo mien
-        dataListDayTheoMien = this.getListDay_VungMien(GloblaValue.region_value);
-
         // Chuyển đổi kết quả về dạng key - value (key moi item la--> mã tỉnh_ngày)
         dataSwitchKey =  createKeyItem(dataLoadingToServer);
+        console.log('CHECK O dataSwitchKey===>>>' + JSON.stringify(dataSwitchKey))
         dataSwitchKey_global.data = createKeyItem(dataLoadingToServer);
 
-        console.log("Data SWItch key: "+ JSON.stringify(dataSwitchKey));
+         // lay ds ngay theo mien
+         dataListDayTheoMien = this.getListDay_VungMien(GloblaValue.region_value);
+         console.log('CHECK O DAY1111===>>>' + JSON.stringify(dataListDayTheoMien))
+
+
         this.state = {
             dataTam: this.getListDay_(false),
             load: false,
@@ -148,7 +155,6 @@ export default class HomeScreen extends Component {
             appState: AppState.currentState
         };
         // Tao mảng danh sách ngày cho listView
-       
         // Tao mảng phuc vu viec thong ke, tra cuu
         dataWithProvinces = createArrPushInItem(dataLoadingToServer);
         console.log('BBBBB===>>>' + JSON.stringify(dataWithProvinces))
@@ -197,7 +203,30 @@ export default class HomeScreen extends Component {
     }
     // =======================================
 
+    //GET VALUE REGION SELECTED IN CAKE
+    async saveRegion(value) {
+        try {
+          await AsyncStorage.setItem('key_region',value);
+        } catch (error) {
+          console.log("Error saving data" + error);
+        }
+    }
+    
+    async getRegion() {
+        try {
+          var value = await AsyncStorage.getItem('key_region');   
+          if(value != null){
+            GloblaValue.region_value = parseInt(value);
+          }
+          return value;
+        } catch (error) {
+          console.log("Error retrieving data" + error);
+        }
+    }
+
+
     componentWillMount() {
+        console.log('TYPEOF=======>>>>>>>>>>>>>>>: ' + typeof GloblaValue.region_value + ' gia tri ' + GloblaValue.region_value)
         setInterval(()=>{
             console.log("INTERVAL HOME=====>>>222");
             //Kiểm tra ngày mới thì reset biến pushMienNam = false, pushMienTrung = false, pushMienBac = false;
@@ -213,7 +242,7 @@ export default class HomeScreen extends Component {
             
             if(timeCurrent>= dateTimeBatDauQuayMienNam && timeCurrent< dateTimeDungQuayMienNam){
                 // đến khung giờ quay trực tiếp thì 10s request server một lần lấy kết quả
-                if(pushMienNam == false && (GloblaValue.region_value == 0 || GloblaValue.region_value == 3)){
+                if(pushMienNam == false && this.state.appState != 'active' && (GloblaValue.region_value == 0 || GloblaValue.region_value == 3)){
                     pushMienNam = true;
                     let contentRow = this.getRowItemPushNotification(2);
                     msg = 'Đang tường thuật trực tiếp xổ số Miền Nam'
@@ -221,7 +250,7 @@ export default class HomeScreen extends Component {
                 }
                 this.refreshFromServer10s();
             }else if(timeCurrent>= dateTimeBatDauQuayMienTrung && timeCurrent< dateTimeDungQuayMienTrung){
-                if(pushMienTrung == false && (GloblaValue.region_value == 0 || GloblaValue.region_value == 2)){
+                if(pushMienTrung == false && this.state.appState != 'active' && (GloblaValue.region_value == 0 || GloblaValue.region_value == 2)){
                     pushMienTrung = true;
                     let contentRow = this.getRowItemPushNotification(1);
                     msg = 'Đang tường thuật trực tiếp xổ số Miền Trung'
@@ -229,7 +258,7 @@ export default class HomeScreen extends Component {
                 }
                 this.refreshFromServer10s();
             }else if(timeCurrent>= dateTimeBatDauQuayMienBac && timeCurrent< dateTimeBatDauQuayMienBac){
-                if(pushMienBac == false && (GloblaValue.region_value == 0 || GloblaValue.region_value == 1)){
+                if(pushMienBac == false && this.state.appState != 'active' && (GloblaValue.region_value == 0 || GloblaValue.region_value == 1)){
                     pushMienBac = true;
                     let contentRow = this.getRowItemPushNotification(0);
                     msg = 'Đang tường thuật trực tiếp xổ số Miền Bắc'
@@ -260,7 +289,7 @@ export default class HomeScreen extends Component {
              }
         },1000)
         this.getKey();
-        AppState.removeEventListener('change', this._handleAppStateChange);
+        // AppState.removeEventListener('change', this._handleAppStateChange);
     }
 
     componentWillUnmount() {
@@ -268,12 +297,12 @@ export default class HomeScreen extends Component {
     }
 
     componentDidMount(){
-       
         handleAndroidBackButton(exitAlert);
         AppState.addEventListener('change', this._handleAppStateChange);
     }
 
     _handleAppStateChange = (nextAppState) => {
+       
         if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
             // AppState.removeEventListener('change', nextAppState);  
           console.log('App has come to the foreground!')
@@ -522,7 +551,7 @@ export default class HomeScreen extends Component {
             var date_vung_mien = new Date()
         var tmp_lottery_provinces = JSON.parse(JSON.stringify(lottery_provinces));
         console.log('NGAY DAU TIEN: ' + moment(date_vung_mien).format('YYYY-MM-DD'))
-        console.log('Gia TRỊ tmp_lottery_provinces: ' + JSON.stringify(tmp_lottery_provinces))
+        console.log('Gia TRỊ dataSwitchKey: ' + JSON.stringify(dataSwitchKey))
         for (var i = 0 ; i < 20; i++){
             var test_date= moment(date_vung_mien).format('YYYY-MM-DD');
             var title = '';

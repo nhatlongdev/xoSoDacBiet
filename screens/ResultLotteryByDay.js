@@ -293,7 +293,7 @@ export default class ResultLotteryByDay extends Component {
 
                         <View style = {style.row_loto}>
                             <View style={{flex:1,paddingVertical:5}}>
-                                <Text style = {style.row_text_title_loto}>Đầu</Text>
+                                <Text style = {style.row_text_content_loto}>Đầu</Text>
                             </View>
                             <View style={{flex:3,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
                                 <Text style = {style.row_text_content_loto}>Đuôi</Text>
@@ -302,7 +302,7 @@ export default class ResultLotteryByDay extends Component {
                                 <Text style = {style.row_text_content_loto}>Đầu</Text>
                            </View>
                            <View style={{flex:1,paddingVertical:5, borderLeftWidth:1, borderLeftColor:'grey'}}>
-                                <Text style = {style.row_text_title_loto}>Đuôi</Text>
+                                <Text style = {style.row_text_content_loto}>Đuôi</Text>
                            </View>                          
                         </View>
 
@@ -487,7 +487,7 @@ var style = StyleSheet.create({
         backgroundColor: 'white'
     },
     header_style:{
-        width: widthScreen,
+        width: '100%',
         height: 50,
         backgroundColor: '#3F51B5',
         alignItems: 'center',
@@ -522,27 +522,30 @@ var style = StyleSheet.create({
         marginBottom: 2
     },
     row_text_title_result: {
-        flex: 0.15,
+        flex: 0.2,
+        fontSize:16,
         textAlign: 'center', 
         color: 'black', 
-        fontWeight: 'bold',
         marginRight: 10,
         paddingHorizontal: 5,
     },
     row_text_content_result: { 
-        fontSize: 16,
+        flex:1,
+        paddingVertical: 3 ,
+        fontSize: 18,
         textAlign: 'center', 
         color: 'black', 
         fontWeight: 'bold',
     },
     row_text_title_loto: {
         flex:1,
+        fontSize:16,
         textAlign: 'center', 
         color: 'black', 
-        fontWeight: 'bold'
     },
     row_text_content_loto: {
         flex: 3, 
+        fontSize:18,
         textAlign: 'center', 
         color: 'black', 
         fontWeight: 'bold'

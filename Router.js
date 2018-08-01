@@ -24,7 +24,7 @@ import ResultStatistic3 from './screens/ResultStatistic3';
 import Splash from './screens/Splash';
 import TestData from './screens/TestData';
 
-var widthScreen = Dimensions.get('window').width;
+var widthScreen;
 export const HomeStack = StackNavigator({
     Splash: {
         screen: Splash,
@@ -119,7 +119,7 @@ export const SlideMenuStack = DrawerNavigator({
     },
   },
   {
-    drawerWidth: widthScreen*70/100,
+    drawerWidth: Dimensions.get('window').width*70/100,
     drawerPosition: 'left',
     contentComponent: props => <SlideMenu {...props}/>
   });

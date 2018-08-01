@@ -6,7 +6,9 @@ import {
     StyleSheet,
     Image,
     TouchableOpacity,
-    ScrollView
+    ScrollView,
+    AsyncStorage,
+    BackHandler
 } from 'react-native';
 import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';
 import GlobalValue from '../components/GlobalValue';
@@ -18,6 +20,20 @@ export default class RegionsScreen extends Component {
     constructor(props){
         super(props);
         // alert(region_global_selected)
+        this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+    }
+
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+    
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+    
+    handleBackButtonClick() {
+        this.props.navigation.goBack(null);
+        return true;
     }
 
     render(){
@@ -81,8 +97,15 @@ export default class RegionsScreen extends Component {
     clickExit(check, value){
         if(value != null){
             GlobalValue.region_value = value;
+            this.saveRegion(GlobalValue.region_value + '');
+        }else {
+            if(GlobalValue.region_value == 0){
+                this.saveRegion('0');
+            }
         }
+        
         if(GlobalValue.first_login == true){
+
             GlobalValue.first_login = false;
             this.props.navigation.replace('Home_Screen');
         }else {
@@ -90,6 +113,15 @@ export default class RegionsScreen extends Component {
                 this.props.navigation.state.params.listenRegions();
             }
             this.props.navigation.goBack();
+        }
+    }
+
+     //SAVE VALUE REGION SELECTED
+     async saveRegion(value) {
+        try {
+          await AsyncStorage.setItem('key_region',value);
+        } catch (error) {
+          console.log("Error saving data" + error);
         }
     }
 }

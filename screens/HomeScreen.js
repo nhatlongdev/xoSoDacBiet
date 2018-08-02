@@ -56,7 +56,7 @@ import _string from '../src/string';
 import RNExitApp from 'react-native-exit-app';
 
 //PushNotification
-import PushNotification from 'react-native-push-notification';
+// import PushNotification from 'react-native-push-notification';
 
 //biến kiểm tra đã push notifi thông báo đang quay chưa
 var pushMienNam = false, pushMienTrung = false, pushMienBac = false;
@@ -103,17 +103,17 @@ BackgroundJob.register({
     job: () => console.log(`Exact Job fired!. Key = ${foregroundJobKey}`)
   });
 
-PushNotification.configure({
-    // (required) Called when a remote or local notification is opened or received
-    //lắng nghe sự kiện click notifi
-    onNotification: function(notification) {
-        console.log( 'NOTIFICATION:', notification );
-        // alert(JSON.stringify(notification));
-        var obj = notification;
-        rowItemGetNotifi = JSON.parse(obj.bigText) ;
-        checkIsNotifi = true;
-    }
-})
+// PushNotification.configure({
+//     // (required) Called when a remote or local notification is opened or received
+//     //lắng nghe sự kiện click notifi
+//     onNotification: function(notification) {
+//         console.log( 'NOTIFICATION:', notification );
+//         // alert(JSON.stringify(notification));
+//         var obj = notification;
+//         rowItemGetNotifi = JSON.parse(obj.bigText) ;
+//         checkIsNotifi = true;
+//     }
+// })
 //=======================================================//
 
 
@@ -252,6 +252,7 @@ export default class HomeScreen extends Component {
                 this.refreshFromServer10s();
             }else if(timeCurrent>= dateTimeBatDauQuayMienTrung && timeCurrent< dateTimeDungQuayMienTrung){
                 if(pushMienTrung == false && this.state.appState != 'active' && (GloblaValue.region_value == 0 || GloblaValue.region_value == 2)){
+                    console.log("TMDK MIEN TRUNG");
                     pushMienTrung = true;
                     let contentRow = this.getRowItemPushNotification(1);
                     msg = 'Đang tường thuật trực tiếp xổ số Miền Trung'
@@ -714,17 +715,17 @@ export default class HomeScreen extends Component {
 
     //click setting
     alarmNotifi(msg, contentRow){
-        PushNotification.localNotification({
-            id:'123',
-            onNotification: true,
-            foreground: true,
-            largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
-            smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
-            ongoing: true, // (optional) set whether this is an "ongoing" notification
-            message: msg + ' ' + moment().format('HH:mm:ss'), // (required)
-            bigText: contentRow, // (optional) default: "message" prop
-            subText: '', // (optional) default: none
-        })
+        // PushNotification.localNotification({
+        //     id:'123',
+        //     onNotification: true,
+        //     foreground: true,
+        //     largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
+        //     smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
+        //     ongoing: true, // (optional) set whether this is an "ongoing" notification
+        //     message: msg + ' ' + moment().format('HH:mm:ss'), // (required)
+        //     bigText: contentRow, // (optional) default: "message" prop
+        //     subText: '', // (optional) default: none
+        // })
     }
 
     //click ba cham goc phai

@@ -1,11 +1,10 @@
-package com.demo6;
+package vn.dacbiet;
 
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.github.wumke.RNExitApp.RNExitAppPackage;
 import com.pilloxa.backgroundjob.BackgroundJobPackage;
-import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -29,7 +28,6 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new RNExitAppPackage(),
             new BackgroundJobPackage(),
-            new ReactNativePushNotificationPackage(),
             new VectorIconsPackage()
       );
     }

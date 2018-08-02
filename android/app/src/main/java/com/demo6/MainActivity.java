@@ -1,4 +1,4 @@
-package com.demo6;
+package vn.dacbiet;
 
 import com.facebook.react.ReactActivity;
 

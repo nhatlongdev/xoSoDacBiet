@@ -535,14 +535,7 @@ export default class HomeScreen extends Component {
         let that = this;
         setTimeout(
             function(){
-                if(GloblaValue.region_value === 0){
-                    that.getListDay_(true);
-                }else{
-                    dataListDayTheoMien = that.getListDay_VungMien(GloblaValue.region_value)
-                    that.setState({
-                        load: false,
-                    })
-                }
+                that.clickRefreshData();
         }, 2000);
     }
 
@@ -710,6 +703,43 @@ export default class HomeScreen extends Component {
             var key = data[i].pc + '_' + date_quay;
             dataSwitchKey[key] = data[i];
         } 
+
+    }
+
+
+    //ham load lai data click refresh
+    clickRefreshData = ()=>{
+        var dateCurrent = new Date();
+        dateCurrent.setDate(dateCurrent.getDate()-20);
+        var paramsDateCurrent = moment(dateCurrent).format('YYYY-MM-DD');
+        getDataFromServerTrucTiep(paramsDateCurrent).then((data_)=>{
+            var dataLotteProvinces_ = data_;
+            var jsonString = JSON.stringify(dataLotteProvinces_);
+            console.log("API TRA VE KET QUA TU REQUEST SERVER 10s: " + JSON.stringify(dataLotteProvinces_));
+            if(dataLotteProvinces_.length > 0){ // có kết quả thì xử lý
+                this.progressDataClickRefresh(dataLotteProvinces_);
+            }
+        }).catch((error) =>{
+
+        });
+    }
+
+    //ham xu ly data khi click refresh
+    progressDataClickRefresh(data){
+        for(var i=0; i< data.length; i++){
+            var date_quay = moment(data[i].rd).format('YYYYMMDD');
+            var key = data[i].pc + '_' + date_quay;
+            dataSwitchKey[key] = data[i];
+        } 
+
+        if(GloblaValue.region_value === 0){
+            this.getListDay_(true);
+        }else{
+            dataListDayTheoMien = this.getListDay_VungMien(GloblaValue.region_value)
+            this.setState({
+                load: false,
+            })
+        }
 
     }
 

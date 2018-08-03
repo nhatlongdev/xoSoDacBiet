@@ -9,9 +9,9 @@ import {
 import { getDataFromServer } from '../networking/Server';
 import dataLottery_detector_statistic from '../components/DataLottery';
 import {createArrPushInItem} from '../components/CreateArrPushInItem';
-import GloblaValue from '../components/GlobalValue';
-
+import GloblaValue from '../components/GlobalValue'
 var dataLotteProvinces;
+
 export default class Splash extends Component {
 
     constructor(props){

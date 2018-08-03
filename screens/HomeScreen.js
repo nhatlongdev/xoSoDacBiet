@@ -42,6 +42,7 @@ import TreeView from '@zaguini/react-native-tree-view';
 // ham goi api lay ket qua tu server
 import {getDataFromServer} from '../networking/Server';
 import {getDataFromServerTrucTiep} from '../networking/Server';
+import {pushTokenToServer} from '../networking/Server';
 import dataSwitchKey_global from '../components/DataLotterySwitchKey_Global';
 import dataLoadingServer_global from '../components/DataLottery_loading_server';
 import Thongke from '../components/Thongke';
@@ -95,7 +96,7 @@ var rowItemGetNotifi ={};
 
 import BackgroundJob from 'react-native-background-job';
 const foregroundJobKey = "foregroundJobKey";
-
+var PushNotification = require('react-native-push-notification');
 //KHAI BAO BACKGROUNDJOB=======================================//
 var checkIsNotifi = false;
 BackgroundJob.register({
@@ -103,18 +104,60 @@ BackgroundJob.register({
     job: () => console.log(`Exact Job fired!. Key = ${foregroundJobKey}`)
   });
 
-// PushNotification.configure({
-//     // (required) Called when a remote or local notification is opened or received
-//     //lắng nghe sự kiện click notifi
-//     onNotification: function(notification) {
-//         console.log( 'NOTIFICATION:', notification );
-//         // alert(JSON.stringify(notification));
-//         var obj = notification;
-//         rowItemGetNotifi = JSON.parse(obj.bigText) ;
-//         checkIsNotifi = true;
-//     }
-// })
-//=======================================================//
+var token_os = ''; 
+var params ={
+    method:'REGISTER',
+    area:0,
+    device_type:2,
+}; 
+
+PushNotification.configure({
+
+    // (optional) Called when Token is generated (iOS and Android)
+    onRegister: function(token) {
+        console.log( 'TOKEN:', token );
+        // alert(JSON.stringify(token));
+        token_os = token.token;
+        params.token = token.token;
+        if(token.os == 'android'){
+            params.device_type = 1;
+        }else{
+            params.device_type = 2;
+        }
+        // alert(token);
+    },
+
+    // (required) Called when a remote or local notification is opened or received
+    onNotification: function(notification) {
+        console.log( 'NOTIFICATION:', notification );
+        alert(JSON.stringify(notification))
+        // process the notification
+
+        // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
+        notification.finish(PushNotificationIOS.FetchResult.NoData);
+    },
+
+    // ANDROID ONLY: GCM or FCM Sender ID (product_number) (optional - not required for local notifications, but is need to receive remote push notifications)
+    senderID: "851260857471",
+
+    // IOS ONLY (optional): default: all - Permissions to register.
+    permissions: {
+        alert: true,
+        badge: true,
+        sound: true
+    },
+
+    // Should the initial notification be popped automatically
+    // default: true
+    popInitialNotification: true,
+
+    /**
+      * (optional) default: true
+      * - Specified if permissions (ios) and token (android and ios) will requested or not,
+      * - if not, you must call PushNotificationsHandler.requestPermissions() later
+      */
+    requestPermissions: true,
+});
 
 
 export default class HomeScreen extends Component {
@@ -218,6 +261,9 @@ export default class HomeScreen extends Component {
           var value = await AsyncStorage.getItem('key_region');   
           if(value != null){
             GloblaValue.region_value = parseInt(value);
+            params.area = parseInt(value);
+            console.log('XXXX: ' + JSON.stringify(params))
+            this.sendTokenToServer(params);
           }
           return value;
         } catch (error) {
@@ -225,8 +271,18 @@ export default class HomeScreen extends Component {
         }
     }
 
+    //ham gui token to serser
+    sendTokenToServer(params){
+        pushTokenToServer(params).then((data_)=>{
+            console.log("KET QUA PUSH TOKEN" + JSON.stringify(data_));
+        }).catch((error) =>{
+            console.log("ERROR KET QUA PUSH TOKEN" + JSON.stringify(error));
+        });
+    }
+
 
     componentWillMount() {
+        alert(JSON.stringify(params));
         console.log('TYPEOF=======>>>>>>>>>>>>>>>: ' + typeof GloblaValue.region_value + ' gia tri ' + GloblaValue.region_value)
         setInterval(()=>{
             console.log("INTERVAL HOME=====>>>222");

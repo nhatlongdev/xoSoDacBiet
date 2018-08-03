@@ -5,8 +5,8 @@ import {Alert} from 'react-native';
 import RNExitApp from 'react-native-exit-app';
 const exitAlert = () => {
   Alert.alert(
-    'Thoát Khỏi Ứng Dụng',
-    'Bạn có muốn thoát không?', [{
+    'Xổ số đặc biệt',
+    'Bạn có muốn thoát khỏi ứng dụng xổ số đặc biệt không?', [{
         text: 'Cancel',
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel'

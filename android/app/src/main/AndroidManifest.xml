@@ -4,11 +4,15 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    <!-- <Only if you're using GCM> -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <permission
         android:name="vn.dacbiet.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
     <uses-permission android:name="vn.dacbiet.permission.C2D_MESSAGE" />
+    <!-- </Only if you're using GCM> -->
+
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
@@ -31,7 +35,8 @@
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
 
-      <receiver
+      <!-- <Only if you're using GCM> -->
+        <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND" >
@@ -40,6 +45,7 @@
                 <category android:name="vn.dacbiet" />
             </intent-filter>
         </receiver>
+        <!-- </Only if you're using GCM> -->
 
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver">
@@ -52,7 +58,13 @@
             android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService"
             android:exported="false" >
             <intent-filter>
+                <!-- <Only if you're using GCM> -->
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <!-- </Only if you're using GCM> -->
+
+                <!-- <Else> -->
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <!-- </Else> -->
             </intent-filter>
         </service>
         

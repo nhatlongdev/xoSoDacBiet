@@ -3,7 +3,7 @@ package vn.dacbiet;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
+import com.evollu.react.fcm.FIRMessagingPackage;
 import com.github.wumke.RNExitApp.RNExitAppPackage;
 import com.pilloxa.backgroundjob.BackgroundJobPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -27,7 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new ReactNativePushNotificationPackage(),
+            new FIRMessagingPackage(),
             new RNExitAppPackage(),
             new BackgroundJobPackage(),
             new VectorIconsPackage()

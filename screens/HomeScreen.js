@@ -90,7 +90,7 @@ var rowItemGetNotifi ={};
 
 import BackgroundJob from 'react-native-background-job';
 const foregroundJobKey = "foregroundJobKey";
-var PushNotification = require('react-native-push-notification');
+
 //KHAI BAO BACKGROUNDJOB=======================================//
 var checkIsNotifi = false;
 BackgroundJob.register({
@@ -104,65 +104,11 @@ var params ={
     area:0,
     device_type:2,
 }; 
+import FCM, { NotificationActionType } from "react-native-fcm";
 
-PushNotification.configure({
+import { registerKilledListener, registerAppListener } from "./Listeners";
 
-    // (optional) Called when Token is generated (iOS and Android)
-    onRegister: function(token) {
-        console.log( 'TOKEN:'+ JSON.stringify(token));
-        // alert(JSON.stringify(token));
-        token_os = token.token;
-        params.token = token.token;
-        if(token.os == 'android'){
-            params.device_type = 1;
-        }else{
-            params.device_type = 2;
-        }
-        // alert(token);
-    },
-
-    // (required) Called when a remote or local notification is opened or received
-    onNotification: function(notification) {
-        console.log( 'CO PUSH NOTIFICATION', notification);
-        console.log( 'NOTIFICATION:' + JSON.stringify(notification));
-        setTimeout(()=>{
-            
-        })              
-
-    //    PushNotification.localNotificationSchedule({
-    //         //... You can use all the options from localNotifications
-    //         id: '10',
-    //         message: notification['name'] + moment().format('HH:mm:ss'), // (required)
-    //         date: new Date(Date.now() + (60 * 1000)), // in 60 secs
-    //         ongoing: true,
-    //       });
-
-        // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
-        // notification.finish(PushNotificationIOS.FetchResult.NoData);
-    },
-
-    // ANDROID ONLY: GCM or FCM Sender ID (product_number) (optional - not required for local notifications, but is need to receive remote push notifications)
-    senderID: "851260857471",
-
-    // IOS ONLY (optional): default: all - Permissions to register.
-    permissions: {
-        alert: true,
-        badge: true,
-        sound: true
-    },
-
-    // Should the initial notification be popped automatically
-    // default: true
-    popInitialNotification: true,
-
-    /**
-      * (optional) default: true
-      * - Specified if permissions (ios) and token (android and ios) will requested or not,
-      * - if not, you must call PushNotificationsHandler.requestPermissions() later
-      */
-    requestPermissions: true,
-});
-
+registerKilledListener();
 
 export default class HomeScreen extends Component {
     
@@ -351,7 +297,49 @@ export default class HomeScreen extends Component {
        
     }
 
-    componentDidMount(){
+    async componentDidMount(){
+         FCM.createNotificationChannel({
+            id: 'default',
+            name: 'Default',
+            description: 'used for example',
+            priority: 'high'
+          })
+          registerAppListener(this.props.navigation);
+
+          FCM.getInitialNotification().then(notif => {
+            //   alert('co chay vao day' + JSON.stringify(notif));
+              console.log('INITIALNOTIFI', notif)
+            this.setState({
+              initNotif: notif
+            });
+            if (notif && notif.targetScreen === "detail") {
+              setTimeout(() => {
+                this.props.navigation.navigate("Detail");
+              }, 500);
+            }
+          });
+      
+          try {
+            let result = await FCM.requestPermissions({
+              badge: false,
+              sound: true,
+              alert: true
+            });
+          } catch (e) {
+            console.error(e);
+          }
+      
+          FCM.getFCMToken().then(token => {
+            console.log("TOKEN (getFCMToken)", token);
+            this.setState({ token: token || "" });
+          });
+      
+          if (Platform.OS === "ios") {
+            FCM.getAPNSToken().then(token => {
+              console.log("APNS TOKEN (getFCMToken)", token);
+            });
+          }
+
         handleAndroidBackButton(exitAlert);
         AppState.addEventListener('change', this._handleAppStateChange);
     }
@@ -756,6 +744,15 @@ export default class HomeScreen extends Component {
             var key = data[i].pc + '_' + date_quay;
             dataSwitchKey[key] = data[i];
         } 
+        // if(GloblaValue.region_value === 0){
+
+        //     this.getListDay_(true);
+        // }else{
+        //     dataListDayTheoMien = this.getListDay_VungMien(GloblaValue.region_value)
+        //     this.setState({
+        //         load: false,
+        //     })
+        // }
 
     }
 

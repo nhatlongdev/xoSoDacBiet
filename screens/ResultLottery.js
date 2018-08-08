@@ -199,6 +199,7 @@ export default class ResultLottery extends Component {
         dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 18:10'); //.format('YYYY/MM/DD HH:mm:ss')
         dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
         this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+        console.log('CONTRUCTOR ' + moment())
       }
 
     componentWillUnmount() {

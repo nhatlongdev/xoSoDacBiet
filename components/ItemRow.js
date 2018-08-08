@@ -59,7 +59,10 @@ export default class ItemRow extends Component {
     render(){
         return(
             <View style ={style.container}>
-                <Text style = {style.text_style}>{this.showText()}</Text>
+                <Text style = {[style.text_style,{color:this.showText().indexOf('Đang quay')!= -1?
+                'red':'black'}]}>
+                {this.showText()}
+                </Text>
                 <View style={{height: 1, backgroundColor: 'grey'}}></View>
             </View>
         );

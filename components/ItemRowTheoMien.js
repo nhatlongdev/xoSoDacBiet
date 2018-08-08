@@ -10,8 +10,10 @@ export default class ItemRowTheoMien extends Component {
     render(){
         return(
             <View style={styles.container}>
-                <Text style={[styles.style_text,{fontWeight:'bold'}]}>{this.props.item.title}</Text>
-                <Text style={styles.style_text}>{this.showText()}</Text>
+                <Text style={[styles.style_text,{fontWeight:'bold', color:this.showText().indexOf('Đang quay')!= -1?
+                'red':'black'}]}>{this.props.item.title}</Text>
+                <Text style={[styles.style_text,{color:this.showText().indexOf('Đang quay')!= -1?
+                'red':'black'}]}>{this.showText()}</Text>
             </View>
         );
     }

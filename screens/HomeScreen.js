@@ -35,7 +35,7 @@ import CircleOption from '../components/CircleOption';
 import FloatButtonCompoment from '../components/FloatButtonCompoment';
 import TextSetting from '../components/TextSetting';
 import ProgressReact from '../components/ProgressReact';
-import moment from 'moment';
+import moment, { duration } from 'moment';
 // import {getDataFromServer} from '../networking/Server';
 import {createArrPushInItem} from '../components/CreateArrPushInItem';
 import TreeView from '@zaguini/react-native-tree-view';
@@ -739,22 +739,34 @@ export default class HomeScreen extends Component {
 
     //ham xu ly data khi quay truc tiep
     progressDataQuayTrucTiep(data){
+        let checkDataFull = true;
         for(var i=0; i< data.length; i++){
             var date_quay = moment(data[i].rd).format('YYYYMMDD');
             var key = data[i].pc + '_' + date_quay;
             dataSwitchKey[key] = data[i];
+            if(data[i].s != '0'){
+                checkDataFull = false;
+            }
         } 
-        // if(GloblaValue.region_value === 0){
-
-        //     this.getListDay_(true);
-        // }else{
-        //     dataListDayTheoMien = this.getListDay_VungMien(GloblaValue.region_value)
-        //     this.setState({
-        //         load: false,
-        //     })
-        // }
+    
+        if(GloblaValue.region_value === 0){
+            this.getListDay_(true);
+        }else{
+            dataListDayTheoMien = this.getListDay_VungMien(GloblaValue.region_value)
+            console.log('CO CHAY VAO LOAD LAI DU LIEU')
+            this.setState({
+                load: false,
+            })
+        }
 
     }
+
+    // `//ham kiem tra de auto refresh data
+    // checkAutoRefreshData(data){
+    //     if(GloblaValue.region_value === 0){
+            
+    //     }
+    // }`
 
 
     //ham load lai data click refresh
@@ -770,7 +782,10 @@ export default class HomeScreen extends Component {
                 this.progressDataClickRefresh(dataLotteProvinces_);
             }
         }).catch((error) =>{
-
+            this.setState({
+                load: false,
+            })
+            ToastAndroid.show('Tải dữ liệu bị lỗi, vui lòng kiểm tra kết nối mạng!', ToastAndroid.SHORT);
         });
     }
 

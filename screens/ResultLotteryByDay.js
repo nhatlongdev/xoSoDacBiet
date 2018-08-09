@@ -36,8 +36,13 @@ export default class ResultLotteryByDay extends Component {
                  var title_kq = dataLottery[j].pc + dataLottery[j].rd;
                  var obdb = {}, ob1 = {}, ob2 = {}, ob3 = {}, ob4 = {}, ob5 = {}, ob6 = {}, ob7 = {};
                  obdb.title = 'ĐB'; ob1.title = 'G.1'; ob2.title = 'G.2'; ob3.title = 'G.3'; ob4.title = 'G.4'; ob5.title = 'G.5'; ob6.title = 'G.6'; ob7.title = 'G.7'; 
-                 var s1s2 = (dataLottery[j].s1? dataLottery[j].s1 :dataLottery[j].s2);
-                 var arr_kqdb = s1s2.split(' - ');
+                 let kq = '';
+                 if(rowItem.area_id === 1){
+                    kq = dataLottery[j].s1;
+                 }else {
+                    kq = dataLottery[j].s2;
+                 }
+                 var arr_kqdb = kq.split(' - ');
                  obdb.arr_kqdb = arr_kqdb;
                  obj_cli.db = obdb;
      

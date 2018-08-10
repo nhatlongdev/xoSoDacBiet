@@ -264,7 +264,7 @@ export default class HomeScreen extends Component {
                 this.refreshFromServer10s();
             }else if(timeCurrent>= dateTimeBatDauQuayMienTrung && timeCurrent< dateTimeDungQuayMienTrung){
                 this.refreshFromServer10s();
-            }else if(timeCurrent>= dateTimeBatDauQuayMienBac && timeCurrent< dateTimeBatDauQuayMienBac){
+            }else if(timeCurrent>= dateTimeBatDauQuayMienBac && timeCurrent< dateTimeDungQuayMienBac){
                 this.refreshFromServer10s();
             }
         },10000)

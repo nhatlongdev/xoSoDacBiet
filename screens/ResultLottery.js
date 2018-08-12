@@ -156,8 +156,9 @@ export default class ResultLottery extends Component {
         }
     }
 
-    setTitle(rowItem, _date){
-        var indexDay = _date.getDay();
+    setTitle(rowItem){
+        var d = new Date(rowItem.rd);
+        var indexDay = d.getDay();
         var title_result =  '';
         if(rowItem.area_id == 1){
             title_result = 'Miền Bắc - ';
@@ -166,7 +167,7 @@ export default class ResultLottery extends Component {
         }else{
             title_result = 'Miền Nam - ';
         }
-        title_result = title_result + getDayOfWeek(indexDay) +  ", " + moment(_date).format('DD/MM/YYYY');
+        title_result = title_result + getDayOfWeek(indexDay) +  ", " + moment(d).format('DD/MM/YYYY');
         return title_result;
     }
 
@@ -401,7 +402,7 @@ export default class ResultLottery extends Component {
                     {/* if else neu chua co ket qua va chuan bi den gio quay truc tiep */}
                     {showResult ? 
                     <View style = {{flex: 1}}>
-                    <Text style = {{textAlign: 'center', width: '100%', color: 'black', padding: 10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
+                    <Text style = {{textAlign: 'center', width: '100%', color: 'black', padding: 10, fontSize: 16}}>{this.setTitle(rowItem)}</Text>
                     <View style = {{flex: 1, backgroundColor: 'grey', marginHorizontal: 2, borderTopWidth:1, borderTopColor:'grey'}}>
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.db.title}</Text>

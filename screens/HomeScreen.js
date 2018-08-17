@@ -102,7 +102,7 @@ var token_os = '';
 var params ={
     method:'REGISTER',
     area:0,
-    device_type:2,
+    device_type:Platform.OS === 'ios'?2:1,
 }; 
 import FCM, { NotificationActionType } from "react-native-fcm";
 
@@ -115,9 +115,6 @@ export default class HomeScreen extends Component {
     // Contructor
     constructor(props){
         super(props);
-    
-        this.getRegion();
-
         //Gia tri vung mien duoc chon luu tam de so sanh xem co thay doi ko
         region_save_tam = GloblaValue.region_value;
 
@@ -283,6 +280,11 @@ export default class HomeScreen extends Component {
                 }else {
                     dataListDayTheoMien = this.getListDay_VungMien(GloblaValue.region_value);
                 }
+
+                //dang ky lai thong tin push notifi voi server
+                params.area = GloblaValue.region_value;
+                this.sendTokenToServer(params);
+
                 this.setState({
                     changeRegions:GloblaValue.region_value,
                  })
@@ -332,6 +334,8 @@ export default class HomeScreen extends Component {
           FCM.getFCMToken().then(token => {
             console.log("TOKEN (getFCMToken)", token);
             this.setState({ token: token || "" });
+            params.token = token;
+            this.getRegion();
           });
       
           if (Platform.OS === "ios") {
@@ -407,6 +411,11 @@ export default class HomeScreen extends Component {
             dataListDayTheoMien = this.getListDay_VungMien(GloblaValue.region_value);
         }
         region_save_tam = GloblaValue.region_value;
+        
+        //dang ky lai thong tin push notifi voi server
+        params.area = GloblaValue.region_value;
+        this.sendTokenToServer(params);
+
         this.setState({
             changeRegions:GloblaValue.region_value,
         })

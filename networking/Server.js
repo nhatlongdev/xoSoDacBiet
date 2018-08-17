@@ -31,6 +31,7 @@ async function getDataFromServerTrucTiep(ngay) {
 //push token to server
 async function pushTokenToServer(params) {
     var _body = 'method='+ params.method + '&area=' + params.area + '&device_type='+ params.device_type+'&token='+params.token;
+    
     try {
         let response = await fetch(apiPushTokenToServer, {
             method:'POST',

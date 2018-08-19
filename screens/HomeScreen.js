@@ -353,12 +353,30 @@ export default class HomeScreen extends Component {
         if(GloblaValue.isLogin === true){
             GloblaValue.isLogin = false;
             var timeCurrent = moment();
-            if(GloblaValue.region_value === 0){
-
-            }else if(GloblaValue.region_value === 3 && timeCurrent>= dateTimeBatDauQuayMienNam && timeCurrent< dateTimeDungQuayMienNam){
+            let paramRow = {};
+            if(GloblaValue.region_value === 3 && timeCurrent>= dateTimeBatDauQuayMienNam && timeCurrent< dateTimeDungQuayMienNam){
                 // đến khung giờ quay trực tiếp thì 10s request server một lần lấy kết quả
                 this.props.navigation.navigate('ResultLottery2', {title: "", 
                 data_lottery: dataSwitchKey, row: dataListDayTheoMien[0]})
+            }else if(GloblaValue.region_value === 2 && timeCurrent>= dateTimeBatDauQuayMienTrung && timeCurrent< dateTimeDungQuayMienTrung){
+                // đến khung giờ quay trực tiếp thì 10s request server một lần lấy kết quả
+                this.props.navigation.navigate('ResultLottery2', {title: "", 
+                data_lottery: dataSwitchKey, row: dataListDayTheoMien[0]})
+            }else if(GloblaValue.region_value === 1 && timeCurrent>= dateTimeBatDauQuayMienBac && timeCurrent< dateTimeDungQuayMienBac){
+                // đến khung giờ quay trực tiếp thì 10s request server một lần lấy kết quả
+                this.props.navigation.navigate('ResultLottery', {title: "", 
+                data_lottery: dataSwitchKey, row: dataListDayTheoMien[0]})
+            }else if(GloblaValue.region_value === 0){
+                if(timeCurrent>= dateTimeBatDauQuayMienNam && timeCurrent< dateTimeDungQuayMienNam){
+                    this.props.navigation.navigate('ResultLottery2', {title: "", 
+                    data_lottery: dataSwitchKey, row: this.state.dataTam[0].member[2]});
+                }else if(timeCurrent>= dateTimeBatDauQuayMienTrung && timeCurrent< dateTimeDungQuayMienTrung){
+                    this.props.navigation.navigate('ResultLottery2', {title: "", 
+                    data_lottery: dataSwitchKey, row: this.state.dataTam[0].member[1]});
+                }else if(timeCurrent>= dateTimeBatDauQuayMienBac && timeCurrent< dateTimeDungQuayMienBac){
+                    this.props.navigation.navigate('ResultLottery', {title: "", 
+                    data_lottery: dataSwitchKey, row: this.state.dataTam[0].member[0]});
+                }
             }
         }
     }

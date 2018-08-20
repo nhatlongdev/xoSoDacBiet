@@ -331,6 +331,7 @@ export default class HomeScreen extends Component {
             console.error(e);
           }
       
+          // Đăng ký token với fcm
           FCM.getFCMToken().then(token => {
             console.log("TOKEN (getFCMToken)", token);
             this.setState({ token: token || "" });
@@ -346,6 +347,38 @@ export default class HomeScreen extends Component {
 
         handleAndroidBackButton(exitAlert);
         AppState.addEventListener('change', this._handleAppStateChange);
+
+        /*XỬ LÝ TRƯỜNG HỢP NẾU MỚI LOGIN VÀO MÀ ĐANG TRONG KHUNG GIỜ QUAY CỦA MIỀN ĐƯỢC CHỌN THÌ VÀO 
+        THẲNG MÀN ĐÓ LUÔN */
+        if(GloblaValue.isLogin === true){
+            GloblaValue.isLogin = false;
+            var timeCurrent = moment();
+            let paramRow = {};
+            if(GloblaValue.region_value === 3 && timeCurrent>= dateTimeBatDauQuayMienNam && timeCurrent< dateTimeDungQuayMienNam){
+                // đến khung giờ quay trực tiếp thì 10s request server một lần lấy kết quả
+                this.props.navigation.navigate('ResultLottery2', {title: "", 
+                data_lottery: dataSwitchKey, row: dataListDayTheoMien[0]})
+            }else if(GloblaValue.region_value === 2 && timeCurrent>= dateTimeBatDauQuayMienTrung && timeCurrent< dateTimeDungQuayMienTrung){
+                // đến khung giờ quay trực tiếp thì 10s request server một lần lấy kết quả
+                this.props.navigation.navigate('ResultLottery2', {title: "", 
+                data_lottery: dataSwitchKey, row: dataListDayTheoMien[0]})
+            }else if(GloblaValue.region_value === 1 && timeCurrent>= dateTimeBatDauQuayMienBac && timeCurrent< dateTimeDungQuayMienBac){
+                // đến khung giờ quay trực tiếp thì 10s request server một lần lấy kết quả
+                this.props.navigation.navigate('ResultLottery', {title: "", 
+                data_lottery: dataSwitchKey, row: dataListDayTheoMien[0]})
+            }else if(GloblaValue.region_value === 0){
+                if(timeCurrent>= dateTimeBatDauQuayMienNam && timeCurrent< dateTimeDungQuayMienNam){
+                    this.props.navigation.navigate('ResultLottery2', {title: "", 
+                    data_lottery: dataSwitchKey, row: this.state.dataTam[0].member[2]});
+                }else if(timeCurrent>= dateTimeBatDauQuayMienTrung && timeCurrent< dateTimeDungQuayMienTrung){
+                    this.props.navigation.navigate('ResultLottery2', {title: "", 
+                    data_lottery: dataSwitchKey, row: this.state.dataTam[0].member[1]});
+                }else if(timeCurrent>= dateTimeBatDauQuayMienBac && timeCurrent< dateTimeDungQuayMienBac){
+                    this.props.navigation.navigate('ResultLottery', {title: "", 
+                    data_lottery: dataSwitchKey, row: this.state.dataTam[0].member[0]});
+                }
+            }
+        }
     }
 
     _handleAppStateChange = (nextAppState) => {
@@ -815,21 +848,6 @@ export default class HomeScreen extends Component {
             })
         }
 
-    }
-
-    //click setting
-    alarmNotifi(msg, contentRow){
-        // PushNotification.localNotification({
-        //     id:'123',
-        //     onNotification: true,
-        //     foreground: true,
-        //     largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
-        //     smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
-        //     ongoing: true, // (optional) set whether this is an "ongoing" notification
-        //     message: msg + ' ' + moment().format('HH:mm:ss'), // (required)
-        //     bigText: contentRow, // (optional) default: "message" prop
-        //     subText: '', // (optional) default: none
-        // })
     }
 
     //click ba cham goc phai

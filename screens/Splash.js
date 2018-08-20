@@ -19,6 +19,7 @@ export default class Splash extends Component {
         this.state = {
             status_net: true,
         }
+        GloblaValue.isLogin = true;
     }
 
     componentWillMount(){

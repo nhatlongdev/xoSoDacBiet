@@ -352,7 +352,7 @@ export default class HomeScreen extends Component {
        
         if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
             // AppState.removeEventListener('change', nextAppState);  
-          console.log('App has come to the foreground!')
+          alert('App has come to the foreground!')
           if(checkIsNotifi == true){
             this.clickItemTheoMien(rowItemGetNotifi);
             checkIsNotifi = false;

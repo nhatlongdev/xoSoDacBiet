@@ -26,7 +26,7 @@ var heightScreen = Dimensions.get('window').height;
 var date_quay = '';
 var item_;
 var day_current;
-var dataFromServer, dataFromServerWithKey;
+var dataFromServerWithKey;
 
 //import data lottery
 import GloblaValue from '../components/GlobalValue';
@@ -37,8 +37,8 @@ export default class ByDayScreen extends Component {
 
     constructor(props){
         super(props);
-        dataFromServer = GloblaValue.data_lottery;
-        dataFromServerWithKey = dataSwitchKey_global.data;
+        dataFromServerWithKey = this.props.navigation.state.params.data_lottery;;
+        console.log("JSON DATA: " + JSON.stringify(dataFromServerWithKey))
         this.state= {
             selected: data[0]
         }
@@ -152,7 +152,7 @@ export default class ByDayScreen extends Component {
             var key = codeTinh + "_" + moment(_date).format('YYYYMMDD')
             if(dataFromServerWithKey[key] != null){
                 this.props.navigation.navigate('ResultLotteryByDay',
-                {row: item_, data: dataFromServer})
+                {row: item_, data: dataFromServerWithKey})
             }else {
                 var milisecondsDateCurrent = moment(moment().format('YYYY-MM-DD'));
                 var milisecondsDateSelect = moment(item.rd);

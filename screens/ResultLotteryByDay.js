@@ -158,7 +158,7 @@ export default class ResultLotteryByDay extends Component {
           drag_left: true,
         };
         dataLottery = this.props.navigation.state.params.data;
-        console.log("GGG-=====>>>"+ JSON.stringify(dataLottery));
+        alert(dataLottery.length);
         var rowItem_source = this.props.navigation.state.params.row;
         console.log("GGGROW-=====>>>"+ JSON.stringify(rowItem_source));
         rowItem = JSON.parse(JSON.stringify(rowItem_source));

@@ -332,7 +332,6 @@ export default class ResultLottery2 extends Component {
     }
 
     componentWillUpdate(){
-      alert('hot')
       console.log("TIMER componentWillUpdate: " + JSON.stringify(rowItem));
     }
 

@@ -17,6 +17,7 @@ import Color from '../src/color';
 import {
     UIActivityIndicator,
   } from 'react-native-indicators';
+import GloblaValue from '../components/GlobalValue';
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
@@ -24,7 +25,6 @@ var dataLottery;
 var rowItem;
 var mang_kq_tong = {};
 var rowItem;
-var dataLottery;
 var date_row;
 var checkRowItemIsCurrent = false;
 var checkDataNotNull = false;
@@ -35,6 +35,9 @@ var dateTimeDungQuay;
 
 // Biến kiểm tra hiển thị hay ẩn kết quả
 var showResult = false;
+
+//bien luu trang thai refresh khi app ->foreground
+var isRefresh = false;
 
 export default class ResultLottery extends Component {
 
@@ -199,6 +202,7 @@ export default class ResultLottery extends Component {
           drag_left: true,
           value_test: 0,
         };
+        isRefresh = GloblaValue.isRefresh;
         dataLottery = this.props.navigation.state.params.data_lottery;
         var rowItem_source = this.props.navigation.state.params.row;
         rowItem = JSON.parse(JSON.stringify(rowItem_source));
@@ -265,21 +269,35 @@ export default class ResultLottery extends Component {
                     if(checkRowItemIsCurrent == true ||   rowItem.rd == moment().format('YYYY-MM-DD')){
                         console.log("VAO DAY");
                         rowItem.rd = moment().format('YYYY-MM-DD');
-                        //nếu kq ngày hiện tại đã có (trực tiếp)
-                        if(this.checkObjData(rowItem, dataLottery) == true){
-                            checkRowItemIsCurrent = false;
-                            this.formatLottery(rowItem, dataLottery);
-                            showResult = true;
-                        }else {
-                            console.log("KO CO KET QUA");
-                            checkRowItemIsCurrent = true;
-                            showResult = false;
-                        }
+                        
+                    }
+                    //nếu kq ngày hiện tại đã có (trực tiếp)
+                    if(this.checkObjData(rowItem, dataLottery) == true){
+                        checkRowItemIsCurrent = false;
+                        this.formatLottery(rowItem, dataLottery);
+                        showResult = true;
+                    }else {
+                        console.log("KO CO KET QUA");
+                        checkRowItemIsCurrent = true;
+                        showResult = false;
                     }
                     this.setState({
                         value_test: 1,
                     })
-                } 
+                }else {
+                    if(isRefresh != GloblaValue.isRefresh){
+                        isRefresh = GloblaValue.isRefresh;
+                        //nếu kq ngày hiện tại đã có (trực tiếp)
+                    if(this.checkObjData(rowItem, dataLottery) == true){
+                        this.formatLottery(rowItem, dataLottery);
+                    }
+                        this.setState({
+                            value_test: 1,
+                        })
+                        console.log('CO REFRESH!!!')
+                    }
+
+                }
             },10000)
       }
 
@@ -289,12 +307,12 @@ export default class ResultLottery extends Component {
       }
 
       componentWillUpdate(){
-        
-        console.log("TIMER componentWillUpdate: " + JSON.stringify(rowItem));
+        console.log('CO UPDATE CHO MAN KET QUA')
+        console.log("TIMER componentWillUpdate666: " + JSON.stringify(rowItem));
       }
 
       componentDidUpdate(){
-        console.log("TIMER componentDidUpdate: " + JSON.stringify(rowItem));
+        console.log("TIMER componentDidUpdate666: " + JSON.stringify(rowItem));
       }
 
 

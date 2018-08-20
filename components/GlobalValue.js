@@ -5,6 +5,7 @@ var GloblaValue = {
     first_login:false,
     click_menuLeft:false,
     isLogin:false,
+    isRefresh:false,
 };
 
 export default GloblaValue;

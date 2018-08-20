@@ -15,6 +15,8 @@ import {setItemRowDrag} from '../components/SetItemRowDrag';
 import {
     UIActivityIndicator,
   } from 'react-native-indicators';
+  import GloblaValue from '../components/GlobalValue';
+
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
@@ -34,6 +36,9 @@ var dateTimeDungQuay;
 
 // bien kiem tra truong hop hien ket qua hay an
 var showResult = false;
+
+//bien luu trang thai refresh khi app ->foreground
+var isRefresh = false;
 
 export default class ResultLottery2 extends Component {
 
@@ -223,6 +228,7 @@ export default class ResultLottery2 extends Component {
             value_test: 0,
             // result: false
           };
+          isRefresh = GloblaValue.isRefresh;
           dataLottery = this.props.navigation.state.params.data_lottery;
           var rowItem_source = this.props.navigation.state.params.row;
           rowItem = JSON.parse(JSON.stringify(rowItem_source));
@@ -291,20 +297,33 @@ export default class ResultLottery2 extends Component {
                     rowItem.rd = moment().format('YYYY-MM-DD');
                     date_row = new Date(rowItem.rd);
                     rowItem = setItemRowDrag(rowItem, date_row,2);
-                    //nếu kq ngày hiện tại đã có (trực tiếp)
-                    if(this.checkObjData(rowItem, dataLottery) == true){
-                        checkRowItemIsCurrent = false;
-                        this.formatLottery(rowItem, dataLottery);
-                        showResult = true;
-                    }else {
-                        showResult = false;
-                    }
+                }
+                //nếu kq ngày hiện tại đã có (trực tiếp)
+                if(this.checkObjData(rowItem, dataLottery) == true){
+                    checkRowItemIsCurrent = false;
+                    this.formatLottery(rowItem, dataLottery);
+                    showResult = true;
+                }else {
+                    showResult = false;
                 }
                 this.setState({
                     value_test: 1,
                 })
-                } 
-            },10000)
+             }else {
+                if(isRefresh != GloblaValue.isRefresh){
+                    isRefresh = GloblaValue.isRefresh;
+                    //nếu kq ngày hiện tại đã có (trực tiếp)
+                if(this.checkObjData(rowItem, dataLottery) == true){
+                    this.formatLottery(rowItem, dataLottery);
+                }
+                    this.setState({
+                        value_test: 1,
+                    })
+                    console.log('CO REFRESH!!!')
+                }
+
+            } 
+         },10000)
     }
 
 
@@ -313,7 +332,7 @@ export default class ResultLottery2 extends Component {
     }
 
     componentWillUpdate(){
-      
+      alert('hot')
       console.log("TIMER componentWillUpdate: " + JSON.stringify(rowItem));
     }
 

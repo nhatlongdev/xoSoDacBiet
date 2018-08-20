@@ -385,11 +385,13 @@ export default class HomeScreen extends Component {
        
         if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
             // AppState.removeEventListener('change', nextAppState);  
-          alert('App has come to the foreground!')
+        //   alert('App has come to the foreground!')
           if(checkIsNotifi == true){
             this.clickItemTheoMien(rowItemGetNotifi);
             checkIsNotifi = false;
           }
+          // Bật app lên thì refresh lại dự liệu
+          this.clickRefreshDsDay();
         }else {
             console.log('App has come to the Background!')
             BackgroundJob.schedule({
@@ -618,6 +620,7 @@ export default class HomeScreen extends Component {
         let that = this;
         setTimeout(
             function(){
+                console.log('TOI Day')
                 that.clickRefreshData();
         }, 2000);
     }
@@ -848,6 +851,8 @@ export default class HomeScreen extends Component {
             })
         }
 
+        //thay doi global isRefresh de update màn kết quả
+        GloblaValue.isRefresh = !GloblaValue.isRefresh;
     }
 
     //click ba cham goc phai

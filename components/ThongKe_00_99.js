@@ -6,7 +6,7 @@ import moment from 'moment';
 
 function thongKe_00_99(data, soLanQuay){
 
-    var mangData = [];
+    var mangData = [], mangCountDbTheoDau = [], mangCountLoToTheoDau =[];
     for(var k =0; k < 100; k++){
         var countDB = 0;
         var countLoTo = 0;
@@ -40,6 +40,16 @@ function thongKe_00_99(data, soLanQuay){
         _obj.phanTramDB = phanTramDB;
         _obj.phanTramLoTo = phanTramLoTo;
         mangData.push(_obj);
+        mangCountDbTheoDau.push(countDB);
+        mangCountLoToTheoDau.push(countLoTo);
+    }
+
+    var max_dac_biet = Math.max.apply(Math, mangCountDbTheoDau);
+    var max_lo_to = Math.max.apply(Math, mangCountLoToTheoDau);
+
+    for(let i=0; i<mangData.length; i++){
+        mangData[i].lengthDB = (mangData[i].countDB / max_dac_biet).toFixed(2);
+        mangData[i].lengthLoTo = (mangData[i].countLoTo / max_lo_to).toFixed(2);
     }
 
     // set min count db, loto

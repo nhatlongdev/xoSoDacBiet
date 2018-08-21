@@ -20,16 +20,19 @@ import ItemNumDetector from '../components/ItemNumDetector';
 import {filterArrDetector} from '../components/FilterArrDetector';
 import Color from '../src/color';
 import dataLottery_detector_statistic from '../components/DataLottery';
+import ItemFlatListDoSo from '../components/ItemFLatListDoSo';
+import dataBong from '../components/BongDoSo';
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
 var item_;
 var data_detector = [];
+var objResultDoSo = {};
 var dataResultLottery = {};
 var soDo = '';
 var soLanQuay = 30;
 export default class NumberDetectorScreen extends Component {
-
+    
     constructor(props){
         super(props);
         data_detector = [];
@@ -43,7 +46,9 @@ export default class NumberDetectorScreen extends Component {
         item_ = data[0];
 
         dataResultLottery = dataLottery_detector_statistic.data;
-        // console.log('HHHHNEw=====>>>>' + JSON.stringify(dataResultLottery));
+        console.log('HHHHNEw=====>>>>' + JSON.stringify(dataResultLottery));
+        console.log('HHHHNEw0000=====>>>>' + JSON.stringify(dataBong));
+        console.log('HHHHNEw98=====>>>>' + JSON.stringify(dataBong[98].length));
         this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     }
 
@@ -118,28 +123,10 @@ export default class NumberDetectorScreen extends Component {
                         source={require('../images/right_arrow31.png')}
                         />
                     </TouchableOpacity>
-                    
                     </View>
 
-                    <View style={{paddingHorizontal:5}}>
-                        <Text style ={{color: Color.blue}}>{this.setTitleResultTraCuu()}</Text> 
-                        <View style = {{backgroundColor: 'red', flexDirection: 'row'}}>
-                            <Text style= {{flex: 2, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Số</Text>
-                            <Text style= {{flex: 2, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Giải</Text>
-                            <Text style= {{flex: 3, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Ngày</Text>
-                        </View>
-                    </View>
-                    <FlatList   style={{paddingHorizontal:5}}
-                                data = {data_detector}
-                                renderItem = {({item, index})=>{
-                                    return(
-                                        <ItemNumDetector
-                                            item = {item} index = {index}
-                                        />
-                                    );
-                                }}
-                                keyExtractor={ (item, index) => index.toString() }> 
-                    </FlatList>
+                    <ItemFlatListDoSo soTraCuu={this.state.soDoTraCuu} data={data_detector}/>
+
                 </ScrollView>
                 <FloatButtonCompomentExit
                      onButtonFloatPress={this.clickExit.bind(this)}
@@ -149,28 +136,37 @@ export default class NumberDetectorScreen extends Component {
         );
     }
 
-    //set title ket qua tra cuu
-    setTitleResultTraCuu(){
-        var titlte = '';
-        if(this.state.soDoTraCuu != ''){
-            titlte =  'Số ' + this.state.soDoTraCuu + ' xuất hiện ' + data_detector.length + ' lần';
-        }else {
-            titlte =  'Kết quả tra cứu';
-        }
-        return titlte;
-    }
-
     clickExit(){
         this.props.navigation.goBack();
     }
 
     numberDetector(_item, soDo, soLanQuay){
+       //Tách chuỗi nhập vào ra thành mảng number
+       var arrSoDo = [];
+       var arrSoDoTam  = [];
+       var arrNumber = soDo.split(','); 
+       for(let i =0;i<arrNumber.length;i++){
+            if(arrNumber[i].length !== 2) break;
+            if(dataBong[arrNumber[i]] != null){
+                arrSoDoTam = arrSoDoTam.concat(dataBong[arrNumber[i]]);
+            }
+       } 
+       
+       //Loại bỏ phần tử trùng nhau trong mảng
+       if(arrSoDo.length >0){
+            // set min count db, loto
+            var _ = require('underscore');	
+            arrSoDo = _.uniq(arrSoDo);
+       }
+
+
         this.setState({
             soDoTraCuu: soDo +"",
         })
         var arrLotteryOfProvinces = {};
         arrLotteryOfProvinces = dataResultLottery[_item.code];
         console.log('Data dua vao: ' + JSON.stringify(arrLotteryOfProvinces) + " -----" + arrLotteryOfProvinces.length)
+
         data_detector = filterArrDetector(arrLotteryOfProvinces,soDo,soLanQuay);
         this.setState({
             data_detector: data_detector

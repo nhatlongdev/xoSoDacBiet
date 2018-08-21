@@ -27,7 +27,7 @@ export default class ResultStatistic extends Component{
 
     render(){
         return(
-            <SafeAreaView style = {{flex: 1, marginHorizontal: 2, marginTop: Platform.OS === 'ios'? 30 : 0, backgroundColor:'white'}}>
+            <SafeAreaView style = {{flex: 1, marginHorizontal: 2, marginTop: Platform.OS === 'ios'? 30 : 0, backgroundColor:'white', marginBottom:2}}>
                 <Text style = {{fontSize: 14, fontWeight: 'bold', textAlign: 'center', color: 'black'}}>Đầu số xuất hiện trong {soLanQuay} lần quay xổ số {nameTinh}</Text>
                 <View style={{flexDirection: 'row', backgroundColor: 'red', borderBottomColor: 'grey', borderBottomWidth: 1, paddingVertical: 2}}>
                     <Text style={{flex: 1, textAlign: 'center', color: 'white', fontWeight: 'bold'}}>Đầu</Text>

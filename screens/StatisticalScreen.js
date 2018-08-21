@@ -191,7 +191,7 @@ export default class StatisticalScreen extends Component {
         var _ = require('underscore');
         var arrVeNhieuTam = _.sortBy(arr_00_99, 'countLoTo');
         var arrVeNhieu_ = arrVeNhieuTam.reverse();
-        var arrVeNhieu = arrVeNhieu_.slice(0, 20);    
+        var arrVeNhieu = arrVeNhieu_.slice(0, 40);    
         this.props.navigation.navigate('ResultStatistic2', {arr: arrVeNhieu, nameTinh:_item.name, soLanQuay:this.state.textSoLanQuay});
     }
 

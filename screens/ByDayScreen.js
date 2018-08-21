@@ -151,8 +151,8 @@ export default class ByDayScreen extends Component {
         if(item_.weekdays.indexOf(dayString) != -1){
             var key = codeTinh + "_" + moment(_date).format('YYYYMMDD')
             if(dataFromServerWithKey[key] != null){
-                this.props.navigation.navigate('ResultLotteryByDay',
-                {row: item_, data: dataFromServerWithKey})
+                this.props.navigation.navigate('ResultLotteryByDay', {data_lottery: dataFromServerWithKey, 
+                    row: item_});
             }else {
                 var milisecondsDateCurrent = moment(moment().format('YYYY-MM-DD'));
                 var milisecondsDateSelect = moment(item.rd);

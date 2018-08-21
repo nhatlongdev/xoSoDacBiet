@@ -11,10 +11,14 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import moment from 'moment';
 import {getDayOfWeek} from '../components/GetDayOfWeek';
 
+import {
+    UIActivityIndicator,
+  } from 'react-native-indicators';
+import GloblaValue from '../components/GlobalValue';
+
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
-var dataLottery;
 var rowItem;
 var mang_kq_tong = {};
 var rowItem;
@@ -22,77 +26,82 @@ var dataLottery;
 var date_row;
 var checkRowItemIsCurrent = false;
 var checkDataNotNull = false;
+
+//bien luu trang thai refresh khi app ->foreground
+var isRefresh = false;
 export default class ResultLotteryByDay extends Component {
 
-    // ham format result lottery  
+    // hàm định đạng lại kết quả trả về ==> phục vụ cho việc hiển thị ra view  
     formatLottery(rowItem, dataLottery){
-        checkDataNotNull = false;
-        for(var j=0;j<dataLottery.length; j++){
-            if(rowItem.code == dataLottery[j].pc && rowItem.rd == dataLottery[j].rd){
-                 checkDataNotNull = true;
-                 var obj_cli={};
-             
-                 var key_push = (rowItem.code);
-                 var title_kq = dataLottery[j].pc + dataLottery[j].rd;
-                 var obdb = {}, ob1 = {}, ob2 = {}, ob3 = {}, ob4 = {}, ob5 = {}, ob6 = {}, ob7 = {};
-                 obdb.title = 'ĐB'; ob1.title = 'G.1'; ob2.title = 'G.2'; ob3.title = 'G.3'; ob4.title = 'G.4'; ob5.title = 'G.5'; ob6.title = 'G.6'; ob7.title = 'G.7'; 
-                 let kq = '';
-                 if(rowItem.area_id === 1){
-                    kq = dataLottery[j].s1;
-                 }else {
-                    kq = dataLottery[j].s2;
-                 }
-                 var arr_kqdb = kq.split(' - ');
-                 obdb.arr_kqdb = arr_kqdb;
-                 obj_cli.db = obdb;
-     
-                 var kq1_string = dataLottery[j].p1;
-                 var arr_kq1 = kq1_string.split(' - ');
-                 ob1.arr_kq1 = arr_kq1;
-                 var mang_loto1 = arr_kqdb.concat(arr_kq1);
-                 obj_cli.g1 = ob1;
-     
-                 var kq2_string = dataLottery[j].p2;
-                 var arr_kq2 = kq2_string.split(' - ');
-                 ob2.arr_kq2 = arr_kq2;
-                 var mang_loto2 = mang_loto1.concat(arr_kq2);
-                 obj_cli.g2 = ob2;
-     
-                 var kq3_string = dataLottery[j].p3;
-                 var arr_kq3 = kq3_string.split(' - ');
-                 ob3.arr_kq3 = arr_kq3;
-                 var mang_loto3 = mang_loto2.concat(arr_kq3);
-                 obj_cli.g3 = ob3;
-     
-                 var kq4_string = dataLottery[j].p4;
-                 var arr_kq4 = kq4_string.split(' - ');
-                 ob4.arr_kq4 = arr_kq4;
-                 var mang_loto4 = mang_loto3.concat(arr_kq4);
-                 obj_cli.g4 = ob4;
-     
-                 var kq5_string = dataLottery[j].p5;
-                 var arr_kq5 = kq5_string.split(' - ');
-                 ob5.arr_kq5 = arr_kq5;
-                 var mang_loto5 = mang_loto4.concat(arr_kq5);
-                 obj_cli.g5 = ob5;
-     
-                 var kq6_string = dataLottery[j].p6;
-                 var arr_kq6 = kq6_string.split(' - ');
-                 ob6.arr_kq6 = arr_kq6;
-                 var mang_loto6 = mang_loto5.concat(arr_kq6);
-                 obj_cli.g6 = ob6;
-     
-                 var kq7_string = dataLottery[j].p7;
-                 var arr_kq7 = kq7_string.split(' - ');
-                 ob7.arr_kq7 = arr_kq7;
-                 var mang_loto7 = mang_loto6.concat(arr_kq7);
-                 obj_cli.g7 = ob7;
-                 obj_cli.mang_loto7 = mang_loto7;
-                 mang_kq_tong[key_push] = obj_cli;
+        var date_quay = moment(rowItem.rd).format('YYYYMMDD');
+        var keyItem = rowItem.code + '_'+date_quay;
+        console.log('rowItem: '+ JSON.stringify(rowItem))
+        console.log('keyITem: '+ keyItem)
+        console.log('dataLottery: ' + JSON.stringify(dataLottery))
+        if(dataLottery[keyItem] != null){
+            var lotteryItem = dataLottery[keyItem];
+            console.log('lotteryItem: ' + JSON.stringify(lotteryItem))
+            var obj_cli={};    
+            var key_push = (rowItem.code);
+            var title_kq = lotteryItem.pc + lotteryItem.rd;
+            var obdb = {}, ob1 = {}, ob2 = {}, ob3 = {}, ob4 = {}, ob5 = {}, ob6 = {}, ob7 = {};
+            obdb.title = 'ĐB'; ob1.title = 'G.1'; ob2.title = 'G.2'; ob3.title = 'G.3'; ob4.title = 'G.4'; ob5.title = 'G.5'; ob6.title = 'G.6'; ob7.title = 'G.7'; 
+            var arr_kqdb;
+            if(rowItem.area_id === 1){
+                arr_kqdb = lotteryItem.s1.split(' - ');
+            }else {
+                arr_kqdb = lotteryItem.s2.split(' - ');
             }
-        }
-        var checkobj = JSON.stringify(mang_kq_tong);
-                    console.log("GIa Tri OBJ cli TOng: ===>>>" + checkobj);          
+            obdb.arr_kqdb = arr_kqdb;
+            obj_cli.db = obdb;
+
+            var kq1_string = lotteryItem.p1;
+            var arr_kq1 = kq1_string.split(' - ');
+            ob1.arr_kq1 = arr_kq1;
+            var mang_loto1 = arr_kqdb.concat(arr_kq1);
+            obj_cli.g1 = ob1;
+
+            var kq2_string = lotteryItem.p2;
+            var arr_kq2 = kq2_string.split(' - ');
+            ob2.arr_kq2 = arr_kq2;
+            var mang_loto2 = mang_loto1.concat(arr_kq2);
+            obj_cli.g2 = ob2;
+
+            var kq3_string = lotteryItem.p3;
+            var arr_kq3 = kq3_string.split(' - ');
+            ob3.arr_kq3 = arr_kq3;
+            var mang_loto3 = mang_loto2.concat(arr_kq3);
+            obj_cli.g3 = ob3;
+
+            var kq4_string = lotteryItem.p4;
+            var arr_kq4 = kq4_string.split(' - ');
+            ob4.arr_kq4 = arr_kq4;
+            var mang_loto4 = mang_loto3.concat(arr_kq4);
+            obj_cli.g4 = ob4;
+
+            var kq5_string = lotteryItem.p5;
+            var arr_kq5 = kq5_string.split(' - ');
+            ob5.arr_kq5 = arr_kq5;
+            var mang_loto5 = mang_loto4.concat(arr_kq5);
+            obj_cli.g5 = ob5;
+
+            var kq6_string = lotteryItem.p6;
+            var arr_kq6 = kq6_string.split(' - ');
+            ob6.arr_kq6 = arr_kq6;
+            var mang_loto6 = mang_loto5.concat(arr_kq6);
+            obj_cli.g6 = ob6;
+
+            var kq7_string = lotteryItem.p7;
+            var arr_kq7 = kq7_string.split(' - ');
+            ob7.arr_kq7 = arr_kq7;
+            var mang_loto7 = mang_loto6.concat(arr_kq7);
+            obj_cli.g7 = ob7;
+            obj_cli.mang_loto7 = mang_loto7;
+
+            mang_kq_tong[key_push] = obj_cli;
+
+            console.log('MANG KQ TONG: ' + JSON.stringify(mang_kq_tong))
+        }        
     }
 
     // ham gop mang thanh text
@@ -129,14 +138,36 @@ export default class ResultLotteryByDay extends Component {
         }
         return textShow;
     }
-    
 
-    setTitle(rowItem, _date){
+    // ham kiem tra xem obj da co trong mang ket qua chua
+    checkObjData(rowItem, dataLottery){
+        var date_quay = moment(rowItem.rd).format('YYYYMMDD');
+        var keyItem = rowItem.code + '_'+date_quay;
+        if(dataLottery[keyItem] != null){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    // ham kiem tra xem tat car cac giai da duoc quay xong chua
+    checkObjDataComplete(rowItem, dataLottery){
+        var date_quay = moment(rowItem.rd).format('YYYYMMDD');
+        var keyItem = rowItem.code + '_'+ date_quay;
+        if(dataLottery[keyItem] != null && dataLottery[keyItem].s != '0'){
+            return true;
+        }
+        return false;
+    }
+    
+    //set title
+    setTitle(rowItem){
         // alert(JSON.stringify(rowItem) + " ------" + _date)
-        var indexDay = _date.getDay();
+        let d = new Date(rowItem.rd);
+        var indexDay = d.getDay();
         var title_result =  '';
         title_result = rowItem.name;
-        title_result = title_result + " - " +  getDayOfWeek(indexDay) +  ", " + moment(_date).format('DD/MM/YYYY');
+        title_result = title_result + " - " +  getDayOfWeek(indexDay) +  ", " + moment(d).format('DD/MM/YYYY');
         return title_result;
     }
 
@@ -157,14 +188,29 @@ export default class ResultLotteryByDay extends Component {
         this.state = {
           drag_left: true,
         };
-        dataLottery = this.props.navigation.state.params.data;
-        alert(dataLottery.length);
+        isRefresh = GloblaValue.isRefresh;
+        dataLottery = this.props.navigation.state.params.data_lottery;
         var rowItem_source = this.props.navigation.state.params.row;
-        console.log("GGGROW-=====>>>"+ JSON.stringify(rowItem_source));
         rowItem = JSON.parse(JSON.stringify(rowItem_source));
         var convert = moment(rowItem.rd).format('YYYY/MM/DD');
         date_row = new Date(convert);
         this.formatLottery(rowItem, dataLottery);
+      }
+    
+      componentWillMount(){
+        setInterval(()=>{
+            console.log("INTEVAL BEN RESUL CHAY");
+            if(isRefresh != GloblaValue.isRefresh){
+                isRefresh = GloblaValue.isRefresh;
+                //nếu kq ngày hiện tại đã có (trực tiếp)
+                if(this.checkObjData(rowItem, dataLottery) == true && this.checkObjDataComplete(rowItem, dataLottery)==true){
+                    this.formatLottery(rowItem, dataLottery);
+                    this.setState({
+                        drag_left: !this.state.drag_left,
+                    })
+                }
+            }
+        },10000)
       }
     
       onSwipeUp(gestureState) {
@@ -231,10 +277,15 @@ export default class ResultLotteryByDay extends Component {
                     </View>
                     <ScrollView>
                     <View style = {{flex: 1}}>
-                    <Text style = {{textAlign: 'center', width: widthScreen, color: 'black', padding: checkRowItemIsCurrent == true? 10 : 0, fontSize: 16}}>
-                        {checkRowItemIsCurrent == true? this.setTitleToday(1) : ''}
-                    </Text>
-                    <Text style = {{textAlign: 'center', width: widthScreen, color: 'black', padding: 10, fontSize: 16}}>{this.setTitle(rowItem, date_row)}</Text>
+                    <Text style = {{textAlign: 'center', width: '100%', color: 'black', padding: 10, fontSize: 16}}>{this.setTitle(rowItem)}</Text>
+                    {
+                        this.checkObjDataComplete(rowItem, dataLottery)==true?
+                        <View style={{alignContent:'center'}}>
+                            <Text style={{flex: 1, color:'red', textAlign:'center', marginBottom:10}}>Đang quay</Text>
+                            <UIActivityIndicator style={{flex:1, paddingBottom: 1,}} size={15} color='blue' />
+                        </View>
+                        :null
+                    }
                     <View style = {{flex: 1, backgroundColor: 'grey', marginHorizontal: 2, borderTopWidth:1, borderTopColor:'grey'}}>
                         <View style = {style.row_result}>
                            <Text style = {style.row_text_title_result}>{objResult.db.title}</Text>

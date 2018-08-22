@@ -27,7 +27,7 @@ var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
 var item_;
 var data_detector = [];
-var objResultDoSo = [];
+var objResultDoSo = {};
 var dataResultLottery = {};
 var soDo = '';
 var soLanQuay = 30;
@@ -44,6 +44,7 @@ export default class NumberDetectorScreen extends Component {
             textSoDo: '',
             textSoLanQuay: '30',
             soDoTraCuu: '',
+            msg_progress:''
         }
         item_ = data[0];
 
@@ -60,6 +61,14 @@ export default class NumberDetectorScreen extends Component {
     
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+
+    shouldComponentUpdate(){
+        return true;
+    }
+
+    componentWillUpdate(){
+        console.log('CO RENDER LAI')
     }
     
     handleBackButtonClick() {
@@ -127,7 +136,7 @@ export default class NumberDetectorScreen extends Component {
                     </TouchableOpacity>
                     </View>
 
-                    <FlatList   
+                    {/* <FlatList   
                             data = {objResultDoSo}
                             renderItem = {({item, index})=>{
                                 return(
@@ -137,9 +146,9 @@ export default class NumberDetectorScreen extends Component {
                                 );
                             }}
                             keyExtractor={ (item, index) => index.toString() }> 
-                    </FlatList>
+                    </FlatList> */}
 
-                    {/* {
+                    {
                         arrSoDo.length>0?
                         <ItemFlatListDoSo soTraCuu={arrSoDo[0]} data={objResultDoSo[arrSoDo[0]]}/>:null
                     } 
@@ -181,7 +190,47 @@ export default class NumberDetectorScreen extends Component {
                     {
                         arrSoDo.length>8?
                         <ItemFlatListDoSo soTraCuu={arrSoDo[8]} data={objResultDoSo[arrSoDo[8]]}/>:null
-                    }   */}
+                    } 
+                    {
+                        arrSoDo.length>9?
+                        <ItemFlatListDoSo soTraCuu={arrSoDo[9]} data={objResultDoSo[arrSoDo[9]]}/>:null
+                    } 
+
+                    {
+                        arrSoDo.length>10?
+                        <ItemFlatListDoSo soTraCuu={arrSoDo[10]} data={objResultDoSo[arrSoDo[10]]}/>:null
+                    }                         
+                   
+                    {
+                        arrSoDo.length>11?
+                        <ItemFlatListDoSo soTraCuu={arrSoDo[11]} data={objResultDoSo[arrSoDo[11]]}/>:null
+                    }  
+
+                    {
+                        arrSoDo.length>12?
+                        <ItemFlatListDoSo soTraCuu={arrSoDo[12]} data={objResultDoSo[arrSoDo[12]]}/>:null
+                    }  
+
+                    {
+                        arrSoDo.length>13?
+                        <ItemFlatListDoSo soTraCuu={arrSoDo[13]} data={objResultDoSo[arrSoDo[13]]}/>:null
+                    }  
+
+                    {
+                        arrSoDo.length>14?
+                        <ItemFlatListDoSo soTraCuu={arrSoDo[14]} data={objResultDoSo[arrSoDo[14]]}/>:null
+                    }  
+
+                    {
+                        arrSoDo.length>15?
+                        <ItemFlatListDoSo soTraCuu={arrSoDo[15]} data={objResultDoSo[arrSoDo[15]]}/>:null
+                    }  
+
+                    {
+                        arrSoDo.length===0?
+                        <Text style={{fontSize:16, color:'black', textAlign:'center'}}>{this.state.msg_progress}</Text>:null
+                    }
+
                 </ScrollView>
                 <FloatButtonCompomentExit
                      onButtonFloatPress={this.clickExit.bind(this)}
@@ -189,6 +238,22 @@ export default class NumberDetectorScreen extends Component {
 
             </View>
         );
+    }
+
+    //Sử dụng reg để kiểm tra chuỗi ký tự nhập vào có hợp lệ ko
+    checkStringInputLegal(soLanQuay, chuoiDo){
+        var str ='';
+        if(soLanQuay.length === 0){
+            str = 'Bạn chưa nhập số lần quay';
+        }else if(chuoiDo.length === 0){
+            str = 'Bạn chưa nhập số cần dò';
+        }else{
+            var pattern_1 = /^[0-9]{1,2}$/;
+            var pattern_2 = /^[0-9]{2},[0-9]{2}$/;
+            if(pattern_1.test(soLanQuay) === false){} str = 'Số lần quay không đúng định dạng, vui lòng nhập lại';
+            if(pattern_1.test(chuoiDo)=== false || pattern_2.test(chuoiDo) === false) str= 'Số dò nhập không đúng định dạng, vui lòng kiểm tra lại';
+        }
+        return str;
     }
 
     //hàm for để sét list kết quả dò số
@@ -205,7 +270,9 @@ export default class NumberDetectorScreen extends Component {
     }
 
     numberDetector(_item, soDo, soLanQuay){
-
+        this.setState({
+            msg_progress:'Đang xử lý, vui lòng đợi...'
+        })
        //Tách chuỗi nhập vào ra thành mảng number
        arrSoDo = [];
        var arrSoDoTam  = [];
@@ -239,10 +306,7 @@ export default class NumberDetectorScreen extends Component {
 
         for(let n=0; n<arrSoDo.length; n++){
             let arr_kq = filterArrDetector(arrLotteryOfProvinces,arrSoDo[n],soLanQuay);
-            let obj = {};
-            obj.so = arrSoDo[n];
-            obj.arr_kq = arr_kq;
-            objResultDoSo.push(obj);
+            objResultDoSo[arrSoDo[n]] = arr_kq;
         }
 
         console.log('KET QUA: ' + JSON.stringify(objResultDoSo))
@@ -252,7 +316,15 @@ export default class NumberDetectorScreen extends Component {
         this.setState({
             data_detector: data_detector
         })
-        console.log('RESULT:  ' + JSON.stringify(data_detector));
+        if(arrSoDo.length>0){
+            this.setState({
+                msg_progress:''
+            })
+        }else{
+            this.setState({
+                msg_progress:'Số dò không hợp lệ vui lòng kiểm tra lại!'
+            })
+        }
     }
 
 }

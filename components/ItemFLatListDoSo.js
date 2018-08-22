@@ -20,7 +20,7 @@ export default class ItemFlatListDoSo extends Component {
         return (
             <View>
                 <View style={{paddingHorizontal:5}}>
-                <Text style ={{color: Color.blue}}>{this.setTitleResultTraCuu(this.props.item.so, this.props.item.arr_kq.length)}</Text> 
+                <Text style ={{color: Color.blue}}>{this.setTitleResultTraCuu(this.props.soTraCuu, this.props.data.length)}</Text> 
                 <View style = {{backgroundColor: 'grey', flexDirection: 'row'}}>
                     <Text style= {{flex: 2, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Số</Text>
                     <Text style= {{flex: 2, textAlign: 'center', padding: 5, fontWeight: 'bold', color: 'white'}}>Giải</Text>
@@ -28,7 +28,7 @@ export default class ItemFlatListDoSo extends Component {
                 </View>
                 </View>
                 <FlatList   style={{paddingHorizontal:5}}
-                            data = {this.props.item.arr_kq}
+                            data = {this.props.data}
                             renderItem = {({item, index})=>{
                                 return(
                                     <ItemNumDetector
@@ -38,6 +38,7 @@ export default class ItemFlatListDoSo extends Component {
                             }}
                             keyExtractor={ (item, index) => index.toString() }> 
                 </FlatList>
+
             </View>
         );
     }

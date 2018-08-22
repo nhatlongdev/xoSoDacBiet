@@ -126,8 +126,8 @@ export default class NumberDetectorScreen extends Component {
                         value = {this.state.textSoDo}
                     />
                     <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center',borderRadius: 2, backgroundColor: '#CCCCCC', height: 50,padding: 5}}
-                                    onPress = {()=>this.state.textSoDo.length !== 0?this.numberDetector(item_, this.state.textSoDo, this.state.textSoLanQuay) : 
-                                        alert('Vui lòng nhập số cần dò')}
+                                    onPress = {()=>this.checkStringInputLegal(this.state.textSoLanQuay, this.state.textSoDo) === 'ok'? this.numberDetector(item_, this.state.textSoDo, this.state.textSoLanQuay):
+                                    null}
                     >
                         <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>TRA CỨU LÔ TÔ, DÒ SỐ</Text>   
                         <Image
@@ -242,7 +242,7 @@ export default class NumberDetectorScreen extends Component {
 
     //Sử dụng reg để kiểm tra chuỗi ký tự nhập vào có hợp lệ ko
     checkStringInputLegal(soLanQuay, chuoiDo){
-        var str ='';
+        var str ='ok';
         if(soLanQuay.length === 0){
             str = 'Bạn chưa nhập số lần quay';
         }else if(chuoiDo.length === 0){
@@ -250,9 +250,16 @@ export default class NumberDetectorScreen extends Component {
         }else{
             var pattern_1 = /^[0-9]{1,2}$/;
             var pattern_2 = /^[0-9]{2},[0-9]{2}$/;
-            if(pattern_1.test(soLanQuay) === false){} str = 'Số lần quay không đúng định dạng, vui lòng nhập lại';
-            if(pattern_1.test(chuoiDo)=== false || pattern_2.test(chuoiDo) === false) str= 'Số dò nhập không đúng định dạng, vui lòng kiểm tra lại';
+            if(pattern_1.test(soLanQuay) === false){
+                str = 'Số lần quay không đúng định dạng, vui lòng nhập lại';
+            }else if(pattern_1.test(chuoiDo)=== false && pattern_2.test(chuoiDo) === false) {
+                 str= 'Số dò nhập không đúng định dạng, vui lòng kiểm tra lại';
+            }
         }
+        arrSoDo=[];
+        this.setState({
+            msg_progress:str,
+        })
         return str;
     }
 

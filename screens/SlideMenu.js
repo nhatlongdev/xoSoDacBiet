@@ -53,14 +53,12 @@ export default class SlideMenu extends Component {
                         <Text>Thống kê</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('By_Day_Screen')}}>
+                    <TouchableOpacity style = {style.item_option} onPress = {()=>{
+                        GloblaValue.clickToByDayByHome = false;
+                        this.props.navigation.navigate('By_Day_Screen')
+                    }}>
                         <Icon name = {'md-calendar'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
                         <Text>Xem kết quả theo ngày</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Comunity_Screen')}}>
-                        <Icon name = {'md-star'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
-                        <Text>Cộng đồng dự đoán</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style = {style.item_option} onPress = {()=>{this.clickMenuLeftToRegion()}}>

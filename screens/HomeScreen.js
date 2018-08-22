@@ -130,7 +130,7 @@ export default class HomeScreen extends Component {
         // Chuyển đổi kết quả về dạng key - value (key moi item la--> mã tỉnh_ngày)
         dataSwitchKey =  createKeyItem(dataLoadingToServer);
         console.log('CHECK O dataSwitchKey===>>>' + JSON.stringify(dataSwitchKey))
-        dataSwitchKey_global.data = createKeyItem(dataLoadingToServer);
+        dataSwitchKey_global.data = dataSwitchKey;
 
          // lay ds ngay theo mien
          dataListDayTheoMien = this.getListDay_VungMien(GloblaValue.region_value);
@@ -507,18 +507,11 @@ export default class HomeScreen extends Component {
                             onPress={()=>{this.props.navigation.navigate('Statistical_Screen'
                             , {data: dataWithProvinces})}}/>
 
-                        <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('By_Day_Screen',{data: dataLoadingToServer, data_lottery: dataSwitchKey})}}>
+                        <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('By_Day_Screen',{data_lottery: dataSwitchKey})}}>
                             <View style = {{width: 50, height: 50, borderRadius:  50/2, backgroundColor: 'green',justifyContent: 'center', alignItems: 'center'}}>
                                 <Icon name={'md-calendar'} style = {{fontSize: 40, color: 'white'}}/>
                             </View>
                             <Text style= {{color: 'black'}}>Theo ngày</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Comunity_Screen')}}>
-                            <View style = {{width: 50, height: 50, borderRadius:  50/2, backgroundColor: 'green',justifyContent: 'center', alignItems: 'center'}}>
-                                <Icon name={'md-star'} style = {{fontSize: 40, color: 'white'}}/>
-                            </View>
-                            <Text style= {{color: 'black'}}>Cộng đồng</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Regions_Screen', {listenRegions:this.listenChangeRegions.bind(this)})}}>
@@ -793,6 +786,7 @@ export default class HomeScreen extends Component {
                 checkDataFull = false;
             }
         } 
+        dataSwitchKey_global.data = dataSwitchKey;
     
         if(GloblaValue.region_value === 0){
             this.getListDay_(true);
@@ -1006,7 +1000,7 @@ var style = StyleSheet.create({
         marginBottom: 5,
     },
     item_option:{
-        width: widthScreen/5,
+        width: widthScreen/4.5,
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: 5,

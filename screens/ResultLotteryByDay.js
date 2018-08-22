@@ -44,8 +44,9 @@ export default class ResultLotteryByDay extends Component {
             var obj_cli={};    
             var key_push = (rowItem.code);
             var title_kq = lotteryItem.pc + lotteryItem.rd;
-            var obdb = {}, ob1 = {}, ob2 = {}, ob3 = {}, ob4 = {}, ob5 = {}, ob6 = {}, ob7 = {};
-            obdb.title = 'ĐB'; ob1.title = 'G.1'; ob2.title = 'G.2'; ob3.title = 'G.3'; ob4.title = 'G.4'; ob5.title = 'G.5'; ob6.title = 'G.6'; ob7.title = 'G.7'; 
+            var obdb = {}, ob1 = {}, ob2 = {}, ob3 = {}, ob4 = {}, ob5 = {}, ob6 = {}, ob7 = {}, ob8 = {};
+            obdb.title = 'ĐB'; ob1.title = 'G.1'; ob2.title = 'G.2'; ob3.title = 'G.3'; 
+            ob4.title = 'G.4'; ob5.title = 'G.5'; ob6.title = 'G.6'; ob7.title = 'G.7';ob8.title = 'G.8'; 
             var arr_kqdb;
             if(rowItem.area_id === 1){
                 arr_kqdb = lotteryItem.s1.split(' - ');
@@ -163,7 +164,7 @@ export default class ResultLotteryByDay extends Component {
     checkObjDataComplete(rowItem, dataLottery){
         var date_quay = moment(rowItem.rd).format('YYYYMMDD');
         var keyItem = rowItem.code + '_'+ date_quay;
-        if(dataLottery[keyItem] != null && dataLottery[keyItem].s != '0'){
+        if(dataLottery[keyItem] != null && dataLottery[keyItem].s !== '0'){
             return true;
         }
         return false;
@@ -212,7 +213,7 @@ export default class ResultLotteryByDay extends Component {
             if(isRefresh != GloblaValue.isRefresh){
                 isRefresh = GloblaValue.isRefresh;
                 //nếu kq ngày hiện tại đã có (trực tiếp)
-                if(this.checkObjData(rowItem, dataLottery) == true && this.checkObjDataComplete(rowItem, dataLottery)==true){
+                if(this.checkObjData(rowItem, dataLottery) === true && this.checkObjDataComplete(rowItem, dataLottery) === true){
                     this.formatLottery(rowItem, dataLottery);
                     this.setState({
                         drag_left: !this.state.drag_left,

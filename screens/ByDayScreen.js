@@ -19,7 +19,7 @@ import data from '../components/TinhThanh';
 import moment from 'moment';
 import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';
 import dataSwitchKey_global from '../components/DataLotterySwitchKey_Global';
-import dataLoadingServer_global from '../components/DataLottery_loading_server';
+import GloblaValue from '../components/GlobalValue';
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
@@ -27,17 +27,18 @@ var date_quay = '';
 var item_;
 var day_current;
 var dataFromServerWithKey;
-
-//import data lottery
-import GloblaValue from '../components/GlobalValue';
-
 // ma code tinh duoc chon
 var codeTinh;
 export default class ByDayScreen extends Component {
 
     constructor(props){
         super(props);
-        dataFromServerWithKey = this.props.navigation.state.params.data_lottery;;
+        if(GloblaValue.clickToByDayByHome === true){
+            dataFromServerWithKey = this.props.navigation.state.params.data_lottery;
+        }else{
+            GloblaValue.clickToByDayByHome = true;
+            dataFromServerWithKey = dataSwitchKey_global.data;
+        }
         console.log("JSON DATA: " + JSON.stringify(dataFromServerWithKey))
         this.state= {
             selected: data[0]

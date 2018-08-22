@@ -6,6 +6,7 @@ var GloblaValue = {
     click_menuLeft:false,
     isLogin:false,
     isRefresh:false,
+    clickToByDayByHome:true,
 };
 
 export default GloblaValue;

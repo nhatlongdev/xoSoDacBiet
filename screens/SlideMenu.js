@@ -58,11 +58,6 @@ export default class SlideMenu extends Component {
                         <Text>Xem kết quả theo ngày</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Comunity_Screen')}}>
-                        <Icon name = {'md-star'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
-                        <Text>Cộng đồng dự đoán</Text>
-                    </TouchableOpacity>
-
                     <TouchableOpacity style = {style.item_option} onPress = {()=>{this.clickMenuLeftToRegion()}}>
                         <Icon name = {'md-compass'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
                         <Text>Chọn vùng miền</Text>

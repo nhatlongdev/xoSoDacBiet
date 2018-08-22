@@ -514,13 +514,6 @@ export default class HomeScreen extends Component {
                             <Text style= {{color: 'black'}}>Theo ngày</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Comunity_Screen')}}>
-                            <View style = {{width: 50, height: 50, borderRadius:  50/2, backgroundColor: 'green',justifyContent: 'center', alignItems: 'center'}}>
-                                <Icon name={'md-star'} style = {{fontSize: 40, color: 'white'}}/>
-                            </View>
-                            <Text style= {{color: 'black'}}>Cộng đồng</Text>
-                        </TouchableOpacity>
-
                         <TouchableOpacity style = {style.item_option} onPress = {()=>{this.props.navigation.navigate('Regions_Screen', {listenRegions:this.listenChangeRegions.bind(this)})}}>
                             <View style = {{width: 50, height: 50, borderRadius:  50/2, backgroundColor: 'green',justifyContent: 'center', alignItems: 'center'}}>
                                 <Icon name={'md-compass'} style = {{fontSize: 40, color: 'white'}}/>
@@ -1006,7 +999,7 @@ var style = StyleSheet.create({
         marginBottom: 5,
     },
     item_option:{
-        width: widthScreen/5,
+        width: widthScreen/4.5,
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: 5,

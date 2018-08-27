@@ -44,8 +44,9 @@ export default class ResultLotteryByDay extends Component {
             var obj_cli={};    
             var key_push = (rowItem.code);
             var title_kq = lotteryItem.pc + lotteryItem.rd;
-            var obdb = {}, ob1 = {}, ob2 = {}, ob3 = {}, ob4 = {}, ob5 = {}, ob6 = {}, ob7 = {};
-            obdb.title = 'ĐB'; ob1.title = 'G.1'; ob2.title = 'G.2'; ob3.title = 'G.3'; ob4.title = 'G.4'; ob5.title = 'G.5'; ob6.title = 'G.6'; ob7.title = 'G.7'; 
+            var obdb = {}, ob1 = {}, ob2 = {}, ob3 = {}, ob4 = {}, ob5 = {}, ob6 = {}, ob7 = {}, ob8 = {};
+            obdb.title = 'ĐB'; ob1.title = 'G.1'; ob2.title = 'G.2'; ob3.title = 'G.3'; 
+            ob4.title = 'G.4'; ob5.title = 'G.5'; ob6.title = 'G.6'; ob7.title = 'G.7';ob8.title = 'G.8'; 
             var arr_kqdb;
             if(rowItem.area_id === 1){
                 arr_kqdb = lotteryItem.s1.split(' - ');
@@ -94,12 +95,21 @@ export default class ResultLotteryByDay extends Component {
             var kq7_string = lotteryItem.p7;
             var arr_kq7 = kq7_string.split(' - ');
             ob7.arr_kq7 = arr_kq7;
-            var mang_loto7 = mang_loto6.concat(arr_kq7);
+            var mang_loto_7 = mang_loto6.concat(arr_kq7);
             obj_cli.g7 = ob7;
-            obj_cli.mang_loto7 = mang_loto7;
-
+            
+            if(rowItem.area_id !== 1){
+                var kq8_string = lotteryItem.p8;
+                var arr_kq8 = kq8_string.split(' - ');
+                ob8.arr_kq8 = arr_kq8;
+                var mang_loto7 = mang_loto_7.concat(arr_kq8);
+                obj_cli.g8 = ob8;
+                obj_cli.mang_loto7 = mang_loto7;
+            }else{
+                obj_cli.mang_loto7 = mang_loto_7;
+            }
+            
             mang_kq_tong[key_push] = obj_cli;
-
             console.log('MANG KQ TONG: ' + JSON.stringify(mang_kq_tong))
         }        
     }
@@ -154,7 +164,7 @@ export default class ResultLotteryByDay extends Component {
     checkObjDataComplete(rowItem, dataLottery){
         var date_quay = moment(rowItem.rd).format('YYYYMMDD');
         var keyItem = rowItem.code + '_'+ date_quay;
-        if(dataLottery[keyItem] != null && dataLottery[keyItem].s != '0'){
+        if(dataLottery[keyItem] != null && dataLottery[keyItem].s !== '0'){
             return true;
         }
         return false;
@@ -203,7 +213,7 @@ export default class ResultLotteryByDay extends Component {
             if(isRefresh != GloblaValue.isRefresh){
                 isRefresh = GloblaValue.isRefresh;
                 //nếu kq ngày hiện tại đã có (trực tiếp)
-                if(this.checkObjData(rowItem, dataLottery) == true && this.checkObjDataComplete(rowItem, dataLottery)==true){
+                if(this.checkObjData(rowItem, dataLottery) === true && this.checkObjDataComplete(rowItem, dataLottery) === true){
                     this.formatLottery(rowItem, dataLottery);
                     this.setState({
                         drag_left: !this.state.drag_left,
@@ -342,6 +352,17 @@ export default class ResultLotteryByDay extends Component {
                                 <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g7.arr_kq7)+" "}</Text>
                            </View>
                         </View>
+
+                        {
+                            rowItem.area_id !== 1?
+                            <View style = {style.row_result}>
+                                <Text style = {style.row_text_title_result}>{objResult.g8.title}</Text>
+                                <View style={{flex: 2,borderLeftWidth:1,borderLeftColor:'grey'}}>
+                                    <Text style = {style.row_text_content_result}>{this.margeArrToString(objResult.g8.arr_kq8)+" "}</Text>
+                                </View>
+                            </View>
+                            :null
+                        }
 
                         <View style = {{flexDirection: 'row', height: 20, backgroundColor: 'yellow', alignItems: 'center', marginBottom: 2}}>
                            

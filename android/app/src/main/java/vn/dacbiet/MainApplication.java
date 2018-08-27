@@ -11,6 +11,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.dooboolab.RNIap.RNIapPackage;
 // Step 1; import package:
 import com.idehub.GoogleAnalyticsBridge.GoogleAnalyticsBridgePackage;
 
@@ -34,7 +35,8 @@ public class MainApplication extends Application implements ReactApplication {
             new BackgroundJobPackage(),
             new VectorIconsPackage(),
             // Step 2; register package:
-            new GoogleAnalyticsBridgePackage()
+            new GoogleAnalyticsBridgePackage(),
+            new RNIapPackage()
       );
     }
 

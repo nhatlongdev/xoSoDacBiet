@@ -62,6 +62,20 @@ import {
     GoogleTagManager
   } from "react-native-google-analytics-bridge";
 
+//buy item   
+import * as RNIap from 'react-native-iap';  
+const itemSkus = Platform.select({
+    ios: [
+      'com.cooni.point1000', 'com.cooni.point5000', // dooboolab
+    ],
+    android: [
+      'android.test.purchased',
+      'point_1000',
+      '5000_point',
+      'android.test.canceled',
+    ],
+  });
+
 //biến lưu ngày push notifi gần nhất
 var datePushNotifiLatest;
 
@@ -245,6 +259,16 @@ export default class HomeScreen extends Component {
         }
     }
 
+    //get product
+    getItems = async() => {
+        try {
+          const products = await RNIap.getProducts(itemSkus);
+          console.log('Products'+ JSON.stringify(products));
+          this.setState({ productList: products });
+        } catch (err) {
+          console.warn(err.code, err.message);
+        }
+    }
 
     //ham gui token to serser
     sendTokenToServer(params){
@@ -306,6 +330,14 @@ export default class HomeScreen extends Component {
     }
 
     async componentDidMount(){
+        // get item iap
+        try {
+            const result = await RNIap.prepare();
+            console.log('result', result);
+          } catch (err) {
+            console.warn(err.code, err.message);
+          }
+
          FCM.createNotificationChannel({
             id: 'default',
             name: 'Default',
@@ -647,6 +679,15 @@ export default class HomeScreen extends Component {
                                 <Icon name={'md-compass'} style = {{fontSize: 40, color: 'white'}}/>
                             </View>
                             <Text style= {{color: 'black'}}>Vùng miền</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style = {style.item_option} onPress = {()=>
+                            this.getItems()
+                        }>
+                            <View style = {{width: 50, height: 50, borderRadius:  50/2, backgroundColor: 'green',justifyContent: 'center', alignItems: 'center'}}>
+                                <Icon name={'md-compass'} style = {{fontSize: 40, color: 'white'}}/>
+                            </View>
+                            <Text style= {{color: 'black'}}>Get Products</Text>
                         </TouchableOpacity>
 
                    </ScrollView>
@@ -1128,7 +1169,7 @@ var style = StyleSheet.create({
         marginBottom: 5,
     },
     item_option:{
-        width: widthScreen/4.5,
+        width: widthScreen/5,
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: 5,

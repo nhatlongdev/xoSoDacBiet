@@ -21,6 +21,7 @@
     "react-native-exit-app": "^1.0.0",
     "react-native-expandable-section-flatlist": "^1.1.7",
     "react-native-fcm": "^16.1.0",
+    "react-native-google-analytics-bridge": "^5.8.0",
     "react-native-indicators": "^0.13.0",
     "react-native-progress": "^3.5.0",
     "react-native-share": "^1.1.0",

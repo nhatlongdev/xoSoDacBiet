@@ -62,19 +62,13 @@ import {
     GoogleTagManager
   } from "react-native-google-analytics-bridge";
 
-//buy item   
-import * as RNIap from 'react-native-iap';  
-const itemSkus = Platform.select({
-    ios: [
-      'com.cooni.point1000', 'com.cooni.point5000', // dooboolab
-    ],
-    android: [
-      'android.test.purchased',
-      'point_1000',
-      '5000_point',
-      'android.test.canceled',
-    ],
-  });
+import InAppBilling from "react-native-billing";
+const defaultState = {
+    productDetails: null,
+    transactionDetails: null,
+    consumed: false,
+    error: null
+  };
 
 //biến lưu ngày push notifi gần nhất
 var datePushNotifiLatest;
@@ -131,6 +125,16 @@ import { registerKilledListener, registerAppListener } from "./Listeners";
 registerKilledListener();
 
 export default class HomeScreen extends Component {
+
+    state = {
+        productId: "android.test.purchased",
+        ...defaultState
+      };
+    
+      resetState = () => {
+        this.setState(defaultState);
+      };
+    
     
     // Contructor
     constructor(props){
@@ -259,17 +263,34 @@ export default class HomeScreen extends Component {
         }
     }
 
-    //get product
-    getItems = async() => {
+    //get item
+    getProductDetails = async () => {
         try {
-          const products = await RNIap.getProducts(itemSkus);
-          console.log('Products'+ JSON.stringify(products));
-          this.setState({ productList: products });
+          this.resetState();
+          await InAppBilling.open();
+          const details = await InAppBilling.getProductDetails(this.state.productId);
+          await InAppBilling.close();
+          this.setState({ productDetails: JSON.stringify(details) });
         } catch (err) {
-          console.warn(err.code, err.message);
+          this.setState({ error: JSON.stringify(err) });
+          await InAppBilling.close();
         }
-    }
+      };
+    
+      purchaseProduct = async () => {
+        try {
+          this.resetState();
+          await InAppBilling.open();
+          const details = await InAppBilling.purchase(this.state.productId);
+          await InAppBilling.close();
+          this.setState({ transactionDetails: JSON.stringify(details) });
+        } catch (err) {
+          this.setState({ error: JSON.stringify(err) });
+          await InAppBilling.close();
+        }
+      };
 
+   
     //ham gui token to serser
     sendTokenToServer(params){
         pushTokenToServer(params).then((data_)=>{
@@ -330,14 +351,7 @@ export default class HomeScreen extends Component {
     }
 
     async componentDidMount(){
-        // get item iap
-        try {
-            const result = await RNIap.prepare();
-            console.log('result', result);
-          } catch (err) {
-            console.warn(err.code, err.message);
-          }
-
+       
          FCM.createNotificationChannel({
             id: 'default',
             name: 'Default',
@@ -511,8 +525,7 @@ export default class HomeScreen extends Component {
     }
 
     render(){
-
-        // Recommend you set this much higher in real app! 30 seconds+
+    // Recommend you set this much higher in real app! 30 seconds+
     // GoogleAnalyticsSettings has static methods and is applied
     // for all trackers
     GoogleAnalyticsSettings.setDispatchInterval(2);
@@ -520,118 +533,10 @@ export default class HomeScreen extends Component {
     //GoogleAnalyticsSettings.setOptOut(true);
 
     // The tracker is constructed
-    // let tracker = new GoogleAnalyticsTracker("UA-3862017-3");
     let tracker = new GoogleAnalyticsTracker("UA-124642701-1");
     // You can have multiple trackers
     //let tracker2 = new GoogleAnalyticsTracker("UA-12345-3", { demo: 1 });
-
-    //tracker2.trackScreenViewWithCustomDimensionValues("Home", { demo: "Yes" });
-
-    tracker.trackEvent("testcategory", "Hello iOS");
-
-    tracker.trackScreenView("Home");
-
-    tracker.trackEvent("testcategory", "Hello iOS", {
-      label: "notdry",
-      value: 1
-    });
-
-    tracker.trackTiming("testcategory", 13000, {
-      label: "notdry",
-      name: "testduration"
-    });
-
-    tracker.setTrackUncaughtExceptions(true);
-    tracker.trackPurchaseEvent(
-      {
-        id: "P12345",
-        name: "Android Warhol T-Shirt",
-        category: "Apparel/T-Shirts",
-        brand: "Apple",
-        variant: "Black",
-        price: 29.2,
-        quantity: 1,
-        couponCode: "APPARELSALE"
-      },
-      {
-        id: "T12345",
-        affiliation: "Apple Store - Online",
-        revenue: 37.39,
-        tax: 2.85,
-        shipping: 5.34,
-        couponCode: "SUMMER2013"
-      }
-    );
-
-    tracker.trackMultiProductsPurchaseEvent(
-      [
-        {
-          id: "2224711",
-          name: "Top Ilem",
-          category: "Women/Kleidung/Tops/Spitzentops",
-          brand: "THE label",
-          variant: "rot",
-          price: 39.9,
-          quantity: 1
-        },
-        {
-          id: "2224706",
-          name: "Shorts Isto",
-          category: "Women/Kleidung/Hosen/Shirts",
-          brand: "THE label",
-          variant: "grau",
-          price: 59.9,
-          quantity: 1
-        }
-      ],
-      {
-        id: "T12345",
-        affiliation: "THE label Shop",
-        revenue: 83.87,
-        tax: 15.93,
-        shipping: 0.0,
-        couponCode: "SUMMER2016"
-      }
-    );
-
-    tracker.trackException("This is an error message", false);
-
-    tracker.trackSocialInteraction("Twitter", "Post");
-
-    tracker.setUser("12345678");
-
-    tracker.allowIDFA(true);
-
-    tracker.setAnonymizeIp(true);
-
-    tracker.trackScreenView("Hello");
-
-    GoogleTagManager.openContainerWithId("GTM-NZT48")
-      .then(() => {
-        return GoogleTagManager.registerFunctionCallTagHandler("awzm_tag", (fn, payload) => {
-          console.log("test", fn, payload)
-        })
-      })
-      .then(() => {
-        return GoogleTagManager.registerFunctionCallTagHandler("some_other_tag", (fn, payload) => {
-          console.log("test2", fn, payload)
-        })
-      })
-      .then(reg => {
-        console.log("Push?: ", reg);
-        return GoogleTagManager.pushDataLayerEvent({
-          event: "some_event",
-          id: 1
-        });
-      })
-      .then(db => {
-        console.log("db: ", db);
-        return GoogleTagManager.doubleForKey("db");
-      })
-      .catch(err => {
-        console.log(err);
-      });
-
+    tracker.trackScreenView("Home_Screen");
 
         return(
             <View style = {{flex: 1, backgroundColor: 'white', marginTop: Platform.OS==='ios'?30:0}}>
@@ -681,18 +586,11 @@ export default class HomeScreen extends Component {
                             <Text style= {{color: 'black'}}>Vùng miền</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style = {style.item_option} onPress = {()=>
-                            this.getItems()
-                        }>
-                            <View style = {{width: 50, height: 50, borderRadius:  50/2, backgroundColor: 'green',justifyContent: 'center', alignItems: 'center'}}>
-                                <Icon name={'md-compass'} style = {{fontSize: 40, color: 'white'}}/>
-                            </View>
-                            <Text style= {{color: 'black'}}>Get Products</Text>
-                        </TouchableOpacity>
-
+                    
                    </ScrollView>
                 </View>
 
+            
                 <Text style = {style.text_title_1}>{this.setTitleDsKetquaMoiNhat(GloblaValue.region_value)}</Text>
 
                 <View style = {style.content}>
@@ -1169,7 +1067,7 @@ var style = StyleSheet.create({
         marginBottom: 5,
     },
     item_option:{
-        width: widthScreen/5,
+        width: widthScreen/4.5,
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: 5,

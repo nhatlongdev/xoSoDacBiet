@@ -25,6 +25,12 @@ import {ThongKeLoKhan} from '../components/ThongKeLoKhan';
 var dataResultLottery = {};
 import dataLottery_detector_statistic from '../components/DataLottery';
 
+import {
+    GoogleAnalyticsTracker,
+    GoogleAnalyticsSettings,
+    GoogleTagManager
+  } from "react-native-google-analytics-bridge";
+
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
 export default class StatisticalScreen extends Component {
@@ -64,6 +70,20 @@ export default class StatisticalScreen extends Component {
     }
 
     render(){
+
+        // Recommend you set this much higher in real app! 30 seconds+
+        // GoogleAnalyticsSettings has static methods and is applied
+        // for all trackers
+        GoogleAnalyticsSettings.setDispatchInterval(2);
+        //GoogleAnalyticsSettings.setDryRun(true);
+        //GoogleAnalyticsSettings.setOptOut(true);
+
+        // The tracker is constructed
+        let tracker = new GoogleAnalyticsTracker("UA-124642701-1");
+        // You can have multiple trackers
+        //let tracker2 = new GoogleAnalyticsTracker("UA-12345-3", { demo: 1 });
+        tracker.trackScreenView("Statistical_Screen");
+
         return(
             <View style = {{flex: 1, marginTop: Platform.OS==='ios'?30:0}}>
                 <View style = {style.header_style}>

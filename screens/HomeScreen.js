@@ -62,14 +62,6 @@ import {
     GoogleTagManager
   } from "react-native-google-analytics-bridge";
 
-import InAppBilling from "react-native-billing";
-const defaultState = {
-    productDetails: null,
-    transactionDetails: null,
-    consumed: false,
-    error: null
-  };
-
 //biến lưu ngày push notifi gần nhất
 var datePushNotifiLatest;
 
@@ -126,16 +118,6 @@ registerKilledListener();
 
 export default class HomeScreen extends Component {
 
-    state = {
-        productId: "android.test.purchased",
-        ...defaultState
-      };
-    
-      resetState = () => {
-        this.setState(defaultState);
-      };
-    
-    
     // Contructor
     constructor(props){
         super(props);
@@ -167,8 +149,9 @@ export default class HomeScreen extends Component {
             showProgress_: true,
             showSetting: false,
             changeRegions:0,
-            appState: AppState.currentState
+            appState: AppState.currentState,
         };
+
         // Tao mảng danh sách ngày cho listView
         // Tao mảng phuc vu viec thong ke, tra cuu
         dataWithProvinces = createArrPushInItem(dataLoadingToServer);
@@ -185,7 +168,6 @@ export default class HomeScreen extends Component {
         //khởi tạo biến lưu ngày push notifi gần nhất
         datePushNotifiLatest = moment().format('YYYY/MM/DD');
     }
-
 
     //SAVE CACHE =======================================
     async getKey() {
@@ -263,34 +245,6 @@ export default class HomeScreen extends Component {
         }
     }
 
-    //get item
-    getProductDetails = async () => {
-        try {
-          this.resetState();
-          await InAppBilling.open();
-          const details = await InAppBilling.getProductDetails(this.state.productId);
-          await InAppBilling.close();
-          this.setState({ productDetails: JSON.stringify(details) });
-        } catch (err) {
-          this.setState({ error: JSON.stringify(err) });
-          await InAppBilling.close();
-        }
-      };
-    
-      purchaseProduct = async () => {
-        try {
-          this.resetState();
-          await InAppBilling.open();
-          const details = await InAppBilling.purchase(this.state.productId);
-          await InAppBilling.close();
-          this.setState({ transactionDetails: JSON.stringify(details) });
-        } catch (err) {
-          this.setState({ error: JSON.stringify(err) });
-          await InAppBilling.close();
-        }
-      };
-
-   
     //ham gui token to serser
     sendTokenToServer(params){
         pushTokenToServer(params).then((data_)=>{
@@ -586,7 +540,6 @@ export default class HomeScreen extends Component {
                             <Text style= {{color: 'black'}}>Vùng miền</Text>
                         </TouchableOpacity>
 
-                    
                    </ScrollView>
                 </View>
 
@@ -866,14 +819,6 @@ export default class HomeScreen extends Component {
         }
 
     }
-
-    // `//ham kiem tra de auto refresh data
-    // checkAutoRefreshData(data){
-    //     if(GloblaValue.region_value === 0){
-            
-    //     }
-    // }`
-
 
     //ham load lai data click refresh
     clickRefreshData = ()=>{

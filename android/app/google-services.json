@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "851260857471",
-    "firebase_url": "https://dacbietvn-ccede.firebaseio.com",
-    "project_id": "dacbietvn-ccede",
-    "storage_bucket": "dacbietvn-ccede.appspot.com"
+    "project_number": "1089314392271",
+    "firebase_url": "https://xosodacbiet-ad280.firebaseio.com",
+    "project_id": "xosodacbiet-ad280",
+    "storage_bucket": "xosodacbiet-ad280.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:851260857471:android:ff356d13e8b1c5c2",
+        "mobilesdk_app_id": "1:1089314392271:android:ff356d13e8b1c5c2",
         "android_client_info": {
           "package_name": "vn.dacbiet"
         }
       },
       "oauth_client": [
         {
-          "client_id": "851260857471-ttl7cq0s29bf06k44t941piqe02t3rgn.apps.googleusercontent.com",
+          "client_id": "1089314392271-92hrg5tfim14fakco0r7645t5kj2k24u.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDIgJTDDaqTBYnsmMulxf66jT76AqfAR_A"
+          "current_key": "AIzaSyDpcrrfvV1AsytS5Vto-CswmJWJTkbK3cw"
         }
       ],
       "services": {

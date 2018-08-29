@@ -17,6 +17,12 @@ import {
   } from 'react-native-indicators';
   import GloblaValue from '../components/GlobalValue';
 
+  import {
+    GoogleAnalyticsTracker,
+    GoogleAnalyticsSettings,
+    GoogleTagManager
+  } from "react-native-google-analytics-bridge";
+
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
@@ -433,6 +439,19 @@ export default class ResultLottery2 extends Component {
         if (rowItem.code.length == 4){
             objResult_4  = mang_kq_tong[rowItem.code[3]];
         }
+
+        // Recommend you set this much higher in real app! 30 seconds+
+        // GoogleAnalyticsSettings has static methods and is applied
+        // for all trackers
+        GoogleAnalyticsSettings.setDispatchInterval(2);
+        //GoogleAnalyticsSettings.setDryRun(true);
+        //GoogleAnalyticsSettings.setOptOut(true);
+
+        // The tracker is constructed
+        let tracker = new GoogleAnalyticsTracker("UA-124642701-1");
+        // You can have multiple trackers
+        //let tracker2 = new GoogleAnalyticsTracker("UA-12345-3", { demo: 1 });
+        tracker.trackScreenView("Result_Lottery");
         
         return(
             <GestureRecognizer

@@ -1,4 +1,4 @@
-package vn.dacbiet;
+package xoso.dacbiet.vn;
 
 import com.facebook.react.ReactActivity;
 import android.content.Intent;

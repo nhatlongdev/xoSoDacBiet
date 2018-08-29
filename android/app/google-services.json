@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1089314392271:android:ff356d13e8b1c5c2",
+        "mobilesdk_app_id": "1:1089314392271:android:cd46d7a9e494dc4a",
         "android_client_info": {
-          "package_name": "vn.dacbiet"
+          "package_name": "xoso.dacbiet.vn"
         }
       },
       "oauth_client": [

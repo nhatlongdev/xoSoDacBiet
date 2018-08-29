@@ -14,7 +14,14 @@ import {
     handleAndroidBackButton,
     removeAndroidBackButtonHandler
   } from '../components/BackHandlerXoSo';
-import {Calendar} from 'react-native-calendars';
+import {Calendar,LocaleConfig} from 'react-native-calendars';
+LocaleConfig.locales['fr'] = {
+  monthNames: ['Tháng Một','Tháng Hai','Tháng Ba','Tháng Tư','Tháng Năm','Tháng sáu','Tháng bẩy','Tháng Tám','Tháng Chín','Tháng Mười','Tháng 11','Tháng 12'],
+  monthNamesShort: ['Janv.','Févr.','Mars','Avril','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.'],
+  dayNames: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+  dayNamesShort: ['CN','Hai','Ba','Tư','Năm','Sáu','Bẩy']
+};
+LocaleConfig.defaultLocale = 'fr';
 import data from '../components/TinhThanh';
 import moment from 'moment';
 import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';

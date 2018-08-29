@@ -399,7 +399,7 @@ export default class ResultLottery extends Component {
     render(){
         const config = {
             velocityThreshold: 0.3,
-            directionalOffsetThreshold: 80
+            directionalOffsetThreshold: 90
           };
  
         var objResult = mang_kq_tong[rowItem.code[0]];  

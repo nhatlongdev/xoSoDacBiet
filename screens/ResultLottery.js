@@ -333,6 +333,7 @@ export default class ResultLottery extends Component {
       }
     
       onSwipeLeft(gestureState) {
+        // alert(JSON.stringify(gestureState))
         if(rowItem.rd != moment().format('YYYY-MM-DD')){
             date_row = new Date(rowItem.rd); 
             date_row.setDate(date_row.getDate()+1);
@@ -367,6 +368,7 @@ export default class ResultLottery extends Component {
       }
     
       onSwipeRight(gestureState) {
+        // alert(JSON.stringify(gestureState))
         checkRowItemIsCurrent = false; 
         date_row = new Date(rowItem.rd); 
         date_row.setDate(date_row.getDate()-1);
@@ -406,7 +408,7 @@ export default class ResultLottery extends Component {
     render(){
         const config = {
             velocityThreshold: 0.3,
-            directionalOffsetThreshold: 90
+            directionalOffsetThreshold: 30
           };
  
         var objResult = mang_kq_tong[rowItem.code[0]];  

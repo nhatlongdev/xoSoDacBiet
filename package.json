@@ -16,7 +16,7 @@
     "react-native": "0.55.4",
     "react-native-action-button": "^2.8.4",
     "react-native-background-job": "^2.1.1",
-    "react-native-billing": "^2.9.1",
+    "react-native-billing": "^2.10.0",
     "react-native-calendar": "^0.13.1",
     "react-native-calendars": "^1.19.3",
     "react-native-exit-app": "^1.0.0",

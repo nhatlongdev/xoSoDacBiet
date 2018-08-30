@@ -21,6 +21,7 @@ import ResultStatistic from './screens/ResultStatistic';
 import ResultStatistic1 from './screens/ResultStatistic1';
 import ResultStatistic2 from './screens/ResultStatistic2';
 import ResultStatistic3 from './screens/ResultStatistic3';
+import ProductsScreen from './screens/ProductsScreen';
 import Splash from './screens/Splash';
 import TestData from './screens/TestData';
 
@@ -106,6 +107,12 @@ export const HomeStack = StackNavigator({
     },
     ResultStatistic3: {
         screen: ResultStatistic3,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ProductsScreen: {
+        screen: ProductsScreen,
         navigationOptions: {
             header: null
         }

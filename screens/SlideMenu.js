@@ -13,15 +13,6 @@ import {
 import {Icon, Col} from 'native-base';
 import Color from '../src/color';
 import GloblaValue from '../components/GlobalValue';
-
-import InAppBilling from "react-native-billing";
-const defaultState = {
-    productDetails: null,
-    transactionDetails: null,
-    consumed: false,
-    error: null
-  };
-
 var dataWithProvinces = {};
 var heightScreen = Dimensions.get('window').height;
 var widthScreen = Dimensions.get('window').width;
@@ -33,62 +24,7 @@ export default class SlideMenu extends Component {
 
     constructor(props){
         super(props);
-        this.state = {
-            productId: "android.test.purchased",
-            ...defaultState
-        };
     }
-
-    resetState = () => {
-        this.setState(defaultState);
-    };
-
-
-    //get item
-    getProductDetails = async () => {
-        try {
-          this.resetState();
-          await InAppBilling.open();
-          const details = await InAppBilling.getProductDetails(this.state.productId);
-          alert(JSON.stringify(details))
-          await InAppBilling.close();
-          this.setState({ productDetails: JSON.stringify(details) });
-        } catch (err) {
-            alert("failse")
-          this.setState({ error: JSON.stringify(err) });
-          await InAppBilling.close();
-        }
-      };
-    
-      purchaseProduct = async () => {
-        try {
-          this.resetState();
-          await InAppBilling.open();
-          const details = await InAppBilling.purchase(this.state.productId);
-          await InAppBilling.close();
-          this.setState({ transactionDetails: JSON.stringify(details) });
-        } catch (err) {
-          this.setState({ error: JSON.stringify(err) });
-          await InAppBilling.close();
-        }
-      };
-
-      consumePurchase = async () => {
-        try {
-          this.resetState();
-          await InAppBilling.open();
-          const details = await InAppBilling.consumePurchase(this.state.productId);
-          await InAppBilling.close();
-          this.setState({ consumed: true });
-        } catch (err) {
-          this.setState({ error: JSON.stringify(err) });
-          await InAppBilling.close();
-        }
-      };
-    
-      updateProductId = productId => {
-        this.setState({ productId });
-      };
 
     render(){
         return(
@@ -137,7 +73,7 @@ export default class SlideMenu extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity style = {style.item_option} onPress = {()=>
-                        this.purchaseProduct()
+                        this.props.navigation.navigate('ProductsScreen')
                     }>
                         <Icon name = {'logo-googleplus'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
                         <Text>Pay</Text>

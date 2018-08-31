@@ -24,8 +24,10 @@ export default class SlideMenu extends Component {
 
     constructor(props){
         super(props);
+
     }
 
+   
     render(){
         return(
             <View style = {style.container}>

@@ -10,6 +10,7 @@ import { getDataFromServer } from '../networking/Server';
 import dataLottery_detector_statistic from '../components/DataLottery';
 import {createArrPushInItem} from '../components/CreateArrPushInItem';
 import GloblaValue from '../components/GlobalValue'
+import data from '../components/ListProductsSave';
 var dataLotteProvinces;
 
 export default class Splash extends Component {
@@ -22,6 +23,38 @@ export default class Splash extends Component {
         GloblaValue.isLogin = true;
     }
 
+     //save and get list product in app purscharse
+    async saveListProduct(value) {
+        try {
+          await AsyncStorage.setItem('key_list_product',value);
+        } catch (error) {
+          console.log("Error saving data" + error);
+        }
+    }
+
+    async getListProduct(isConnected) {
+        try {
+          const value = await AsyncStorage.getItem('key_list_product');
+            if(value === null){
+                this.saveListProduct(JSON.stringify(data))
+            }
+            if(isConnected.type === 'wifi' || isConnected.type === 'WIFI'){
+                console.log('CO WIFI')
+                //lay du lieu tu server
+                this.refreshFromServer();
+                GloblaValue.status_net = true;
+            }else {
+                // Nếu không có mạng thì lấy dữ liệu cache
+                this.getKey(false); 
+                GloblaValue.status_net = false;
+            }
+          return value;
+        } catch (error) {
+          console.log("Error retrieving data" + error);
+        }
+    }
+
+
     componentWillMount(){
         console.log('CHAY VAO WILLMOUNT')
         NetInfo.addEventListener('connectionChange', this.handler.bind(this));
@@ -30,17 +63,8 @@ export default class Splash extends Component {
 
     //check status networking
     handler(isConnected) {
-        console.log('CHAY VAO WILLMOUNT_3')
-        if(isConnected.type === 'wifi' || isConnected.type === 'WIFI'){
-            console.log('CO WIFI')
-            //lay du lieu tu server
-            this.refreshFromServer();
-            GloblaValue.status_net = true;
-        }else {
-            // Nếu không có mạng thì lấy dữ liệu cache
-            this.getKey(false); 
-            GloblaValue.status_net = false;
-        }
+       //kiem tra cake list product in appp da co chua, neu chua co thi lu cake
+       this.getListProduct(isConnected);
     }
 
     render(){

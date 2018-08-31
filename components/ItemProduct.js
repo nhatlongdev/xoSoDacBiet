@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { 
     View,
     Text,
-    TouchableOpacity
+    TouchableOpacity,
+    AsyncStorage
  } from 'react-native';
 
  import InAppBilling from "react-native-billing";
@@ -12,11 +13,13 @@ import {
      consumed: false,
      error: null
    };
+  var jsonListProducts;  
 
  export default class ItemProduct extends Component {
 
     constructor(props){
         super(props);
+        jsonListProducts = {};
         this.state = {
             productId: "",
             ...defaultState
@@ -43,15 +46,52 @@ import {
          );
      }
 
+      //save and get list product in app purscharse
+    async saveListProduct(value) {
+        try {
+          await AsyncStorage.setItem('key_list_product',value);
+        } catch (error) {
+          console.log("Error saving data" + error);
+        }
+      }
+
+    async getListProduct() {
+        try {
+          const value = await AsyncStorage.getItem('key_list_product');
+          console.log('chay den day');
+          if(value != null){
+            console.log('chay den day 1');
+            jsonListProducts = JSON.parse(value);
+            if(jsonListProducts !== null && jsonListProducts[this.state.productId] != null ){
+              if(jsonListProducts[this.state.productId].consumed === false){
+                  this.purchaseProduct();
+              }else{
+                 //da mua xong nhung chua consumed
+                 this.consumePurchase();
+              }
+            }
+          }
+          return value;
+        } catch (error) {
+          console.log("Error retrieving data" + error);
+        }
+    }
+
+
       //get item
       getProductDetails = async () => {
         try {
           this.resetState();
           await InAppBilling.open();
           const details = await InAppBilling.getProductDetails(this.state.productId);
-          alert(JSON.stringify(details))
           await InAppBilling.close();
-          this.setState({ productDetails: JSON.stringify(details) });
+          if(details !== null && details.productId !== null && details.productId !== ''){
+            //lay ds sp dang luu trong cake kiem tra xem san pham do nguoi dung da mua chua, neu da mua thi da consume chua
+            this.setState({ 
+              productDetails: JSON.stringify(details) 
+            });
+            this.getListProduct();
+          }
         } catch (err) {
             alert(err)
           this.setState({ error: JSON.stringify(err) });
@@ -65,7 +105,15 @@ import {
           await InAppBilling.open();
           const details = await InAppBilling.purchase(this.state.productId);
           await InAppBilling.close();
+          console.log('DU LIEU TRA VE KHI PURCHASE: ' + JSON.stringify(details));
           this.setState({ transactionDetails: JSON.stringify(details) });
+          if(details !== null && details.purchaseState === 'PurchasedSuccessfully'){
+            console.log('DU LIEU TRA VE KHI PURCHASE TMDK GOI CONSUME');
+            jsonListProducts[this.state.productId].consumed = true;
+            this.saveListProduct(JSON.stringify(jsonListProducts));
+            this.consumePurchase();
+          }
+          console.log('transactionDetails: ' + JSON.stringify(details));
         } catch (err) {
           this.setState({ error: JSON.stringify(err) });
           await InAppBilling.close();
@@ -78,6 +126,12 @@ import {
           await InAppBilling.open();
           const details = await InAppBilling.consumePurchase(this.state.productId);
           await InAppBilling.close();
+          console.log('DU LIEU TRA VE KHI CONSUME: ' + JSON.stringify(details));
+          if(details === true){
+            jsonListProducts[this.state.productId].consumed = false;
+            this.saveListProduct(JSON.stringify(jsonListProducts));
+            alert('CONSUME THANH CONG LUU LAI VAO CAKE');
+          }
           this.setState({ consumed: true });
         } catch (err) {
           this.setState({ error: JSON.stringify(err) });
@@ -95,6 +149,6 @@ import {
         this.setState({
             productId: item.id,
         });
-        this.purchaseProduct();
+        this.getListProduct();
      }
  }

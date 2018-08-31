@@ -24,6 +24,7 @@ import ResultStatistic3 from './screens/ResultStatistic3';
 import ProductsScreen from './screens/ProductsScreen';
 import Splash from './screens/Splash';
 import TestData from './screens/TestData';
+import SoMoScreen from './screens/SoMoScreen';
 
 var widthScreen;
 export const HomeStack = StackNavigator({
@@ -113,6 +114,12 @@ export const HomeStack = StackNavigator({
     },
     ProductsScreen: {
         screen: ProductsScreen,
+        navigationOptions: {
+            header: null
+        }
+    },
+    SoMoScreen: {
+        screen: SoMoScreen,
         navigationOptions: {
             header: null
         }

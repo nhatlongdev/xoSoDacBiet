@@ -533,9 +533,9 @@ export default class HomeScreen extends Component {
                             <Text style= {{color: 'black'}}>Theo ngày</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style = {style.item_option} onPress = {()=>
-                            this.test()
-                        }>
+                        <TouchableOpacity style = {style.item_option} onPress = {()=>{
+                            this.props.navigation.navigate('SoMoScreen')
+                        }}>
                             <View style = {{width: 50, height: 50, borderRadius:  50/2, backgroundColor: 'green',justifyContent: 'center', alignItems: 'center'}}>
                                 <Icon name={'md-compass'} style = {{fontSize: 40, color: 'white'}}/>
                             </View>
@@ -603,17 +603,6 @@ export default class HomeScreen extends Component {
             </View>
 
         );
-    }
-
-    //Ham test
-    test(){
-        let xx = 'bể nuôi cá cảnh';
-        let xxx = 'be nuoi ca canh';
-        if(xx.indexOf('ể') !== -1 || xxx.indexOf('ể') !== -1){
-            alert('CO KHOP')
-        }else{
-            alert('NO KHOP')
-        }
     }
 
     _renderRow = (rowItem, rowId, sectionId) => 

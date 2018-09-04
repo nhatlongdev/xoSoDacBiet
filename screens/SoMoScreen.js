@@ -74,7 +74,15 @@ var dataSearch = [];
                 </TouchableOpacity>
                 </View>
 
+                <View style={{flexDirection:'row',marginHorizontal: 5,
+                    borderBottomWidth: 1, borderBottomColor: 'grey',
+                }}> 
+                    <Text style={{flex:2, fontWeight:'bold', textAlign:'center'}}>Giấc mơ</Text>
+                    <Text style={{flex:1,  textAlign:'center', fontWeight:'bold'}}>Số đề</Text>
+                </View>
+
                 <FlatList
+                    style={{marginHorizontal: 5,marginBottom: 5,}}
                     data={this.state.dataSearch}
                     renderItem = {({item, index})=>{
                         return(

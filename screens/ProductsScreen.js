@@ -32,7 +32,7 @@ import {
 
      render() {
          return (
-             <View style={{flex:1}}>
+             <View style={{flex:1, marginTop: Platform.OS==='ios'?30:0}}>
                 <View style = {styles.header_style}>
                     <Text style = {styles.text_style}>Danh sách gói dịch vụ</Text>
                 </View>

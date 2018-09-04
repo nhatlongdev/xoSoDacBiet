@@ -130,7 +130,7 @@ import {
           if(details === true){
             jsonListProducts[this.state.productId].consumed = false;
             this.saveListProduct(JSON.stringify(jsonListProducts));
-            alert('CONSUME THANH CONG LUU LAI VAO CAKE');
+            // alert('CONSUME THANH CONG LUU LAI VAO CAKE');
           }
           this.setState({ consumed: true });
         } catch (err) {

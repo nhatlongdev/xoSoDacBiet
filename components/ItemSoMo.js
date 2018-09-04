@@ -10,8 +10,8 @@ import {
      render() {
          return (
              <View style={styles.container}>
-                 <Text style={{flex:2}}>{this.props.item.title}</Text>
-                 <Text style={{flex:1, borderLeftWidth:1, borderLeftColor:'grey'}}>{this.props.item.value}</Text>
+                <Text style={{flex:2, alignSelf:'stretch', borderRightWidth:1, borderRightColor:'grey', padding:5, textAlign: 'justify'}}>{this.props.item.title}</Text>
+                <Text style={{flex:1, alignSelf:'stretch', padding:5}}>{this.props.item.value}</Text>
              </View>
          );
      }
@@ -25,20 +25,17 @@ import {
          borderRightColor: 'grey',
          borderBottomWidth: 1,
          borderBottomColor: 'grey',
-         flex:1, 
          flexDirection: 'row',
+         alignItems: 'center',
          justifyContent: 'center',
-         padding:5,
-         alignSelf: 'stretch',
      },
      text_mo:{
         flex:2,
-        alignSelf: 'stretch',
-        padding: 5,
+        alignSelf:'stretch',
+        
      },
      text_so:{
          flex:1,
-         alignSelf: 'stretch',
-         padding: 2,
+         alignSelf:'stretch'
      }
  })

@@ -19,12 +19,13 @@ import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';
 import ItemSoMo from '../components/ItemSoMo';
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
-var dataSearch = [];
+var dataSearch;
 
  export default class SoMoScreen extends Component {
 
     constructor(props){
         super(props);
+        dataSearch = JSON.parse(JSON.stringify(data));
         this.state={
             content_search:'',
             dataSearch: dataSearch,
@@ -51,7 +52,7 @@ var dataSearch = [];
             <View style = {style.header_style}>
                 <Text style = {style.text_style}>Xổ số đặc biệt - Sổ mơ</Text>
             </View>
-            <ScrollView style={{flex:1}}>
+            
                 <View style = {{padding: 10, marginBottom: 5}}>
                 <Text style={{fontSize: 15, fontWeight: 'bold', color: 'black'}}>Nhập gợi ý tìm kiếm:</Text>
                 <TextInput
@@ -63,24 +64,27 @@ var dataSearch = [];
                 />
         
                 <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center',borderRadius: 2, backgroundColor: '#CCCCCC', height: 50,padding: 5}}
-                                onPress = {()=>this.checkStringInputLegal(this.state.content_search) === 'ok'? 
+                                onPress = {()=>this.state.content_search.length !== 0? 
                                 this.searchData(this.state.content_search):
-                                alert('Bạn chưa nhập nội dung giấc mơ')}
+                                this.refreshAllData()}
                 >
                     <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>TÌM KIẾM</Text>   
                     <Image
-                    source={require('../images/right_arrow31.png')}
+                        source={require('../images/right_arrow31.png')}
                     />
                 </TouchableOpacity>
                 </View>
-
-                <View style={{flexDirection:'row',marginHorizontal: 5,
-                    borderBottomWidth: 1, borderBottomColor: 'grey',
-                }}> 
-                    <Text style={{flex:2, fontWeight:'bold', textAlign:'center'}}>Giấc mơ</Text>
-                    <Text style={{flex:1,  textAlign:'center', fontWeight:'bold'}}>Số đề</Text>
-                </View>
-
+                {
+                    this.state.dataSearch.length >0?
+                    <View style={{flexDirection:'row',marginHorizontal: 5,
+                         borderBottomWidth: 1, borderBottomColor: 'grey',
+                    }}> 
+                        <Text style={{flex:2, fontWeight:'bold', textAlign:'center'}}>Giấc mơ</Text>
+                        <Text style={{flex:1,  textAlign:'center', fontWeight:'bold'}}>Số đề</Text>
+                    </View>:null
+                }
+                
+                <ScrollView style={{flex:1}}>   
                 <FlatList
                     style={{marginHorizontal: 5,marginBottom: 5,}}
                     data={this.state.dataSearch}
@@ -112,18 +116,110 @@ var dataSearch = [];
         }
         return str;
     }
+
+    //set data full khi nguoi dung ko nhap gi ma nhan tim kiem
+    refreshAllData(){
+        this.setState({
+            dataSearch:data,
+        })
+    }
    
     //Hàm tìm kiếm dữ liệu
     searchData(str){
+        var arr_str = str.split(' ');
         dataSearch = [];
-        for(let i = 0; i< data.length; i++){
-            if(data[i].title.toLowerCase().indexOf(str.toLowerCase()) !== -1 || data[i].khongDau.toLowerCase().indexOf(str.toLowerCase()) !== -1){
-                dataSearch.push(data[i]);
-            }
+        var dataTam = [];
+        if(arr_str.length >0){
+            for(let i = 0; i< data.length; i++){
+                var sum = 0;
+                var arr_title = data[i].title.split(' ');
+                var arr_khong_dau = data[i].khongDau.split(' ');
+                for(let j=0; j<arr_title.length; j++){
+                    for(let a =0; a<arr_str.length; a++){
+                        if(arr_title[j].toLowerCase()=== arr_str[a].toLowerCase()){
+                            console.log('VAO DK TITLE 1: ')
+                            sum = sum + 1;
+                        }else if(arr_title[j].toLowerCase().indexOf(arr_str[a].toLowerCase()) !== -1){
+                            console.log('VAO DK TITLE 2: ')
+                            sum = sum + 0.1;
+                        }
+                    }    
+                }
+
+                for(let j=0; j<arr_khong_dau.length; j++){
+                    for(let a =0; a<arr_str.length; a++){
+                        if(arr_khong_dau[j].toLowerCase()=== arr_str[a].toLowerCase()){
+                            console.log('VAO DK TITLE 1: ')
+                            sum = sum + 1;
+                        }else if(arr_khong_dau[j].toLowerCase().indexOf(arr_str[a].toLowerCase()) !== -1){
+                            console.log('VAO DK TITLE 2: ')
+                            sum = sum + 0.1;
+                        }
+                    }    
+                }
+                if(sum >0){
+                    data[i].priority = sum;
+                    dataTam.push(data[i]);
+                }  
+            }    
+            // for(let a =0; a<arr_str.length; a++){
+            //     console.log('arr_str thu a: ' + arr_str[a])
+            //     for(let i = 0; i< data.length; i++){
+            //         if(data[i].title === 'Rắn hai đầu'){
+            //             var sum = 0;
+            //             var arr_title = data[i].title.split(' ');
+            //             var arr_khong_dau = data[i].khongDau.split(' ');
+            //             console.log('arr_title: ' + arr_title.toString())
+            //             console.log('arr_khong_dau: ' + arr_khong_dau.toString())
+            //             for(let j=0; j<arr_title.length; j++){
+            //                 console.log('TITLE: ')
+            //                 if(arr_title[j].toLowerCase()=== arr_str[a].toLowerCase()){
+            //                     console.log('VAO DK TITLE 1: ')
+            //                     sum = sum + 2;
+            //                 }else if(arr_title[j].toLowerCase().indexOf(arr_str[a].toLowerCase()) !== -1){
+            //                     console.log('VAO DK TITLE 2: ')
+            //                     sum = sum + 0.1;
+            //                 }
+            //             }
+
+            //             for(let k=0; k<arr_khong_dau.length; k++){
+            //                 console.log('KHONG DAU: ')
+            //                 if(arr_khong_dau[k].toLowerCase()=== arr_str[a].toLowerCase()){
+            //                     console.log('VAO DK KONG DAU 1: ')
+            //                     sum = sum + 2;
+            //                 }else if(arr_khong_dau[k].toLowerCase().indexOf(arr_str[a].toLowerCase()) !== -1){
+            //                     console.log('VAO DK KONG DAU 1: ')
+            //                     sum = sum + 0.1;
+            //                 }
+            //             }  
+
+            //             if(sum >0){
+
+            //                 data[i].priority = sum;
+            //                 dataTam.push(data[i]);
+            //             }  
+            //         }
+            //     }
+            // }
+        }
+
+        //Loại bỏ các phần tử trùng nhau
+        if(dataTam.length>0){
+            //sắp xếp theo thư tự sum giảm dần
+            var s = require('underscore');
+            var dataTam_ = s.sortBy(dataTam,'priority');
+            var dataTam__ = dataTam_.reverse();
+
+            var _ = require('underscore');	
+            dataSearch = _.uniq(dataTam__);
         }
         this.setState({
             dataSearch: dataSearch,
         })
+        console.log('SEARCH: ' + JSON.stringify(dataSearch))
+        if(dataSearch.length === 0){
+            alert('Không tìm thấy dữ liệu trùng với giấc mơ của bạn, vui lòng nhập nội dung khác')
+        }
     }
 
     clickExit(){

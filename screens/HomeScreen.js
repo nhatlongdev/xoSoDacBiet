@@ -536,9 +536,10 @@ export default class HomeScreen extends Component {
                         <TouchableOpacity style = {style.item_option} onPress = {()=>{
                             this.props.navigation.navigate('SoMoScreen')
                         }}>
-                            <View style = {{width: 50, height: 50, borderRadius:  50/2, backgroundColor: 'green',justifyContent: 'center', alignItems: 'center'}}>
-                                <Icon name={'md-compass'} style = {{fontSize: 40, color: 'white'}}/>
-                            </View>
+                            <Image
+                                    style = {{height: 50, width: 50}}
+                                    source = {require('../images/somo.png')}
+                                />
                             <Text style= {{color: 'black'}}>Sổ mơ</Text>
                         </TouchableOpacity>
 

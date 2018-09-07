@@ -5,6 +5,7 @@ import {
     TouchableOpacity,
     FlatList,
     StyleSheet,
+    Platform,
     BackHandler
  } from 'react-native';
  import ItemProduct from '../components/ItemProduct';

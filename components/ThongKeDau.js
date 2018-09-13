@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import moment from 'moment';
 
-function thongKeDau_(data,item, soLanQuay){
+function thongKeDau_(data, soLanQuay){
     var tongGiai = 0;
     var tongLanQuay = 0;
     var mangData = [], mangCountDbTheoDau = [], mangCountLoToTheoDau =[];

@@ -248,7 +248,8 @@ export default class HomeScreen extends Component {
     //ham gui token to serser
     sendTokenToServer(params){
         pushTokenToServer(params).then((data_)=>{
-            console.log("KET QUA PUSH TOKEN" + JSON.stringify(data_));
+          pushTokenToServer  
+          console.log("KET QUA PUSH TOKEN" + JSON.stringify(data_));
             this.saveObjParams(JSON.stringify(params))
         }).catch((error) =>{
             console.log("ERROR KET QUA PUSH TOKEN" + JSON.stringify(error));

@@ -5,7 +5,7 @@ import {
     TouchableOpacity,
     AsyncStorage
  } from 'react-native';
-
+ import {updatePurcharse} from '../networking/Server';
  import InAppBilling from "react-native-billing";
  const defaultState = {
      productDetails: null,
@@ -111,7 +111,9 @@ import {
             console.log('DU LIEU TRA VE KHI PURCHASE TMDK GOI CONSUME');
             jsonListProducts[this.state.productId].consumed = true;
             this.saveListProduct(JSON.stringify(jsonListProducts));
-            this.consumePurchase();
+            //thong bao toi server mua thanh cong sp
+            console.log('CO CHAY TOI UPDATE')
+            this.updatePurcharse(this.state.productId);
           }
           console.log('transactionDetails: ' + JSON.stringify(details));
         } catch (err) {
@@ -151,4 +153,17 @@ import {
         });
         this.getListProduct();
      }
+
+     //ham cap nhat toi server khi mua thanh cong sp
+     updatePurcharse(package_id){
+      console.log('CHAY HAM UPDATE: ')
+      updatePurcharse(package_id).then((data_)=>{
+        console.log('UPDATE THAH CONG: ' + JSON.stringify(data_))
+          //thuc hien consume
+          this.consumePurchase();
+      }).catch((error) =>{
+          console.log("ERROR KET QUA PUSH TOKEN" + JSON.stringify(error));
+      });
+  }
+
  }

@@ -7,6 +7,9 @@ var GloblaValue = {
     isLogin:false,
     isRefresh:false,
     clickToByDayByHome:true,
+    remainDay:0,
+    dataProduct:[],
+    dataProductSave:{},
 };
 
 export default GloblaValue;

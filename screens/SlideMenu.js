@@ -78,8 +78,16 @@ export default class SlideMenu extends Component {
                         this.props.navigation.navigate('ProductsScreen')
                     }>
                         <Icon name = {'logo-googleplus'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
+                        <Text style={{marginRight:5, flex:1}}>{'Số ngày nhận thông báo kết quả trực tiếp: ' + GloblaValue.remainDay}</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style = {style.item_option} onPress = {()=>
+                        this.props.navigation.navigate('ProductsScreen')
+                    }>
+                        <Icon name = {'logo-googleplus'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
                         <Text>Pay</Text>
                     </TouchableOpacity>
+
                 </ScrollView>
                 
             </View>
@@ -118,6 +126,7 @@ var style = ({
         justifyContent: 'center',
     },
     item_option: {
+        flex:1,
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 20,

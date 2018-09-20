@@ -4,15 +4,16 @@ import {
     Text,
     Image,
     AsyncStorage,
-    NetInfo
+    NetInfo,
+    Platform
 } from 'react-native';
 import { getDataFromServer } from '../networking/Server';
 import dataLottery_detector_statistic from '../components/DataLottery';
 import {createArrPushInItem} from '../components/CreateArrPushInItem';
 import GloblaValue from '../components/GlobalValue'
 import data from '../components/ListProductsSave';
-var dataLotteProvinces;
-
+import {getRemainDay, apiGetListProducts} from '../networking/Server';
+var DeviceInfo = require('react-native-device-info');
 export default class Splash extends Component {
 
     constructor(props){
@@ -36,8 +37,43 @@ export default class Splash extends Component {
         try {
           const value = await AsyncStorage.getItem('key_list_product');
             if(value === null){
-                this.saveListProduct(JSON.stringify(data))
+                this.getListProductServer();
+            }else{
+                console.log("ARR TO====>>>>" + JSON.stringify(value));
             }
+            this.remainDay(isConnected);
+          return value;
+        } catch (error) {
+          console.log("Error retrieving data" + error);
+        }
+    }
+
+    //ham lay ds cac goi dich vu
+    getListProductServer(){
+        apiGetListProducts().then((data_)=>{
+                GloblaValue.dataProduct = data_;
+                
+                var arr = JSON.parse(data_);
+                for(let i=0; i<arr.le)
+                for(var x in data_){
+                    data_[x].isBuy=false,
+                    data_[x].consumed= false,
+                    data_[x].error= null
+                    let key = data_[x].id;
+                    arr[key] = data_[x];
+                }
+               alert("ARR TO====>>>>" + JSON.stringify(arr));
+                this.saveListProduct(JSON.stringify(arr));
+            }).catch((error) =>{
+                console.log("ERROR KET QUA PUSH TOKEN" + JSON.stringify(error));
+            });
+    }
+
+     //ham chek so ngay con lai
+     remainDay(isConnected){
+        getRemainDay().then((data_)=>{
+        //    alert("KET QUA REMAIN DAY: " + JSON.stringify(data_));
+           GloblaValue.remainDay = data_.num_day;
             if(isConnected.type === 'wifi' || isConnected.type === 'WIFI'){
                 console.log('CO WIFI')
                 //lay du lieu tu server
@@ -48,10 +84,9 @@ export default class Splash extends Component {
                 this.getKey(false); 
                 GloblaValue.status_net = false;
             }
-          return value;
-        } catch (error) {
-          console.log("Error retrieving data" + error);
-        }
+        }).catch((error) =>{
+            console.log("ERROR KET QUA PUSH TOKEN" + JSON.stringify(error));
+        });
     }
 
 

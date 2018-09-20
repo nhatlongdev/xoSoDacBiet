@@ -149,6 +149,7 @@ dependencies {
     compile project(':react-native-exit-app')
     compile project(':react-native-google-analytics-bridge')
     compile project(':react-native-billing')
+    compile project(':react-native-device-info')
 }
 
 // Run this once to be able to run the application with BUCK

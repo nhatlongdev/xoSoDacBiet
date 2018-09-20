@@ -14,6 +14,7 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 // Step 1; import package:
 import com.idehub.GoogleAnalyticsBridge.GoogleAnalyticsBridgePackage;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;  // <--- import
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+          new RNDeviceInfo(), // <---- add here
             new FIRMessagingPackage(),
             new RNExitAppPackage(),
             new BackgroundJobPackage(),

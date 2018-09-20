@@ -159,7 +159,7 @@ export default class ResultLotteryByDay extends Component {
     checkObjData(rowItem, dataLottery){
         var date_quay = moment(rowItem.rd).format('YYYYMMDD');
         var keyItem = rowItem.code + '_'+date_quay;
-        if(dataLottery[keyItem] != null){
+        if(dataLottery[keyItem] !== null){
             return true;
         }else {
             return false;
@@ -170,7 +170,7 @@ export default class ResultLotteryByDay extends Component {
     checkObjDataComplete(rowItem, dataLottery){
         var date_quay = moment(rowItem.rd).format('YYYYMMDD');
         var keyItem = rowItem.code + '_'+ date_quay;
-        if(dataLottery[keyItem] != null && dataLottery[keyItem].s !== '0'){
+        if(dataLottery[keyItem] !== null && dataLottery[keyItem].s !== '0'){
             return true;
         }
         return false;
@@ -219,7 +219,7 @@ export default class ResultLotteryByDay extends Component {
             if(isRefresh != GloblaValue.isRefresh){
                 isRefresh = GloblaValue.isRefresh;
                 //nếu kq ngày hiện tại đã có (trực tiếp)
-                if(this.checkObjData(rowItem, dataLottery) === true && this.checkObjDataComplete(rowItem, dataLottery) === true){
+                if(this.checkObjData(rowItem, dataLottery) === true){
                     this.formatLottery(rowItem, dataLottery);
                     this.setState({
                         drag_left: !this.state.drag_left,
@@ -569,7 +569,13 @@ export default class ResultLotteryByDay extends Component {
     }
 
     clickRefresh(){
-        alert('doing....')
+        //nếu kq ngày hiện tại đã có (trực tiếp)
+        if(this.checkObjData(rowItem, dataLottery) === true){
+            this.formatLottery(rowItem, dataLottery);
+            this.setState({
+                drag_left: !this.state.drag_left,
+            })
+        }
     }
 
 

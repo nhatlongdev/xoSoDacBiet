@@ -190,6 +190,9 @@ export default class StatisticalScreen extends Component {
             if(pattern_1.test(soLanQuay) === false){
                 alert('Số lần quay không đúng định dạng, vui lòng nhập lại');
                 str = '';
+            }else if(soLanQuay === '0' || soLanQuay === '00'){
+                alert('Số lần quay phải lớn hơn 0, vui lòng nhập lại');
+                str = '';
             }
         }
         return str;
@@ -202,7 +205,7 @@ export default class StatisticalScreen extends Component {
     thongKeDauDuoi(_item, soLanQuay){
         var arrLotteryOfProvinces = arrLotteryOfProvinces = dataResultLottery[_item.code];
         console.log('MANG TRUOC KHI GUIhhhhhh: ' + JSON.stringify(arrLotteryOfProvinces))
-        var arrTKDau = thongKeDau_(arrLotteryOfProvinces,_item, soLanQuay);
+        var arrTKDau = thongKeDau_(arrLotteryOfProvinces, soLanQuay);
         var arrTKDuoi = thongKeDuoi_(arrLotteryOfProvinces,_item, soLanQuay);
         this.props.navigation.navigate('ResultStatistic', {arrDau: arrTKDau, arrDuoi: arrTKDuoi, nameTinh:_item.name, soLanQuay:this.state.textSoLanQuay});
     }

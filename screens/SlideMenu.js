@@ -74,24 +74,36 @@ export default class SlideMenu extends Component {
                         <Text>Share</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style = {style.item_option} onPress = {()=>
-                        this.props.navigation.navigate('ProductsScreen')
-                    }>
-                        <Icon name = {'logo-googleplus'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
-                        <Text style={{marginRight:5, flex:1}}>{'Số ngày nhận thông báo kết quả trực tiếp: ' + GloblaValue.remainDay}</Text>
+                    <TouchableOpacity style = {style.item_option} 
+                    >
+                        <Icon name = {'ios-chatboxes'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
+                        <Text style={{marginRight:5, flex:1}}>{this.setTitleDuration(GloblaValue.remainDay)}</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style = {style.item_option} onPress = {()=>
                         this.props.navigation.navigate('ProductsScreen')
                     }>
                         <Icon name = {'logo-googleplus'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
-                        <Text>Pay</Text>
+                        <Text>Dịch vụ - tiện ích</Text>
                     </TouchableOpacity>
 
                 </ScrollView>
                 
             </View>
         );
+    }
+
+    //hàm set title cho mục số ngày nhận thông báo
+    setTitleDuration(duration){
+        var str='';
+        if(duration === -1){
+            str='Truy cập dịch vụ để đăng ký nhận thông báo kết quả trực tiếp';
+        }else if(duration === 0){
+            str='Gói đăng ký nhận thông báo kết quả trực tiếp của bạn đã hết hạn';
+        }else {
+            str= 'Số ngày nhận thông báo kết quả trực tiếp: ' + duration;
+        }
+        return str;
     }
 
     //click to region

@@ -35,11 +35,7 @@ export default class Splash extends Component {
     async getListProduct(isConnected) {
         try {
           const value = await AsyncStorage.getItem('key_list_product');
-            if(value === null){
-                this.getListProductServer(isConnected);
-            }else{
-                this.remainDay(isConnected);
-            }   
+          this.getListProductServer(isConnected);
           return value;
         } catch (error) {
           console.log("Error retrieving data" + error);
@@ -52,10 +48,11 @@ export default class Splash extends Component {
                 GloblaValue.dataProduct = data_;
                 var arr = GloblaValue.dataProduct;
                 var arrJson = {};
+                var numeral = require('numeral');
                 for(let i=0; i<arr.length; i++){
-                    arr[i].isBuy=false,
-                    arr[i].consumed= false,
-                    arr[i].error= null
+                    arr[i].isBuy=false;
+                    arr[i].consumed= false;
+                    arr[i].error= null;
                     arrJson[arr[i].id] = arr[i];
                 }
                 GloblaValue.dataProductSave = arrJson;

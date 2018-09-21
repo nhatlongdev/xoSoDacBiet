@@ -127,19 +127,22 @@ var dataSearch;
     //Hàm tìm kiếm dữ liệu
     searchData(str){
         var arr_str = str.split(' ');
+        var arr_str_new = arr_str.filter((e) => {
+            return e !== '';
+        })
         dataSearch = [];
         var dataTam = [];
-        if(arr_str.length >0){
+        if(arr_str_new.length >0){
             for(let i = 0; i< data.length; i++){
                 var sum = 0;
                 var arr_title = data[i].title.split(' ');
                 var arr_khong_dau = data[i].khongDau.split(' ');
                 for(let j=0; j<arr_title.length; j++){
-                    for(let a =0; a<arr_str.length; a++){
-                        if(arr_title[j].toLowerCase()=== arr_str[a].toLowerCase()){
+                    for(let a =0; a<arr_str_new.length; a++){
+                        if(arr_title[j].toLowerCase()=== arr_str_new[a].toLowerCase()){
                             console.log('VAO DK TITLE 1: ')
                             sum = sum + 1;
-                        }else if(arr_title[j].toLowerCase().indexOf(arr_str[a].toLowerCase()) !== -1){
+                        }else if(arr_title[j].toLowerCase().indexOf(arr_str_new[a].toLowerCase()) !== -1){
                             console.log('VAO DK TITLE 2: ')
                             sum = sum + 0.1;
                         }
@@ -147,11 +150,11 @@ var dataSearch;
                 }
 
                 for(let j=0; j<arr_khong_dau.length; j++){
-                    for(let a =0; a<arr_str.length; a++){
-                        if(arr_khong_dau[j].toLowerCase()=== arr_str[a].toLowerCase()){
+                    for(let a =0; a<arr_str_new.length; a++){
+                        if(arr_khong_dau[j].toLowerCase()=== arr_str_new[a].toLowerCase()){
                             console.log('VAO DK TITLE 1: ')
                             sum = sum + 1;
-                        }else if(arr_khong_dau[j].toLowerCase().indexOf(arr_str[a].toLowerCase()) !== -1){
+                        }else if(arr_khong_dau[j].toLowerCase().indexOf(arr_str_new[a].toLowerCase()) !== -1){
                             console.log('VAO DK TITLE 2: ')
                             sum = sum + 0.1;
                         }
@@ -162,45 +165,6 @@ var dataSearch;
                     dataTam.push(data[i]);
                 }  
             }    
-            // for(let a =0; a<arr_str.length; a++){
-            //     console.log('arr_str thu a: ' + arr_str[a])
-            //     for(let i = 0; i< data.length; i++){
-            //         if(data[i].title === 'Rắn hai đầu'){
-            //             var sum = 0;
-            //             var arr_title = data[i].title.split(' ');
-            //             var arr_khong_dau = data[i].khongDau.split(' ');
-            //             console.log('arr_title: ' + arr_title.toString())
-            //             console.log('arr_khong_dau: ' + arr_khong_dau.toString())
-            //             for(let j=0; j<arr_title.length; j++){
-            //                 console.log('TITLE: ')
-            //                 if(arr_title[j].toLowerCase()=== arr_str[a].toLowerCase()){
-            //                     console.log('VAO DK TITLE 1: ')
-            //                     sum = sum + 2;
-            //                 }else if(arr_title[j].toLowerCase().indexOf(arr_str[a].toLowerCase()) !== -1){
-            //                     console.log('VAO DK TITLE 2: ')
-            //                     sum = sum + 0.1;
-            //                 }
-            //             }
-
-            //             for(let k=0; k<arr_khong_dau.length; k++){
-            //                 console.log('KHONG DAU: ')
-            //                 if(arr_khong_dau[k].toLowerCase()=== arr_str[a].toLowerCase()){
-            //                     console.log('VAO DK KONG DAU 1: ')
-            //                     sum = sum + 2;
-            //                 }else if(arr_khong_dau[k].toLowerCase().indexOf(arr_str[a].toLowerCase()) !== -1){
-            //                     console.log('VAO DK KONG DAU 1: ')
-            //                     sum = sum + 0.1;
-            //                 }
-            //             }  
-
-            //             if(sum >0){
-
-            //                 data[i].priority = sum;
-            //                 dataTam.push(data[i]);
-            //             }  
-            //         }
-            //     }
-            // }
         }
 
         //Loại bỏ các phần tử trùng nhau

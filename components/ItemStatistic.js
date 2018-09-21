@@ -38,7 +38,7 @@ export default class ItemStatistic extends Component{
                          <View style={{flex:parseFloat(this.props.item.lengthDB), height: 20, backgroundColor: this.setBackgroundForChart(this.props.item,'DB'), marginRight: 5}}></View>   
                          <View style={{flex:1 - parseFloat(this.props.item.lengthDB)}}></View>
                     </View>
-                    <Text style={{flex:1}}>{this.props.item.phanTramDB}% ({this.props.item.countDB})</Text>
+                    <Text style={{flex:1}}>{this.props.item.phanTramDB!=='NaN'?this.props.item.phanTramDB:'0.00'}% ({this.props.item.countDB!=='NaN'?this.props.item.countDB:'0.00'})</Text>
                 </View>
                 <View style = {{flex: 3, flexDirection: 'row', borderLeftColor: 'grey', borderLeftWidth: 1, 
                         borderRightColor: 'grey', borderRightWidth: 1,paddingHorizontal: 2, paddingVertical: 2,alignSelf:'stretch', alignItems:'center'}}>
@@ -46,7 +46,7 @@ export default class ItemStatistic extends Component{
                         <View style={{flex:parseFloat(this.props.item.lengthLoTo), height: 20, backgroundColor: this.setBackgroundForChart(this.props.item,'LoTo'), marginRight: 5}}></View>   
                         <View style={{flex:1 - parseFloat(this.props.item.lengthLoTo)}}></View>
                     </View>    
-                    <Text style={{flex:1}}>{this.props.item.phanTramLoTo}% ({this.props.item.countLoTo})</Text>
+                    <Text style={{flex:1}}>{this.props.item.phanTramLoTo!=='NaN'?this.props.item.phanTramLoTo:'0.00'}% ({this.props.item.countLoTo!=='NaN'?this.props.item.countLoTo:'0.00'})</Text>
                 </View>
             </View>
         );

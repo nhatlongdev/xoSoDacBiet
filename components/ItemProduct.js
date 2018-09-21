@@ -93,7 +93,6 @@ import {
             this.getListProduct();
           }
         } catch (err) {
-            alert(err)
           this.setState({ error: JSON.stringify(err) });
           await InAppBilling.close();
         }

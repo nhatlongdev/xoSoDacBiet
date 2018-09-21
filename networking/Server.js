@@ -90,7 +90,7 @@ async function apiGetListProducts() {
     try {
         let response = await fetch(apiGetListProducts_);
         let responseJson = await response.json();
-        return responseJson.bodyitems;
+        return responseJson;
     } catch (error) {
         console.log(error);
     }

@@ -9,7 +9,7 @@ import {
     BackHandler
  } from 'react-native';
  import ItemProduct from '../components/ItemProduct';
- import data from '../components/ListProduct';
+ import GlobalValue from '../components/GlobalValue';
 
  export default class ProductsScreen extends Component {
 
@@ -38,7 +38,7 @@ import {
                     <Text style = {styles.text_style}>Danh sách gói dịch vụ</Text>
                 </View>
                 <FlatList
-                    data={data}
+                    data={GlobalValue.dataProduct}
                     renderItem={({item, index})=>{
                         return(
                             <ItemProduct item={item}

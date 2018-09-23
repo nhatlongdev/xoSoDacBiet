@@ -10,6 +10,8 @@ var GloblaValue = {
     remainDay:0,
     dataProduct:[],
     dataProductSave:{},
+    arrSoDo: [],
+    objResultDoSo: {},
 };
 
 export default GloblaValue;

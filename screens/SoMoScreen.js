@@ -17,6 +17,7 @@ import {
 var data = require('../assets/somo.json');
 import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';
 import ItemSoMo from '../components/ItemSoMo';
+import FlatListSoMoComponent from './FlatListSoMoComponent';
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
 var dataSearch;
@@ -84,20 +85,8 @@ var dataSearch;
                     </View>:null
                 }
                 
-                <ScrollView style={{flex:1}}>   
-                <FlatList
-                    style={{marginHorizontal: 5,marginBottom: 5,}}
-                    data={this.state.dataSearch}
-                    renderItem = {({item, index})=>{
-                        return(
-                           <ItemSoMo
-                                item={item} index={index}
-                           />         
-                        );
-                    }}
-                    keyExtractor={(item, index)=> item.toString()}
-                >
-                </FlatList>
+                <ScrollView style={{flex:1}}> 
+                <FlatListSoMoComponent data={this.state.dataSearch}/>
                   
             </ScrollView>
             <FloatButtonCompomentExit

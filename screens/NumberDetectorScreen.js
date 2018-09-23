@@ -5,11 +5,9 @@ import {
     Dimensions,
     StyleSheet,
     Picker,
-    Item,
     TextInput,
     Image,
     TouchableOpacity,
-    FlatList,
     ScrollView,
     BackHandler,
     Platform
@@ -22,6 +20,8 @@ import Color from '../src/color';
 import dataLottery_detector_statistic from '../components/DataLottery';
 import ItemFlatListDoSo from '../components/ItemFLatListDoSo';
 import dataBong from '../components/BongDoSo';
+import ResultDoSoComponent from './ResultDoSoComponent';
+import GlobalValue from '../components/GlobalValue';
 
 import {
     GoogleAnalyticsTracker,
@@ -146,7 +146,8 @@ export default class NumberDetectorScreen extends Component {
                         value = {this.state.textSoDo}
                     />
                     <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center',borderRadius: 2, backgroundColor: '#CCCCCC', height: 50,padding: 5}}
-                                    onPress = {()=>this.checkStringInputLegal(this.state.textSoLanQuay, this.state.textSoDo) === 'ok'? this.numberDetector(item_, this.state.textSoDo, this.state.textSoLanQuay):
+                                    onPress = {()=>this.checkStringInputLegal(this.state.textSoLanQuay, this.state.textSoDo) === 'ok'? 
+                                    this.numberDetector(item_, this.state.textSoDo, this.state.textSoLanQuay):
                                     null}
                     >
                         <Text style={{flex: 1, textAlign: 'center', color: 'black', fontWeight: 'bold'}}>TRA CỨU LÔ TÔ, DÒ SỐ</Text>   
@@ -156,100 +157,7 @@ export default class NumberDetectorScreen extends Component {
                     </TouchableOpacity>
                     </View>
 
-                    {/* <FlatList   
-                            data = {objResultDoSo}
-                            renderItem = {({item, index})=>{
-                                return(
-                                    <ItemFlatListDoSo
-                                        item = {item} index = {index}
-                                    />
-                                );
-                            }}
-                            keyExtractor={ (item, index) => index.toString() }> 
-                    </FlatList> */}
-
-                    {
-                        arrSoDo.length>0?
-                        <ItemFlatListDoSo soTraCuu={arrSoDo[0]} data={objResultDoSo[arrSoDo[0]]}/>:null
-                    } 
-
-                    {
-                        arrSoDo.length>1?
-                        <ItemFlatListDoSo soTraCuu={arrSoDo[1]} data={objResultDoSo[arrSoDo[1]]}/>:null
-                    }                         
-                   
-                    {
-                        arrSoDo.length>2?
-                        <ItemFlatListDoSo soTraCuu={arrSoDo[2]} data={objResultDoSo[arrSoDo[2]]}/>:null
-                    }  
-
-                    {
-                        arrSoDo.length>3?
-                        <ItemFlatListDoSo soTraCuu={arrSoDo[3]} data={objResultDoSo[arrSoDo[3]]}/>:null
-                    }  
-
-                    {
-                        arrSoDo.length>4?
-                        <ItemFlatListDoSo soTraCuu={arrSoDo[4]} data={objResultDoSo[arrSoDo[4]]}/>:null
-                    }  
-
-                    {
-                        arrSoDo.length>5?
-                        <ItemFlatListDoSo soTraCuu={arrSoDo[5]} data={objResultDoSo[arrSoDo[5]]}/>:null
-                    }  
-
-                    {
-                        arrSoDo.length>6?
-                        <ItemFlatListDoSo soTraCuu={arrSoDo[6]} data={objResultDoSo[arrSoDo[6]]}/>:null
-                    }  
-
-                    {
-                        arrSoDo.length>7?
-                        <ItemFlatListDoSo soTraCuu={arrSoDo[7]} data={objResultDoSo[arrSoDo[7]]}/>:null
-                    } 
-                    {
-                        arrSoDo.length>8?
-                        <ItemFlatListDoSo soTraCuu={arrSoDo[8]} data={objResultDoSo[arrSoDo[8]]}/>:null
-                    } 
-                    {
-                        arrSoDo.length>9?
-                        <ItemFlatListDoSo soTraCuu={arrSoDo[9]} data={objResultDoSo[arrSoDo[9]]}/>:null
-                    } 
-
-                    {
-                        arrSoDo.length>10?
-                        <ItemFlatListDoSo soTraCuu={arrSoDo[10]} data={objResultDoSo[arrSoDo[10]]}/>:null
-                    }                         
-                   
-                    {
-                        arrSoDo.length>11?
-                        <ItemFlatListDoSo soTraCuu={arrSoDo[11]} data={objResultDoSo[arrSoDo[11]]}/>:null
-                    }  
-
-                    {
-                        arrSoDo.length>12?
-                        <ItemFlatListDoSo soTraCuu={arrSoDo[12]} data={objResultDoSo[arrSoDo[12]]}/>:null
-                    }  
-
-                    {
-                        arrSoDo.length>13?
-                        <ItemFlatListDoSo soTraCuu={arrSoDo[13]} data={objResultDoSo[arrSoDo[13]]}/>:null
-                    }  
-
-                    {
-                        arrSoDo.length>14?
-                        <ItemFlatListDoSo soTraCuu={arrSoDo[14]} data={objResultDoSo[arrSoDo[14]]}/>:null
-                    }  
-
-                    {
-                        arrSoDo.length>15?
-                        <ItemFlatListDoSo soTraCuu={arrSoDo[15]} data={objResultDoSo[arrSoDo[15]]}/>:null
-                    }  
-
-                    {
-                        arrSoDo.length===0?
-                        <Text style={{fontSize:16, color:'black', textAlign:'center'}}>{this.state.msg_progress}</Text>:null
-                    }
+                    <ResultDoSoComponent arrSoDo={GlobalValue.arrSoDo} objResultDoSo={GlobalValue.objResultDoSo}/> 
 
                 </ScrollView>
                 <FloatButtonCompomentExit
@@ -335,6 +243,9 @@ export default class NumberDetectorScreen extends Component {
             let arr_kq = filterArrDetector(arrLotteryOfProvinces,arrSoDo[n],soLanQuay);
             objResultDoSo[arrSoDo[n]] = arr_kq;
         }
+
+        GlobalValue.arrSoDo = arrSoDo;
+        GlobalValue.objResultDoSo = objResultDoSo;
 
         console.log('KET QUA: ' + JSON.stringify(objResultDoSo))
 

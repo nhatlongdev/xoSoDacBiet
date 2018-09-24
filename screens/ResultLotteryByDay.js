@@ -215,16 +215,15 @@ export default class ResultLotteryByDay extends Component {
     
       componentWillMount(){
         setInterval(()=>{
-            console.log("INTEVAL BEN RESUL CHAY");
-            if(isRefresh != GloblaValue.isRefresh){
-                isRefresh = GloblaValue.isRefresh;
-                //nếu kq ngày hiện tại đã có (trực tiếp)
-                if(this.checkObjData(rowItem, dataLottery) === true){
-                    this.formatLottery(rowItem, dataLottery);
-                    this.setState({
-                        drag_left: !this.state.drag_left,
-                    })
-                }
+            console.log("INTEVAL BEN RESUL CHAY yyyyy");
+            console.log("GIA TRI CHECKL " + isRefresh + '---' + GloblaValue.isRefresh);
+            //nếu kq ngày hiện tại đã có (trực tiếp)
+            if(this.checkObjData(rowItem, dataLottery) === true){
+                console.log("INTEVAL BEN RESUL CHAY yyyyyuuu");
+                this.formatLottery(rowItem, dataLottery);
+                this.setState({
+                    drag_left: !this.state.drag_left,
+                })
             }
         },10000)
       }
@@ -271,7 +270,7 @@ export default class ResultLotteryByDay extends Component {
             velocityThreshold: 0.3,
             directionalOffsetThreshold: 80
           };
- 
+          console.log("REFRESH");  
         var objResult = mang_kq_tong[rowItem.code];  
 
         // Recommend you set this much higher in real app! 30 seconds+

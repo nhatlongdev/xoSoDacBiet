@@ -175,10 +175,8 @@ export default class NumberDetectorScreen extends Component {
             str = 'Bạn chưa nhập số lần quay';
         }else if(chuoiDo.length === 0){
             str = 'Bạn chưa nhập số cần dò';
-        }else if(chuoiDo.length === 1){
-            str = 'Số dò nhập không đúng định dạng, vui lòng kiểm tra lại';
         }else{
-            var pattern_1 = /^[0-9]{1,2}$/;
+            var pattern_1 = /^[0-9]{2}$/;
             var pattern_2 = /^[0-9]{2},[0-9]{2}$/;
             if(pattern_1.test(soLanQuay) === false){
                 str = 'Số lần quay không đúng định dạng, vui lòng nhập lại';

@@ -5,7 +5,8 @@ import {
     Dimensions,
     StyleSheet,
     ScrollView,
-    BackHandler
+    BackHandler,
+    ToastAndroid
 } from 'react-native';
 import FloatButtonCompomentScreenResult from '../components/FloatButtonCompomentScreenResult';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
@@ -246,6 +247,7 @@ export default class ResultLottery2 extends Component {
             dateTimeBatDauQuay = moment(moment().format('YYYY-MM-DD') + ' 16:15'); //.format('YYYY/MM/DD HH:mm:ss')
             dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
             this.handleBackButtonClick = this.handleBackButtonClick.bind(this); 
+            ToastAndroid.show('Vuốt màn hình để xem kết quả ngày khác',3000);
       }
 
     componentWillUnmount() {

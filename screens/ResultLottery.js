@@ -6,7 +6,9 @@ import {
     StyleSheet,
     ScrollView,
     ActivityIndicator,
-    BackHandler
+    BackHandler,
+    AppState,
+    ToastAndroid
 } from 'react-native';
 import FloatButtonCompomentScreenResult from '../components/FloatButtonCompomentScreenResult';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
@@ -24,7 +26,6 @@ import {
     GoogleAnalyticsSettings,
     GoogleTagManager
   } from "react-native-google-analytics-bridge";
-
 
 var widthScreen = Dimensions.get('window').width;
 var heightScreen = Dimensions.get('window').height;
@@ -222,6 +223,7 @@ export default class ResultLottery extends Component {
         dateTimeDungQuay = moment(moment().format('YYYY-MM-DD' + ' 18:40'));
         this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
         console.log('CONTRUCTOR ' + moment())
+        ToastAndroid.show('Vuốt màn hình để xem kết quả ngày khác',3000);
       }
 
     componentWillUnmount() {

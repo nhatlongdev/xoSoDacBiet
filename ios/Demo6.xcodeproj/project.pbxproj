@@ -80,6 +80,8 @@
 		4FA33E4B66FF477C8B81B006 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8C45D48EF34AEAB35D2C80 /* libsqlite3.0.tbd */; };
 		7D63DE8D679740119DF9D9C7 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B866EA0733F94EFB8C672DEA /* libRNDeviceInfo.a */; };
 		8B1A6B1E96EF4795A25F90C2 /* libRNDeviceInfo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E4BF474E54C435681C9D160 /* libRNDeviceInfo-tvOS.a */; };
+		2ECFB31877094E738E3324E7 /* libRNTrackPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 515C3DF7883B4377B1229066 /* libRNTrackPlayer.a */; };
+		2524600E4FD64223B8347DB6 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C1A43574EBE4DD88096EABF /* libRNSound.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -477,6 +479,10 @@
 		7F31EACA8B0F4B468C2273D0 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; name = "RNDeviceInfo.xcodeproj"; path = "../node_modules/react-native-device-info/ios/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		B866EA0733F94EFB8C672DEA /* libRNDeviceInfo.a */ = {isa = PBXFileReference; name = "libRNDeviceInfo.a"; path = "libRNDeviceInfo.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		3E4BF474E54C435681C9D160 /* libRNDeviceInfo-tvOS.a */ = {isa = PBXFileReference; name = "libRNDeviceInfo-tvOS.a"; path = "libRNDeviceInfo-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		83FC5280DE8C44A4B592A5B7 /* RNTrackPlayer.xcodeproj */ = {isa = PBXFileReference; name = "RNTrackPlayer.xcodeproj"; path = "../node_modules/react-native-track-player/ios/RNTrackPlayer.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		515C3DF7883B4377B1229066 /* libRNTrackPlayer.a */ = {isa = PBXFileReference; name = "libRNTrackPlayer.a"; path = "libRNTrackPlayer.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		56174E7152E340539D5C6297 /* RNSound.xcodeproj */ = {isa = PBXFileReference; name = "RNSound.xcodeproj"; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		0C1A43574EBE4DD88096EABF /* libRNSound.a */ = {isa = PBXFileReference; name = "libRNSound.a"; path = "libRNSound.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -517,6 +523,8 @@
 				907F7899FF57499BBC882484 /* libz.tbd in Frameworks */,
 				4FA33E4B66FF477C8B81B006 /* libsqlite3.0.tbd in Frameworks */,
 				7D63DE8D679740119DF9D9C7 /* libRNDeviceInfo.a in Frameworks */,
+				2ECFB31877094E738E3324E7 /* libRNTrackPlayer.a in Frameworks */,
+				2524600E4FD64223B8347DB6 /* libRNSound.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -753,6 +761,8 @@
 				90D5AA57D9EE436BAB2BC3FA /* RNFIRMessaging.xcodeproj */,
 				E2999CA2125A4CAF9BCEEE83 /* RCTGoogleAnalyticsBridge.xcodeproj */,
 				7F31EACA8B0F4B468C2273D0 /* RNDeviceInfo.xcodeproj */,
+				83FC5280DE8C44A4B592A5B7 /* RNTrackPlayer.xcodeproj */,
+				56174E7152E340539D5C6297 /* RNSound.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1522,12 +1532,16 @@
 					"$(SRCROOT)\..\node_modules\react-native-fcm\ios",
 					"$(SRCROOT)\..\node_modules\react-native-google-analytics-bridge\ios\RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)\..\node_modules\react-native-device-info\ios\RNDeviceInfo",
+					"$(SRCROOT)\..\node_modules\react-native-track-player\ios\RNTrackPlayer/**",
+					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
 				);
 				INFOPLIST_FILE = Demo6Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1559,12 +1573,16 @@
 					"$(SRCROOT)\..\node_modules\react-native-fcm\ios",
 					"$(SRCROOT)\..\node_modules\react-native-google-analytics-bridge\ios\RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)\..\node_modules\react-native-device-info\ios\RNDeviceInfo",
+					"$(SRCROOT)\..\node_modules\react-native-track-player\ios\RNTrackPlayer/**",
+					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
 				);
 				INFOPLIST_FILE = Demo6Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1597,6 +1615,8 @@
 					"$(SRCROOT)\..\node_modules\react-native-fcm\ios",
 					"$(SRCROOT)\..\node_modules\react-native-google-analytics-bridge\ios\RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)\..\node_modules\react-native-device-info\ios\RNDeviceInfo",
+					"$(SRCROOT)\..\node_modules\react-native-track-player\ios\RNTrackPlayer/**",
+					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
 				);
 				INFOPLIST_FILE = Demo6/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1629,6 +1649,8 @@
 					"$(SRCROOT)\..\node_modules\react-native-fcm\ios",
 					"$(SRCROOT)\..\node_modules\react-native-google-analytics-bridge\ios\RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)\..\node_modules\react-native-device-info\ios\RNDeviceInfo",
+					"$(SRCROOT)\..\node_modules\react-native-track-player\ios\RNTrackPlayer/**",
+					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
 				);
 				INFOPLIST_FILE = Demo6/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1662,11 +1684,15 @@
 					"$(SRCROOT)\..\node_modules\react-native-fcm\ios",
 					"$(SRCROOT)\..\node_modules\react-native-google-analytics-bridge\ios\RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)\..\node_modules\react-native-device-info\ios\RNDeviceInfo",
+					"$(SRCROOT)\..\node_modules\react-native-track-player\ios\RNTrackPlayer/**",
+					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
 				);
 				INFOPLIST_FILE = "Demo6-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1708,11 +1734,15 @@
 					"$(SRCROOT)\..\node_modules\react-native-fcm\ios",
 					"$(SRCROOT)\..\node_modules\react-native-google-analytics-bridge\ios\RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)\..\node_modules\react-native-device-info\ios\RNDeviceInfo",
+					"$(SRCROOT)\..\node_modules\react-native-track-player\ios\RNTrackPlayer/**",
+					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
 				);
 				INFOPLIST_FILE = "Demo6-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1753,11 +1783,15 @@
 					"$(SRCROOT)\..\node_modules\react-native-fcm\ios",
 					"$(SRCROOT)\..\node_modules\react-native-google-analytics-bridge\ios\RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)\..\node_modules\react-native-device-info\ios\RNDeviceInfo",
+					"$(SRCROOT)\..\node_modules\react-native-track-player\ios\RNTrackPlayer/**",
+					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
 				);
 				INFOPLIST_FILE = "Demo6-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1798,11 +1832,15 @@
 					"$(SRCROOT)\..\node_modules\react-native-fcm\ios",
 					"$(SRCROOT)\..\node_modules\react-native-google-analytics-bridge\ios\RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)\..\node_modules\react-native-device-info\ios\RNDeviceInfo",
+					"$(SRCROOT)\..\node_modules\react-native-track-player\ios\RNTrackPlayer/**",
+					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
 				);
 				INFOPLIST_FILE = "Demo6-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

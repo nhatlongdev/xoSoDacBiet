@@ -1,6 +1,7 @@
 import DeviceInfo from 'react-native-device-info';
 
-const apiGetDataFromServer = 'http://api.xoso98.com/logicandroid.php?id=lotteryresultlist&from_date=2018-01-01%2000:00:00';
+const apiGetDataFromServer = 'https://dacbiet.vn/logicandroid.php?id=lotteryresultlist&from_date=2018-01-01%2000:00:00';
+
 // const apiGetDataFromServerTrucTiep = 'http://api.xoso98.com/logicandroid.php?id=lotteryresultlist&from_date=2018-07-13%2000:00:00';
 const apiPushTokenToServer = 'https://dacbiet.vn/firebase/api.php';
 async function getDataFromServer() {
@@ -14,7 +15,7 @@ async function getDataFromServer() {
 }
 
 async function getDataFromServerTrucTiep(ngay) {
-    var apiGetDataFromServerTrucTiep = 'http://api.xoso98.com/logicandroid.php?id=lotteryresultlist&from_date=' + ngay + '%2000:00:00';
+    var apiGetDataFromServerTrucTiep = 'https://dacbiet.vn/logicandroid.php?id=lotteryresultlist&from_date=' + ngay + '%2000:00:00';
     console.log("API====: " + apiGetDataFromServerTrucTiep);
     try {
         let response = await fetch(apiGetDataFromServerTrucTiep);

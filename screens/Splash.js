@@ -13,6 +13,8 @@ import {createArrPushInItem} from '../components/CreateArrPushInItem';
 import GloblaValue from '../components/GlobalValue'
 import {getRemainDay, apiGetListProducts} from '../networking/Server';
 var DeviceInfo = require('react-native-device-info');
+var data_lottery_json = require('../assets/lottery_results_2018.json');
+var checkOnNetInfo;
 export default class Splash extends Component {
 
     constructor(props){
@@ -34,8 +36,7 @@ export default class Splash extends Component {
 
     async getListProduct(isConnected) {
         try {
-          const value = await AsyncStorage.getItem('key_list_product');
-          this.getListProductServer(isConnected);
+          const value = await AsyncStorage.getItem('key_list_product');  
           return value;
         } catch (error) {
           console.log("Error retrieving data" + error);
@@ -43,7 +44,7 @@ export default class Splash extends Component {
     }
 
     //ham lay ds cac goi dich vu
-    getListProductServer(isConnected){
+    getListProductServer(){
         apiGetListProducts().then((data_)=>{
                 GloblaValue.dataProduct = data_;
                 var arr = GloblaValue.dataProduct;
@@ -57,29 +58,23 @@ export default class Splash extends Component {
                 }
                 GloblaValue.dataProductSave = arrJson;
                 this.saveListProduct(JSON.stringify(arrJson));
-                this.remainDay(isConnected);
+                this.remainDay();
             }).catch((error) =>{
-                console.log("ERROR KET QUA PUSH TOKEN" + JSON.stringify(error));
+                this.getKey(false); 
             });
     }
 
      //ham chek so ngay con lai
-     remainDay(isConnected){
+     remainDay(){
         getRemainDay().then((data_)=>{
         //    alert("KET QUA REMAIN DAY: " + JSON.stringify(data_));
            GloblaValue.remainDay = data_.num_day;
-            if(isConnected.type === 'wifi' || isConnected.type === 'WIFI'){
-                console.log('CO WIFI')
-                //lay du lieu tu server
-                this.refreshFromServer();
-                GloblaValue.status_net = true;
-            }else {
-                // Nếu không có mạng thì lấy dữ liệu cache
-                this.getKey(false); 
-                GloblaValue.status_net = false;
-            }
+           console.log('CO WIFI')
+           //lay du lieu tu server
+           this.refreshFromServer();
+           GloblaValue.status_net = true;
         }).catch((error) =>{
-            console.log("ERROR KET QUA PUSH TOKEN" + JSON.stringify(error));
+            this.getKey(false); 
         });
     }
 
@@ -88,12 +83,27 @@ export default class Splash extends Component {
         console.log('CHAY VAO WILLMOUNT')
         NetInfo.addEventListener('connectionChange', this.handler.bind(this));
         console.log('CHAY VAO WILLMOUNT_1')
+
+        //Truong hop co may ko nhan ham on net infor
+        checkOnNetInfo = setInterval(()=>{
+            //TH KO CO MANG kiem tra cake(neu co lay cake ra su dung)
+            this.getKey(false);
+        },15000)
     }
 
     //check status networking
     handler(isConnected) {
-       //kiem tra cake list product in appp da co chua, neu chua co thi lu cake
-       this.getListProduct(isConnected);
+        if(isConnected.type === 'wifi' || isConnected.type === 'WIFI'){
+            //TH CO MANG goi api lay ds goi dv va api lay data lottery
+            this.getListProductServer();
+            //kill interval
+            clearInterval(checkOnNetInfo);
+        }else {
+            //TH KO CO MANG kiem tra cake(neu co lay cake ra su dung)
+            this.getKey(false);
+            //kill interval
+            clearInterval(checkOnNetInfo);
+        }   
     }
 
     render(){
@@ -118,7 +128,7 @@ export default class Splash extends Component {
             this.getKey(true); 
             console.log('CHAY TOI DAY: ' + JSON.stringify(GloblaValue.data_lottery))        
         }).catch((error) =>{
-            
+            this.getKey(false); 
         });
     }
 
@@ -136,7 +146,7 @@ export default class Splash extends Component {
         }
     }
 
-    //save cache
+    //save cache DATA LOTTERY
     async getKey(net) {
         try {
           const value = await AsyncStorage.getItem('key_data');
@@ -147,13 +157,15 @@ export default class Splash extends Component {
                 dataLottery_detector_statistic.data = createArrPushInItem(JSON.parse(value));
             }
             this.getRegion();
-          }else{
+          }else{ //TH KO CO DU LIEU CAKE ==> CHUA DANG NHAP LAN NAO
               if(net == false){
-                alert('Vui lòng kiểm tra kết nối mạng!')  
-              }else {
-                GloblaValue.first_login = true;  
-                this.props.navigation.replace('Regions_Screen');
+                alert('Vui lòng kiểm tra kết nối mạng!\nỨng dụng vẫn hoạt động bình thường nhưng để xem kết quả mới nhất vui lòng kết nối mạng')
+                GloblaValue.data_lottery = data_lottery_json.bodyitems;
+                dataLottery_detector_statistic.data = createArrPushInItem(data_lottery_json.bodyitems);  
+                this.saveKey(JSON.stringify(data_lottery_json.bodyitems));
               }
+              GloblaValue.first_login = true;  
+              this.props.navigation.replace('Regions_Screen');
           }
         } catch (error) {
           console.log("Error retrieving data" + error);

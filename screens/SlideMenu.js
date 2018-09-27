@@ -8,7 +8,9 @@ import {
     TouchableOpacity,
     Share,
     ScrollView,
-    Linking
+    Linking,
+    ToastAndroid,
+    Vibration
 } from 'react-native';
 import {Icon, Col} from 'native-base';
 import Color from '../src/color';
@@ -16,6 +18,9 @@ import GloblaValue from '../components/GlobalValue';
 var dataWithProvinces = {};
 var heightScreen = Dimensions.get('window').height;
 var widthScreen = Dimensions.get('window').width;
+// Import the react-native-sound module
+var SoundPlayer = require('react-native-sound');
+var song;
 
 //biến lấy dữ liệu kết quả sổ xố đã qua xử lý từng miền, từng giải con thành obj riêng
 var dataDetectorStatistic;
@@ -24,9 +29,35 @@ export default class SlideMenu extends Component {
 
     constructor(props){
         super(props);
-
+        song = null;
     }
 
+    componentWillMount(){
+        song = new SoundPlayer('tin_nhan_moi.mp3', SoundPlayer.MAIN_BUNDLE, (error) => {
+            if (error) {
+              alert('failed to load the sound')
+            return;
+            }
+            // loaded successfully
+            // console.log('duration in seconds: ' + whoosh.getDuration() + 'number of channels: ' + whoosh.getNumberOfChannels());
+        });
+    }
+
+
+    onPressButtonPlay(){
+        if(song != null){
+            song.play((success)=>{
+                if(!success) alert('play error');
+            })
+        }
+        this.onVibrate();
+    }
+
+    onVibrate(){
+        const DURATION = 3000
+        const PATTERN = [1000, 2000, 3000]
+        Vibration.vibrate(DURATION);
+    }
    
     render(){
         return(
@@ -74,17 +105,21 @@ export default class SlideMenu extends Component {
                         <Text>Share</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style = {style.item_option} 
-                    >
+                    <TouchableOpacity style = {style.item_option} onPress = {()=>{this.onPressButtonPlay()}}>
                         <Icon name = {'ios-chatboxes'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
                         <Text style={{marginRight:5, flex:1}}>{this.setTitleDuration(GloblaValue.remainDay)}</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style = {style.item_option} onPress = {()=>
-                        this.props.navigation.navigate('ProductsScreen')
-                    }>
+                    <TouchableOpacity style = {style.item_option} onPress = {()=>{this.clickMenuLeftToService()}}>
                         <Icon name = {'logo-googleplus'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
                         <Text>Dịch vụ - tiện ích</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style = {style.item_option} onPress = {()=>
+                        this.props.navigation.navigate('SettingScreen')
+                    }>
+                        <Icon name = {'md-settings'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
+                        <Text>Cài đặt</Text>
                     </TouchableOpacity>
 
                 </ScrollView>
@@ -93,11 +128,14 @@ export default class SlideMenu extends Component {
         );
     }
 
+
     //hàm set title cho mục số ngày nhận thông báo
     setTitleDuration(duration){
         var str='';
         if(duration === -1){
             str='Truy cập dịch vụ để đăng ký nhận thông báo kết quả trực tiếp';
+        }else if(duration === -2){
+            str='Kiểm tra kết nối mạng để nhận thông báo kết quả trực tiếp';
         }else if(duration === 0){
             str='Gói đăng ký nhận thông báo kết quả trực tiếp của bạn đã hết hạn';
         }else {
@@ -110,6 +148,15 @@ export default class SlideMenu extends Component {
     clickMenuLeftToRegion(){
         GloblaValue.click_menuLeft = true;
         this.props.navigation.navigate('Regions_Screen');
+    }
+
+    //ham set truong hop khi click vao option dichvu-tienich
+    clickMenuLeftToService(){
+        if(GloblaValue.status_net === true){
+            this.props.navigation.navigate('ProductsScreen')
+        }else {
+            ToastAndroid.show('Vui lòng kiểm tra kết nối mạng!',3000)
+        }        
     }
 
     //click to web

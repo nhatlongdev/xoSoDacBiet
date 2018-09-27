@@ -7,7 +7,7 @@ var GloblaValue = {
     isLogin:false,
     isRefresh:false,
     clickToByDayByHome:true,
-    remainDay:0,
+    remainDay:-2,
     dataProduct:[],
     dataProductSave:{},
     arrSoDo: [],

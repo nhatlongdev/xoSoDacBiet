@@ -25,6 +25,7 @@ import ProductsScreen from './screens/ProductsScreen';
 import Splash from './screens/Splash';
 import TestData from './screens/TestData';
 import SoMoScreen from './screens/SoMoScreen';
+import SettingScreen from './screens/SettingScreen';
 
 var widthScreen;
 export const HomeStack = StackNavigator({
@@ -120,6 +121,12 @@ export const HomeStack = StackNavigator({
     },
     SoMoScreen: {
         screen: SoMoScreen,
+        navigationOptions: {
+            header: null
+        }
+    },
+    SettingScreen: {
+        screen: SettingScreen,
         navigationOptions: {
             header: null
         }

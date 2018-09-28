@@ -8,6 +8,7 @@ import {
     Switch
  } from 'react-native';
  import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';
+ import GlobalValue from '../components/GlobalValue';
 
  export default class SettingScreen extends Component {
 
@@ -15,8 +16,8 @@ import {
         super(props);
         this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
         this.state={
-            toggled_sound:false,
-            toggled_vibrate:false,
+            toggled_sound:GlobalValue.sound,
+            toggled_vibrate:GlobalValue.vibrate,
         }
     }
 
@@ -34,6 +35,9 @@ import {
     }
 
      render() {
+         //set gia tri cho global
+         
+         GlobalValue.vibrate = this.state.toggled_vibrate;
          return (
             <View style = {{flex: 1, marginTop: Platform.OS==='ios'?30:0}}>
                 <View style = {style.header_style}>
@@ -44,7 +48,7 @@ import {
                     <Text style={{fontSize:18}}>Âm thanh khi có giải mới</Text>
                     <Switch 
                         style={{flex:1}}
-                        onValueChange={ (value) => this.setState({ toggled_sound: value })} 
+                        onValueChange={ (value) => this.clickSetting(value, 'sound')} 
                         value={ this.state.toggled_sound }
                     />
                 </View>
@@ -53,7 +57,7 @@ import {
                     <Text style={{fontSize:18}}>Rung khi có giải mới</Text>
                     <Switch 
                         style={{flex:1}}
-                        onValueChange={ (value) => this.setState({ toggled_vibrate: value })} 
+                        onValueChange={ (value) => this.clickSetting(value, 'vibrate')} 
                         value={ this.state.toggled_vibrate }
                     />
                 </View>
@@ -64,6 +68,55 @@ import {
             </View>
          );
      }
+
+     //ham xu ly khi co su thay doi setting sound va vibrate
+     clickSetting(value, type){
+        if(type === 'sound'){
+            GlobalValue.sound = value;
+            this.saveSound(value +'')
+            this.setState({ toggled_sound: value })
+        }else {
+            GlobalValue.vibrate = value;
+            this.saveVibrate(value + '');
+            this.setState({ toggled_vibrate: value })
+        }
+        
+     }
+
+    //save and get value config sound, vibrate
+    async saveSound(value) {
+        try {
+          await AsyncStorage.setItem('key_sound',value);
+        } catch (error) {
+          console.log("Error saving data" + error);
+        }
+    }
+
+    async getSound(isConnected) {
+        try {
+          const value = await AsyncStorage.getItem('key_sound');  
+          return value;
+        } catch (error) {
+          console.log("Error retrieving data" + error);
+        }
+    }
+
+    async saveVibrate(value) {
+        try {
+          await AsyncStorage.setItem('key_vibrate',value);
+        } catch (error) {
+          console.log("Error saving data" + error);
+        }
+    }
+
+    async getVibrate(isConnected) {
+        try {
+          const value = await AsyncStorage.getItem('key_vibrate');  
+          return value;
+        } catch (error) {
+          console.log("Error retrieving data" + error);
+        }
+    }
 
      //exit
      clickExit(){

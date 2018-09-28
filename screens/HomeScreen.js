@@ -15,7 +15,8 @@ import {
     BackHandler,
     ToastAndroid,
     AppState,
-    Platform
+    Platform,
+    Vibration
 } from 'react-native';
 // modules
 import {
@@ -77,6 +78,10 @@ var dataWithProvinces = {};
 //bien tang i khi load more
 var countLoadmore = 0;
 
+// Import the react-native-sound module
+var SoundPlayer = require('react-native-sound');
+var song;
+
 //thoi gian bat dau quay, thoi gian dung quay
 var dateTimeBatDauQuayMienNam, dateTimeDungQuayMienNam, dateTimeBatDauQuayMienTrung, dateTimeDungQuayMienTrung, dateTimeBatDauQuayMienBac, dateTimeDungQuayMienBac;
 
@@ -121,6 +126,8 @@ export default class HomeScreen extends Component {
     // Contructor
     constructor(props){
         super(props);
+
+        song = null;
         //Gia tri vung mien duoc chon luu tam de so sanh xem co thay doi ko
         region_save_tam = GloblaValue.region_value;
 
@@ -258,6 +265,16 @@ export default class HomeScreen extends Component {
 
 
     componentWillMount() {
+
+        song = new SoundPlayer('tin_nhan_moi.mp3', SoundPlayer.MAIN_BUNDLE, (error) => {
+            if (error) {
+              alert('failed to load the sound')
+            return;
+            }
+            // loaded successfully
+            // console.log('duration in seconds: ' + whoosh.getDuration() + 'number of channels: ' + whoosh.getNumberOfChannels());
+        });
+
         console.log('TYPEOF=======>>>>>>>>>>>>>>>: ' + typeof GloblaValue.region_value + ' gia tri ' + GloblaValue.region_value)
         setInterval(()=>{
             console.log("INTERVAL HOME=====>>>222");
@@ -299,6 +316,22 @@ export default class HomeScreen extends Component {
         },1000)
         this.getKey();
         // AppState.removeEventListener('change', this._handleAppStateChange);
+    }
+
+    // HAM PLAY MUSIC
+    onPressButtonPlay(){
+        if(song != null){
+            song.play((success)=>{
+                if(!success) alert('play error');
+            })
+        }
+        this.onVibrate();
+    }
+
+    onVibrate(){
+        const DURATION = 1000
+        const PATTERN = [1000, 2000, 3000]
+        Vibration.vibrate(DURATION);
     }
 
     componentWillUnmount() {
@@ -805,6 +838,14 @@ export default class HomeScreen extends Component {
         for(var i=0; i< data.length; i++){
             var date_quay = moment(data[i].rd).format('YYYYMMDD');
             var key = data[i].pc + '_' + date_quay;
+            if(dataSwitchKey[key] === undefined || dataSwitchKey[key] === null){
+            
+                this.onPressButtonPlay();
+            }else {
+                if(JSON.stringify(dataSwitchKey[key]) !== JSON.stringify(data[i])){
+                    this.onPressButtonPlay();
+                }
+            }
             dataSwitchKey[key] = data[i];
             if(data[i].s != '0'){
                 checkDataFull = false;

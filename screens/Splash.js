@@ -15,6 +15,7 @@ import {getRemainDay, apiGetListProducts} from '../networking/Server';
 var DeviceInfo = require('react-native-device-info');
 var data_lottery_json = require('../assets/lottery_results_2018.json');
 var checkOnNetInfo;
+var checkGoTo;
 export default class Splash extends Component {
 
     constructor(props){
@@ -23,6 +24,7 @@ export default class Splash extends Component {
             status_net: true,
         }
         GloblaValue.isLogin = true;
+        checkGoTo = 0;
     }
 
      //save and get list product in app purscharse
@@ -156,7 +158,8 @@ export default class Splash extends Component {
                 GloblaValue.data_lottery = JSON.parse(value);
                 dataLottery_detector_statistic.data = createArrPushInItem(JSON.parse(value));
             }
-            this.getRegion();
+            checkGoTo = 1;
+            this.getSound();
           }else{ //TH KO CO DU LIEU CAKE ==> CHUA DANG NHAP LAN NAO
               if(net == false){
                 alert('Vui lòng kiểm tra kết nối mạng!\nỨng dụng vẫn hoạt động bình thường nhưng để xem kết quả mới nhất vui lòng kết nối mạng')
@@ -164,8 +167,8 @@ export default class Splash extends Component {
                 dataLottery_detector_statistic.data = createArrPushInItem(data_lottery_json.bodyitems);  
                 this.saveKey(JSON.stringify(data_lottery_json.bodyitems));
               }
-              GloblaValue.first_login = true;  
-              this.props.navigation.replace('Regions_Screen');
+              checkGoTo = 2;
+              this.getSound();
           }
         } catch (error) {
           console.log("Error retrieving data" + error);
@@ -177,6 +180,59 @@ export default class Splash extends Component {
           await AsyncStorage.setItem('key_data', value);
         } catch (error) {
           console.log("Error saving data" + error);
+        }
+    }
+
+    //GET SOUND AND VIBRATE
+    async saveSound(value) {
+        try {
+          await AsyncStorage.setItem('key_sound',value);
+        } catch (error) {
+          console.log("Error saving data" + error);
+        }
+    }
+
+    async getSound() {
+        try {
+          const value = await AsyncStorage.getItem('key_sound'); 
+          if(value === null){
+              this.saveSound(GloblaValue.sound);
+          }else {
+              GloblaValue.sound = value;
+          }
+          this.getVibrate(); 
+          return value;
+        } catch (error) {
+          console.log("Error retrieving data" + error);
+        }
+    }
+
+    async saveVibrate(value) {
+        try {
+          await AsyncStorage.setItem('key_vibrate',value);
+        } catch (error) {
+          console.log("Error saving data" + error);
+        }
+    }
+
+    async getVibrate() {
+        try {
+          const value = await AsyncStorage.getItem('key_vibrate'); 
+          if(value === null){
+              this.saveVibrate(GloblaValue.vibrate);
+          }else {
+              GloblaValue.vibrate = value;
+          } 
+          if(checkGoTo === 1){
+            this.getRegion();
+          }else if(checkGoTo === 2){
+            GloblaValue.first_login = true;  
+            this.props.navigation.replace('Regions_Screen');
+          }
+          checkGoTo = 0;
+          return value;
+        } catch (error) {
+          console.log("Error retrieving data" + error);
         }
     }
 

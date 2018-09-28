@@ -12,8 +12,8 @@ var GloblaValue = {
     dataProductSave:{},
     arrSoDo: [],
     objResultDoSo: {},
-    sound:true,
-    vibrate:true,
+    sound:'true',
+    vibrate:'true',
 };
 
 export default GloblaValue;

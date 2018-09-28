@@ -318,17 +318,26 @@ export default class HomeScreen extends Component {
         // AppState.removeEventListener('change', this._handleAppStateChange);
     }
 
+    //ham play 
+    onNewLotteryToPlaySoundVibrate(){
+        if(GloblaValue.sound === 'true'){
+            this.onPlaySound();
+        }
+        if(GloblaValue.vibrate === 'true'){
+            this.onPlayVibrate();
+        }
+    }
+
     // HAM PLAY MUSIC
-    onPressButtonPlay(){
+    onPlaySound(){
         if(song != null){
             song.play((success)=>{
                 if(!success) alert('play error');
             })
         }
-        this.onVibrate();
     }
 
-    onVibrate(){
+    onPlayVibrate(){
         const DURATION = 1000
         const PATTERN = [1000, 2000, 3000]
         Vibration.vibrate(DURATION);
@@ -839,11 +848,10 @@ export default class HomeScreen extends Component {
             var date_quay = moment(data[i].rd).format('YYYYMMDD');
             var key = data[i].pc + '_' + date_quay;
             if(dataSwitchKey[key] === undefined || dataSwitchKey[key] === null){
-            
-                this.onPressButtonPlay();
+                this.onNewLotteryToPlaySoundVibrate();
             }else {
                 if(JSON.stringify(dataSwitchKey[key]) !== JSON.stringify(data[i])){
-                    this.onPressButtonPlay();
+                    this.onNewLotteryToPlaySoundVibrate();
                 }
             }
             dataSwitchKey[key] = data[i];

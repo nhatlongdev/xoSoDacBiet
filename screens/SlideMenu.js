@@ -18,9 +18,6 @@ import GloblaValue from '../components/GlobalValue';
 var dataWithProvinces = {};
 var heightScreen = Dimensions.get('window').height;
 var widthScreen = Dimensions.get('window').width;
-// Import the react-native-sound module
-var SoundPlayer = require('react-native-sound');
-var song;
 
 //biến lấy dữ liệu kết quả sổ xố đã qua xử lý từng miền, từng giải con thành obj riêng
 var dataDetectorStatistic;
@@ -29,36 +26,12 @@ export default class SlideMenu extends Component {
 
     constructor(props){
         super(props);
-        song = null;
     }
 
     componentWillMount(){
-        song = new SoundPlayer('tin_nhan_moi.mp3', SoundPlayer.MAIN_BUNDLE, (error) => {
-            if (error) {
-              alert('failed to load the sound')
-            return;
-            }
-            // loaded successfully
-            // console.log('duration in seconds: ' + whoosh.getDuration() + 'number of channels: ' + whoosh.getNumberOfChannels());
-        });
+       
     }
 
-
-    onPressButtonPlay(){
-        if(song != null){
-            song.play((success)=>{
-                if(!success) alert('play error');
-            })
-        }
-        this.onVibrate();
-    }
-
-    onVibrate(){
-        const DURATION = 3000
-        const PATTERN = [1000, 2000, 3000]
-        Vibration.vibrate(DURATION);
-    }
-   
     render(){
         return(
             <View style = {style.container}>

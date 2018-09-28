@@ -5,7 +5,8 @@ import {
     Platform,
     StyleSheet,
     BackHandler,
-    Switch
+    Switch,
+    AsyncStorage
  } from 'react-native';
  import FloatButtonCompomentExit from '../components/FloatButtonCompomentExit';
  import GlobalValue from '../components/GlobalValue';
@@ -49,7 +50,7 @@ import {
                     <Switch 
                         style={{flex:1}}
                         onValueChange={ (value) => this.clickSetting(value, 'sound')} 
-                        value={ this.state.toggled_sound }
+                        value={ this.convertStringToTrueFalse(this.state.toggled_sound) }
                     />
                 </View>
 
@@ -58,7 +59,7 @@ import {
                     <Switch 
                         style={{flex:1}}
                         onValueChange={ (value) => this.clickSetting(value, 'vibrate')} 
-                        value={ this.state.toggled_vibrate }
+                        value={ this.convertStringToTrueFalse(this.state.toggled_vibrate)}
                     />
                 </View>
 
@@ -69,16 +70,22 @@ import {
          );
      }
 
+     //convert string to true, fale
+     convertStringToTrueFalse(value){
+        if(value === 'true')return true;
+        if(value === 'false') return false;
+     }
+
      //ham xu ly khi co su thay doi setting sound va vibrate
      clickSetting(value, type){
         if(type === 'sound'){
-            GlobalValue.sound = value;
+            GlobalValue.sound = value+'';
             this.saveSound(value +'')
-            this.setState({ toggled_sound: value })
+            this.setState({ toggled_sound: value+'' })
         }else {
-            GlobalValue.vibrate = value;
+            GlobalValue.vibrate = value+'';
             this.saveVibrate(value + '');
-            this.setState({ toggled_vibrate: value })
+            this.setState({ toggled_vibrate: value +''})
         }
         
      }
@@ -92,29 +99,11 @@ import {
         }
     }
 
-    async getSound(isConnected) {
-        try {
-          const value = await AsyncStorage.getItem('key_sound');  
-          return value;
-        } catch (error) {
-          console.log("Error retrieving data" + error);
-        }
-    }
-
     async saveVibrate(value) {
         try {
           await AsyncStorage.setItem('key_vibrate',value);
         } catch (error) {
           console.log("Error saving data" + error);
-        }
-    }
-
-    async getVibrate(isConnected) {
-        try {
-          const value = await AsyncStorage.getItem('key_vibrate');  
-          return value;
-        } catch (error) {
-          console.log("Error retrieving data" + error);
         }
     }
 

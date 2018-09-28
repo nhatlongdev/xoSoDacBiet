@@ -142,7 +142,6 @@ export default class NumberDetectorScreen extends Component {
                         placeholder={'Nhập số cần dò'}
                         placeholderTextColor = {'grey'}
                         onChangeText = {(text)=>this.setState({textSoDo: text})}
-                        keyboardType='numeric'
                         value = {this.state.textSoDo}
                     />
                     <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center',borderRadius: 2, backgroundColor: '#CCCCCC', height: 50,padding: 5}}
@@ -175,8 +174,10 @@ export default class NumberDetectorScreen extends Component {
             str = 'Bạn chưa nhập số lần quay';
         }else if(chuoiDo.length === 0){
             str = 'Bạn chưa nhập số cần dò';
+        }else if(soLanQuay === '0' || soLanQuay === '00'){
+            str = 'Số lần quay phải lớn hơn 0, vui lòng nhập lại';
         }else{
-            var pattern_1 = /^[0-9]{2}$/;
+            var pattern_1 = /^[0-9]{1,2}$/;
             var pattern_2 = /^[0-9]{2},[0-9]{2}$/;
             if(pattern_1.test(soLanQuay) === false){
                 str = 'Số lần quay không đúng định dạng, vui lòng nhập lại';

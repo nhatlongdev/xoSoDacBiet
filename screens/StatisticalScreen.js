@@ -185,13 +185,13 @@ export default class StatisticalScreen extends Component {
         if(soLanQuay.length === 0){
             str = '';
             alert('Bạn chưa nhập số lần quay');
+        }else if(soLanQuay === '0' || soLanQuay === '00'){
+            alert('Số lần quay phải lớn hơn 0, vui lòng nhập lại');
+            str = '';
         }else{
             var pattern_1 = /^[0-9]{1,2}$/;
             if(pattern_1.test(soLanQuay) === false){
                 alert('Số lần quay không đúng định dạng, vui lòng nhập lại');
-                str = '';
-            }else if(soLanQuay === '0' || soLanQuay === '00'){
-                alert('Số lần quay phải lớn hơn 0, vui lòng nhập lại');
                 str = '';
             }
         }

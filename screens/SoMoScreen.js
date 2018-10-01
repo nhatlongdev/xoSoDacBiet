@@ -109,12 +109,13 @@ var dataSearch;
     //set data full khi nguoi dung ko nhap gi ma nhan tim kiem
     refreshAllData(){
         this.setState({
-            dataSearch:data,
+            dataSearch:JSON.parse(JSON.stringify(data)),
         })
     }
    
     //Hàm tìm kiếm dữ liệu
     searchData(str){
+        let dataSoMoTam = JSON.parse(JSON.stringify(data));
         var arr_str = str.split(' ');
         var arr_str_new = arr_str.filter((e) => {
             return e !== '';
@@ -122,10 +123,10 @@ var dataSearch;
         dataSearch = [];
         var dataTam = [];
         if(arr_str_new.length >0){
-            for(let i = 0; i< data.length; i++){
+            for(let i = 0; i< dataSoMoTam.length; i++){
                 var sum = 0;
-                var arr_title = data[i].title.split(' ');
-                var arr_khong_dau = data[i].khongDau.split(' ');
+                var arr_title = dataSoMoTam[i].title.split(' ');
+                var arr_khong_dau = dataSoMoTam[i].khongDau.split(' ');
                 for(let j=0; j<arr_title.length; j++){
                     for(let a =0; a<arr_str_new.length; a++){
                         if(arr_title[j].toLowerCase()=== arr_str_new[a].toLowerCase()){
@@ -150,8 +151,8 @@ var dataSearch;
                     }    
                 }
                 if(sum >0){
-                    data[i].priority = sum;
-                    dataTam.push(data[i]);
+                    dataSoMoTam[i].priority = sum;
+                    dataTam.push(dataSoMoTam[i]);
                 }  
             }    
         }

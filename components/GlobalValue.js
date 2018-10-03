@@ -14,6 +14,7 @@ var GloblaValue = {
     objResultDoSo: {},
     sound:'true',
     vibrate:'true',
+    tracking_id: 'UA-126906121-1',
 };
 
 export default GloblaValue;

@@ -79,7 +79,7 @@ export default class StatisticalScreen extends Component {
         //GoogleAnalyticsSettings.setOptOut(true);
 
         // The tracker is constructed
-        let tracker = new GoogleAnalyticsTracker("UA-124642701-1");
+        let tracker = new GoogleAnalyticsTracker(GloblaValue.tracking_id);
         // You can have multiple trackers
         //let tracker2 = new GoogleAnalyticsTracker("UA-12345-3", { demo: 1 });
         tracker.trackScreenView("Statistical_Screen");

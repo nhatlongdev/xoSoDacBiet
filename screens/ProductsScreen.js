@@ -6,7 +6,8 @@ import {
     FlatList,
     StyleSheet,
     Platform,
-    BackHandler
+    BackHandler,
+    Image
  } from 'react-native';
  import ItemProduct from '../components/ItemProduct';
  import GlobalValue from '../components/GlobalValue';
@@ -33,10 +34,19 @@ import {
 
      render() {
          return (
-             <View style={{flex:1, marginTop: Platform.OS==='ios'?30:0}}>
+            <View style = {{flex: 1, marginTop: Platform.OS==='ios'?30:0}}>
                 <View style = {styles.header_style}>
+                    <TouchableOpacity onPress = {()=>
+                        this.handleBackButtonClick()
+                    }>
+                        <Image
+                            style={{width:30, height: 30, tintColor:'white'}}
+                            source = {require('../images/arrow_back.png')}
+                        />
+                    </TouchableOpacity>
                     <Text style = {styles.text_style}>Danh sách gói dịch vụ</Text>
-                </View>
+                </View> 
+                
                 <FlatList
                     data={GlobalValue.dataProduct}
                     renderItem={({item, index})=>{
@@ -51,21 +61,28 @@ import {
              </View>
          );
      }
+
  }
 
  const styles = ({
+    container:{
+        flex:1,
+        backgroundColor: 'yellow'
+    },
     header_style:{
         width: '100%',
         height: 50,
         backgroundColor: '#3F51B5',
+        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         paddingHorizontal: 5,
-        marginTop: 20,
     },
     text_style:{
+        flex:1,
+        fontWeight: 'bold',
         fontSize: 20,
         color: 'white',
         textAlign: 'center'
-    },
+    }
  });

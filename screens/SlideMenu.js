@@ -78,7 +78,7 @@ export default class SlideMenu extends Component {
                         <Text>Share</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style = {style.item_option} onPress = {()=>{this.onPressButtonPlay()}}>
+                    <TouchableOpacity style = {style.item_option}>
                         <Icon name = {'ios-chatboxes'} style = {{color: '#848484', marginRight: 20, fontSize: 30,}}/>
                         <Text style={{marginRight:5, flex:1}}>{this.setTitleDuration(GloblaValue.remainDay)}</Text>
                     </TouchableOpacity>

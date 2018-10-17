@@ -101,8 +101,8 @@ android {
         applicationId "xoso.dacbiet.vn"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 103
-        versionName "1.03"
+        versionCode 104
+        versionName "1.04"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }

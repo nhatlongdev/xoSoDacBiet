@@ -540,15 +540,19 @@ export default class HomeScreen extends Component {
                 <View style = {style.header_style}>
                     <TouchableOpacity onPress = {()=>{this.props.navigation.openDrawer()}}>
                         <Image
+                            style={{width:30, height: 30,tintColor:'white'}}
                             source = {require('../images/menu.png')}
                         />
                     </TouchableOpacity>
                     <Text style = {style.text_title}>Xổ số đặc biệt - Trực tiếp</Text>
-                   {/*<TouchableOpacity onPress = {()=>{this.clickBaChamGocPhai()}}>
+                    <TouchableOpacity onPress = {()=>
+                        exitAlert()
+                    }>
                         <Image
-                            source = {require('../images/dots_vertical.png')}
+                            style={{width:30, height: 30,tintColor:'white'}}
+                            source = {require('../images/exit_app.png')}
                         />
-                     </TouchableOpacity>*/}
+                    </TouchableOpacity>
                 </View>
 
                 <View style = {style.container_option}>

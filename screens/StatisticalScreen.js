@@ -24,6 +24,7 @@ import {thongKe_00_99} from '../components/ThongKe_00_99';
 import {ThongKeLoKhan} from '../components/ThongKeLoKhan';
 var dataResultLottery = {};
 import dataLottery_detector_statistic from '../components/DataLottery';
+import GloblaValue from '../components/GlobalValue';
 
 import {
     GoogleAnalyticsTracker,

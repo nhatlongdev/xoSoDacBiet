@@ -21,7 +21,7 @@ import dataLottery_detector_statistic from '../components/DataLottery';
 import ItemFlatListDoSo from '../components/ItemFLatListDoSo';
 import dataBong from '../components/BongDoSo';
 import ResultDoSoComponent from './ResultDoSoComponent';
-import GlobalValue from '../components/GlobalValue';
+import GloblaValue from '../components/GlobalValue';
 
 import {
     GoogleAnalyticsTracker,
@@ -156,7 +156,7 @@ export default class NumberDetectorScreen extends Component {
                     </TouchableOpacity>
                     </View>
 
-                    <ResultDoSoComponent arrSoDo={GlobalValue.arrSoDo} objResultDoSo={GlobalValue.objResultDoSo}/> 
+                    <ResultDoSoComponent arrSoDo={GloblaValue.arrSoDo} objResultDoSo={GloblaValue.objResultDoSo}/> 
 
                 </ScrollView>
                 <FloatButtonCompomentExit
@@ -245,8 +245,8 @@ export default class NumberDetectorScreen extends Component {
             objResultDoSo[arrSoDo[n]] = arr_kq;
         }
 
-        GlobalValue.arrSoDo = arrSoDo;
-        GlobalValue.objResultDoSo = objResultDoSo;
+        GloblaValue.arrSoDo = arrSoDo;
+        GloblaValue.objResultDoSo = objResultDoSo;
 
         console.log('KET QUA: ' + JSON.stringify(objResultDoSo))
 

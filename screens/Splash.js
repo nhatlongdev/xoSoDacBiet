@@ -13,7 +13,7 @@ import {createArrPushInItem} from '../components/CreateArrPushInItem';
 import GloblaValue from '../components/GlobalValue'
 import {getRemainDay, apiGetListProducts} from '../networking/Server';
 var DeviceInfo = require('react-native-device-info');
-var data_lottery_json = require('../assets/lottery_results_2018.json');
+var data_lottery_json = require('../assets/data_lottery_default.json');
 var checkOnNetInfo;
 var checkGoTo;
 export default class Splash extends Component {
@@ -95,7 +95,7 @@ export default class Splash extends Component {
 
     //check status networking
     handler(isConnected) {
-        if(isConnected.type === 'wifi' || isConnected.type === 'WIFI'){
+        if(isConnected.type !== 'none'){
             //TH CO MANG goi api lay ds goi dv va api lay data lottery
             this.getListProductServer();
             //kill interval
@@ -193,6 +193,7 @@ export default class Splash extends Component {
     }
 
     async getSound() {
+       
         try {
           const value = await AsyncStorage.getItem('key_sound'); 
           if(value === null){
